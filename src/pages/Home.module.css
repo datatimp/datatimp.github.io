@@ -1,0 +1,77 @@
+.page {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* Asymmetric Swiss Grid */
+    gap: var(--space-md);
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--space-lg) var(--space-xl);
+}
+
+.projectColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.aboutColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.aboutCard {
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.aboutCard::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background-image: url('../assets/pattern-geometric-01-color-v01.svg');
+    background-repeat: repeat;
+    background-size: 250px 250px;
+    transform: rotate(-30deg);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.2s cubic-bezier( 0.65, 0.04, 0.35, 1.00 ); 
+}
+
+.aboutCard:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.aboutCard:hover::before {
+    opacity: 0.1;
+}
+
+.aboutCard a {
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.aboutCardFooter {
+    display: flex;
+    gap: 1rem;
+}
+
+.headshot {
+    width: 120px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        padding: 0 var(--space-sm) var(--space-lg);
+    }
+}

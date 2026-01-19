@@ -1,0 +1,58 @@
+:root {
+    /* Colors */
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-primary: #0033cc;
+    /* International Klein Blue style */
+    --color-accent: #ff0000;
+    /* Swiss Red accent */
+    --color-gray-100: #f5f5f5;
+    --color-gray-200: #e5e5e5;
+    --color-gray-800: #333333;
+    --color-black-card: #111111;
+    /* For the About Me Bento Card */
+
+    /* Typography */
+    --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Space Mono', monospace;
+
+    /* Spacing */
+    --space-xs: 0.5rem;
+    /* 8px */
+    --space-sm: 1rem;
+    /* 16px */
+    --space-md: 2rem;
+    /* 32px */
+    --space-lg: 4rem;
+    /* 64px */
+    --space-xl: 8rem;
+    /* 128px */
+
+    /* Layout */
+    --grid-gap: var(--space-md);
+    --container-width: 1440px;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.9;
+}

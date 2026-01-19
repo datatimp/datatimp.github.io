@@ -1,0 +1,29 @@
+.hero {
+    padding: var(--space-xl) var(--space-lg);
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    color: var(--color-gray-800);
+    max-width: 800px;
+    margin-bottom: var(--space-lg);
+    line-height: 1.2;
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-sm);
+}
