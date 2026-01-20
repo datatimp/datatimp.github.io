@@ -43,10 +43,10 @@ export const Home = () => {
                 <section className={styles.aboutColumn}>
                     <Card
                         title="About Me"
-                        variant="highContrast"
                         className={styles.aboutCard}
                         footer={
                             <div className={styles.aboutCardFooter}>
+                                <a href={about.data.github}>Github</a>
                                 <a href={about.data.linkedin}>LinkedIn</a>
                             </div>
                         }

@@ -27,7 +27,12 @@
 .aboutCard {
     position: relative;
     overflow: hidden;
-    transition: background-color 0.3s ease;
+    /* Dark card base styles */
+    background-color: var(--color-black-card);
+    color: #fff;
+    border-color: var(--color-black-card);
+    /* Transitions */
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .aboutCard::before {
@@ -46,6 +51,7 @@
 .aboutCard:hover {
     background-color: #ffffff;
     color: #000000;
+    box-shadow: 8px 8px 0px var(--color-primary);
 }
 
 .aboutCard:hover::before {
