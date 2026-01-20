@@ -54,6 +54,31 @@
     box-shadow: 8px 8px 0px var(--color-primary);
 }
 
+/* .headshotWrapper {
+    border: 2px solid rgba(0, 0, 0, 0);
+    object-fit: cover;
+    box-shadow: 3px 4px #000000;
+} */
+
+ .headshotWrapper {
+      display: inline-block;
+      padding-right: 5px;
+      padding-bottom: 2px;
+  }    
+
+.headshot {
+    width: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0);
+    object-fit: cover;
+    box-shadow: 3px 4px transparentvar(--color-black-card);
+    transition: box-shadow 0.2s ease;   
+}
+
+.aboutCard:hover .headshot {
+    box-shadow: 3px 4px var(--color-primary);
+}
+
 .aboutCard:hover::before {
     opacity: 0.1;
 }
