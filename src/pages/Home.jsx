@@ -51,12 +51,13 @@ export const Home = () => {
                             </div>
                         }
                     >
+                        <div className={styles.patternOverlay}></div>
                         <div className={styles.headshotWrapper}>
-                        <img
-                            src={headshot}
-                            alt="Tim Pevey"
-                            className={styles.headshot}
-                        />
+                            <img
+                                src={headshot}
+                                alt="Tim Pevey"
+                                className={styles.headshot}
+                            />
                         </div>
                         <ReactMarkdown>{about.content}</ReactMarkdown>
                     </Card>
