@@ -1,6 +1,7 @@
 ---
 name: Tim Pevey
-title: Product Designer crafting clean, user-centric interfaces.
+title: 
+subtitle: Product Designer crafting clean, user-centric interfaces.
 linkedin: https://www.linkedin.com/in/timothypevey/
 github: https://www.github.com/datatimp
 ---

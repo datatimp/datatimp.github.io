@@ -1,32 +1,36 @@
 :root {
-    /* Colors */
-    --color-bg: #ffffff;
-    --color-text: #000000;
-    --color-primary: #009280;
- 
-    --color-accent: #ff0000;
+    /* Color */
+    
+    /* Color > Primitives */
+    --color-neutral-0: #ffffff;
+    --color-neutral-50: #f8f8f8;
+    --color-neutral-100: #f5f5f5;
+    --color-neutral-200: #e5e5e5;
+    --color-neutral-800: #333333;
+    --color-neutral-900: #111111;
+    --color-neutral-1000: #000000;
+    --color-red-500: #ff0000;
+    --color-teal-500: #009280;
 
-    --color-gray-100: #f5f5f5;
-    --color-gray-200: #e5e5e5;
-    --color-gray-800: #333333;
-    --color-black-card: #111111;
-    /* For the About Me Bento Card */
+    /* Color > Semantic */
+
+    --color-bg: var(--color-neutral-50);
+    --color-text: var(--color-neutral-900);
+    --color-primary: var(--color-teal-500);
+    --color-accent: var(--color-red-500);
+    --color-black-card: var(--color-neutral-900); /* About Me card */
 
     /* Typography */
     --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'Space Mono', monospace;
+    --font-display: 'Playfair Display', serif;
 
     /* Spacing */
-    --space-xs: 0.5rem;
-    /* 8px */
-    --space-sm: 1rem;
-    /* 16px */
-    --space-md: 2rem;
-    /* 32px */
-    --space-lg: 4rem;
-    /* 64px */
-    --space-xl: 8rem;
-    /* 128px */
+    --space-xs: 0.5rem;  /* 8px */
+    --space-sm: 1rem;    /* 16px */
+    --space-md: 2rem;    /* 32px */
+    --space-lg: 4rem;    /* 64px */
+    --space-xl: 8rem;    /* 128px */
 
     /* Layout */
     --grid-gap: var(--space-md);

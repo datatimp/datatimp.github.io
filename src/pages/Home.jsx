@@ -23,8 +23,8 @@ export const Home = () => {
         <div className={styles.page}>
             <Navbar />
             <Hero
-                title={about.data.name}
-                subtitle={about.data.title}
+                title={about.data.title}
+                subtitle={about.data.subtitle}
             />
 
             <main className={styles.grid}>
