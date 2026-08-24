@@ -18,11 +18,6 @@
             l.pathname.slice(0, -1) + decoded + l.hash);
         }
       })();
-      // Portfolio not yet launched at the domain root — bounce root to /resume.
-      // (Runs after the decode above, so real deep links are unaffected.)
-      if (location.hostname === 'datatimp.github.io' && location.pathname === '/') {
-        location.replace('/resume');
-      }
     </script>
   </head>
   <body>

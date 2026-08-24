@@ -2,6 +2,7 @@
 # ─── Meta ──────────────────────────────────────────────────────────────
 title: "Palettary"
 slug: palettary
+draft: true              # unfinished — hidden from the site until content is done
 order: 3
 disciplines:
   - Product

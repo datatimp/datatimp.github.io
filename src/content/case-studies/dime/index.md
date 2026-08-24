@@ -2,6 +2,7 @@
 # ─── Meta (shown in the hero + snapshot bar) ───────────────────────────
 title: "Dime Payments"
 slug: dime
+draft: true              # unfinished — hidden from the site until content is done
 order: 1
 disciplines:            # rendered as the hero subtitle + card tags
   - Product Design
