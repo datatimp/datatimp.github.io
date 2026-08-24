@@ -113,6 +113,36 @@ Every item under `blocks:` needs a `type:`. Here are the types and their fields.
     - ./assets/deck-slide02.webp
 ```
 
+### `typeSpec` — native type-specimen panel
+
+A bordered box (snapshot-grey) with a role header and labelled fields, each value
+rendered in its own face. `color` tints every value; each field's `size` sets that
+value's size. `font` must be a CSS family that's actually loaded.
+
+```yaml
+- type: typeSpec
+  color: "#1b7b01"                 # tints every value
+  fonts:
+    - role: "Logo / Titles"
+      font: "'Fredoka', system-ui, sans-serif"
+      fields:
+        - label: "Typeface"
+          value: "Fredoka"
+          size: "2.5rem"
+        - label: "Weight"
+          value: "Medium"
+          size: "1.5rem"
+        - label: "Glyphs"
+          glyphs: true             # renders an abc…0123 specimen line
+          size: "1.75rem"
+    - role: "Body Text"
+      font: "'Inter', system-ui, sans-serif"
+      fields:
+        - label: "Typeface"
+          value: "Inter"
+          size: "2.5rem"
+```
+
 ### Prose blocks — `overview` / `problem` / `process` / `impact`
 
 Plain heading + body copy. All behave the same; the name is just for your own labelling.

@@ -19,6 +19,15 @@
     src: url('../assets/fonts/playfairdisplay-variable-latin.woff2') format('woff2');
 }
 
+/* Fredoka — variable weight axis (Heartful Gardens display face, type spec) */
+@font-face {
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('../assets/fonts/fredoka-variable-latin.woff2') format('woff2');
+}
+
 /* Space Mono — static 400 + 700 (mono tags) */
 @font-face {
     font-family: 'Space Mono';

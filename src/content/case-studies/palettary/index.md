@@ -9,18 +9,17 @@ disciplines:
   - Web Development
 role: Designer & Builder
 timeline: 2025
-client: Self-initiated
 tools:
+  - Rive
+  - Illustrator
   - Figma
-  - HTML/CSS
-  - JavaScript
 platform: Web
 liveUrl: https://datatimp.github.io/palettary/
 summary: >
-  A pair of web tools for designers working in Figma — importable named
+  A suite of web tools for designers working in Figma — importable named
   color-primitive palettes and a Figma file thumbnail generator.
 card: ./assets/palettary-screenshot.webp
-hero: ./assets/hero.png            # TODO
+hero: ./assets/palettary-hero-img.webp            
 
 # ─── Body blocks ───────────────────────────────────────────────────────
 blocks:

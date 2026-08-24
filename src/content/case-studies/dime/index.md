@@ -18,7 +18,7 @@ summary: >             # 1–3 sentence TL;DR under the hero
   standards, design tokens, and a scalable Figma component library that gave
   developers ready-to-use components and cut redundant design work.
 card: ./assets/dime-screenshot.webp
-hero: ./assets/hero.png            # TODO: drop the money-shot screenshot here
+hero: ./assets/dime-hero-img.webp            
 
 # ─── Body blocks (rendered in order by the CaseStudy template) ─────────
 # block types: overview | problem | process | row | impact | brandDeck

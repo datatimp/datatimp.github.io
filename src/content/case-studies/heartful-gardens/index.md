@@ -55,6 +55,10 @@ blocks:
     radius: true
     border: true
 
+  - type: subsection
+    number: "01b"
+    heading: "Color"
+
   # Hex values below: V04 (Final) uses the real values from the brand deck.
   # V01–V03, V05–V06 are still approximate — replace with exact Figma values.
   - type: brandColors
@@ -83,6 +87,34 @@ blocks:
         logo: ./assets/hg-logomark-v06.svg
         swatches: ["#1F6B2E", "#F4A9B0", "#FFFFFF"]
 
+  - type: subsection
+    number: "01c"
+    heading: "Typography"
+    body: >
+      The display type is Fredoka Medium — a rounded geometric sans that gives the logo and titles their friendly, hand-made warmth. Body copy is set in Inter which stay crisp and legible small, on screen and in print.
+
+  - type: typeSpec
+    color: "#1b7b01"          # HG green — tints every value
+    fonts:
+      - role: "Logo / Titles"
+        font: "'Fredoka', system-ui, sans-serif"
+        fields:
+          - label: "Typeface"
+            value: "Fredoka"
+            size: "5rem"
+          - label: "Weight"
+            value: "Medium"
+            size: "3rem"
+          - label: "Glyphs"
+            glyphs: true
+            size: "3rem"
+      - role: "Body Text"
+        font: "'Inter', system-ui, sans-serif"
+        fields:
+          - label: "Typeface"
+            value: "Inter"
+            size: "2.5rem"
+
   - type: brandDeck
     heading: "Brand guidelines"
     body: >
@@ -101,15 +133,20 @@ blocks:
     number: "02"
     heading: "Site Design"
     problem: >
-      TODO: State the site-design problem (e.g. give a small local business a
-      web presence that feels warm and credible, not templated).
+      Give a small, local garden-and-bakery a web presence as warm and
+      hand-made as the brand itself — credible to first-time visitors, easy to
+      navigate on a phone at the market, and never mistaken for a template.
 
   - type: subsection
     number: "02a"
     heading: "Utility"
     body: >
-      TODO: The practical, get-things-done side of the site — what visitors
-      need to accomplish and how the design supports it. (Screens pending.)
+      Before it could charm anyone, the site had to earn its keep. Visitors
+      needed to find what Heartful Gardens grows and bakes, learn when and where
+      to buy it, and reach the team — quickly, whether at home or standing at the
+      market stall. The layout leads with those essentials and holds a clear
+      hierarchy from phone to desktop, so the practical questions are answered
+      before the personality ever gets a word in. (Screens coming soon.)
 
   - type: subsection
     number: "02b"
@@ -228,5 +265,9 @@ blocks:
   - type: impact
     heading: "Impact"
     body: >
-      TODO: A complete brand system + web presence launched for the client.
+      Heartful Gardens walked away with a complete, cohesive brand — a logo
+      system, color and type, a set of production-ready print pieces, and a warm,
+      animated website, all speaking the same friendly language. What began as a
+      name became a business with a face customers could recognize across the
+      market stall, the counter, and the screen.
 ---

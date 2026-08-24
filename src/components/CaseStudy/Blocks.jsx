@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { AltRow } from './AltRow';
 import { BrandColors } from './BrandColors';
 import { BrandDeck } from './BrandDeck';
+import { TypeSpec } from './TypeSpec';
 import { MediaFrame } from './MediaFrame';
 import styles from './CaseStudy.module.css';
 
@@ -85,6 +86,8 @@ export const Block = ({ block }) => {
             return <BrandColors {...block} />;
         case 'brandDeck':
             return <BrandDeck {...block} />;
+        case 'typeSpec':
+            return <TypeSpec {...block} />;
         case 'gallery':
             return <Gallery {...block} />;
         case 'image':
