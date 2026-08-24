@@ -5,10 +5,10 @@
     padding: var(--space-md) var(--space-lg);
     position: sticky;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.97);
     backdrop-filter: blur(10px);
     z-index: 100;
-    border-bottom: 1px solid var(--color-gray-200);
+    border-bottom: 1px solid var(--color-gray-800);
 }
 
 .logo {
@@ -17,7 +17,7 @@
     font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: -0.05em;
-    color: var(--color-text);
+    color: #fff;
     text-decoration: none;
 }
 
@@ -35,10 +35,64 @@
     font-size: 1rem;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--color-gray-800);
+    color: #fff;
     transition: color 0.2s ease;
 }
 
 .link:hover {
     color: var(--color-primary);
+}
+
+/* Hamburger toggle — hidden on desktop, shown on mobile */
+.toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .toggle {
+        display: block;
+    }
+
+    /* Collapse the links into a dropdown below the (sticky) navbar */
+    .navLinks {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        margin: 0;
+        padding: var(--space-sm) 0;
+        background-color: rgba(0, 0, 0, 0.97); /* match the navbar exactly */
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--color-gray-800);
+    }
+
+    .navLinks.open {
+        display: flex;
+    }
+
+    .navLinks li {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .link {
+        font-size: 1.25rem;
+    }
 }

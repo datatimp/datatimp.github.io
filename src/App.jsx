@@ -1,11 +1,27 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
+import { CaseStudy } from './pages/CaseStudy';
+
+// Reset scroll to the top whenever the route changes.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   return (
-    <Home />
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:slug" element={<CaseStudy />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-

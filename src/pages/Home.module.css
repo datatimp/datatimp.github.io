@@ -6,6 +6,7 @@
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    align-items: start;
     gap: var(--space-md);
     max-width: var(--container-width);
     margin: 0 auto;
@@ -38,7 +39,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/pattern-geometric-01-color-40deg.svg');
+    background-image: url('../assets/images/pattern-geometric-01-color-40deg.svg');
     background-repeat: repeat;
     background-size: 250px 250px;
     opacity: 0;
@@ -74,22 +75,45 @@
 
 .headshotWrapper {
     display: inline-block;
+    position: relative;
     padding-right: 5px;
     padding-bottom: 2px;
 }
 
 .headshot {
+    display: block;
     width: 120px;
+    height: 120px;
     border-radius: 50%;
     border: 2px solid transparent;
     object-fit: cover;
-    box-shadow: 3px 4px var(--color-black-card);
+    /* box-shadow: 3px 4px var(--color-primary); */
     margin-bottom: 1rem;
     transition: box-shadow 0.2s ease;
 }
 
+/* Default-visible headshot, stacked over the base image; fades out on card
+   hover to crossfade to the base (hover) portrait beneath. */
+.headshotTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-bottom: 0;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
+
 .aboutCard:hover .headshot {
-    box-shadow: 3px 4px var(--color-primary);
+    /* box-shadow: 3px 4px var(--color-primary); */
+}
+
+.aboutCard:hover .headshotTop {
+    box-shadow: none;
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .headshotTop { transition: none; }
 }
 
 .aboutCard a {
@@ -100,6 +124,92 @@
 .aboutCardFooter {
     display: flex;
     gap: 1rem;
+}
+
+/* Case-study preview cards (link to routed pages) */
+.caseCard {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background-color: var(--color-neutral-0);
+    border: 1px solid #000;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.caseCard:hover {
+    box-shadow: 8px 8px 0 #000;
+    transform: translate(-2px, -2px);
+}
+
+/* Top media band: a 405px window showing the site screenshot, framed low so
+   the "What We Offer" menu shows (which crops the awkward hero→body transition),
+   faded to 30%. */
+.caseCardTop {
+    position: relative;
+    height: 405px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.caseCardImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0%; /* frame from the top — nav + hero, crops the bottom menu */
+    opacity: 0.6;
+}
+
+/* Inset shadow overlay — sits ABOVE the image (an inset shadow on the <img>
+   itself is painted over by the image and never shows). Below the title bar. */
+.caseCardTop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow: inset 5px 5px 50px rgba(0, 0, 0, 0.05);
+    box-shadow: inset -5px -5px 50p rgba(0, 0, 0, 0.05);
+}
+
+.caseCardTitleBar {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background-color: #000;
+    color: #fff;
+    padding: 0.65rem var(--space-md);
+    font-family: var(--font-sans);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.caseCardBody {
+    padding: var(--space-md);
+}
+
+.caseCardSummary {
+    margin: 0;
+    line-height: 1.55;
+    color: var(--color-text);
+}
+
+.caseCardDivider {
+    border: none;
+    border-top: 1px solid #000;
+    margin: var(--space-md) 0;
+}
+
+.caseCardTags {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-neutral-800);
 }
 
 /* Responsive Mobile Layout */

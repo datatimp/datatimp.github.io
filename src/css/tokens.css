@@ -11,6 +11,9 @@
     --color-neutral-1000: #000000;
     --color-red-500: #ff0000;
     --color-teal-500: #009280;
+    --color-gold-500: #c9a227;
+    --color-olive-500: #525118;
+    --color-red-200: #a46a6a;
 
     /* Color > Semantic */
 
@@ -35,4 +38,5 @@
     /* Layout */
     --grid-gap: var(--space-md);
     --container-width: 1440px;
+    --radius: 0.75rem;   /* 12px — default corner radius */
 }

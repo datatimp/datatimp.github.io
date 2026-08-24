@@ -31,3 +31,6 @@ coverage
 
 # Claude Code
 .claude
+
+# Windows/WSL download metadata
+*:Zone.Identifier

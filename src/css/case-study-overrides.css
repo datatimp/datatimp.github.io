@@ -1,0 +1,29 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Case-study CSS overrides — YOUR direct-access stylesheet.
+
+   Give any `image` or `row` block a `class:` in its index.md frontmatter,
+   then target that class here with plain CSS. Unlike the component styles,
+   these class names are NOT hashed — what you write is what you get, and
+   media queries work exactly as you'd expect.
+
+     index.md:
+       - type: row
+         media: ./assets/hg-logomark-fc.svg
+         class: hg-logo          # ← your handle for this one block
+
+     here:
+       .hg-logo { ... }                       // all screen sizes
+       @media (max-width: 720px) {            // phones only
+         .hg-logo { max-width: 200px; margin-inline: auto; }
+       }
+
+   The class lands on the media frame (the box around the image/Rive).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Heartful Gardens — shrink the logomark on mobile only; desktop untouched. */
+@media (max-width: 720px) {
+    .hg-logo {
+        max-width: 200px;
+        margin-inline: auto;
+    }
+}

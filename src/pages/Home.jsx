@@ -1,42 +1,60 @@
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Hero } from '../components/Hero/Hero';
 import { Card } from '../components/Card/Card';
+import { Footer } from '../components/Footer/Footer';
 import ReactMarkdown from 'react-markdown';
 import { parseMarkdown } from '../utils/parseMarkdown';
+import { caseStudies } from '../content/caseStudies';
 import styles from './Home.module.css';
-import headshot from '../assets/tim-headshot-01c-circle-sm.png';
+import headshot from '../assets/images/tim-headshot-02a-circle-sm.webp';
+import headshotHover from '../assets/images/tim-headshot-01a-circle-sm.webp';
 
-// Import markdown content as raw strings
+// About section content (simple flat frontmatter)
 import aboutRaw from '../content/about.md?raw';
-import project1Raw from '../content/projects/reimagining-finance.md?raw';
-import project2Raw from '../content/projects/urban-mobility.md?raw';
-import project3Raw from '../content/projects/ecommerce-redesign.md?raw';
-
-// Parse markdown files
 const about = parseMarkdown(aboutRaw);
-const projectFiles = [project1Raw, project2Raw, project3Raw]
-    .map(raw => parseMarkdown(raw))
-    .sort((a, b) => a.data.order - b.data.order);
+
+const isResolved = (url) => typeof url === 'string' && !url.startsWith('.');
 
 export const Home = () => {
+    const workRef = useRef(null);
+
+    const scrollToWork = () => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        workRef.current?.scrollIntoView({
+            behavior: reduce ? 'auto' : 'smooth',
+            block: 'start',
+        });
+    };
+
     return (
         <div className={styles.page}>
             <Navbar />
             <Hero
                 title={about.data.title}
                 subtitle={about.data.subtitle}
+                onCtaClick={scrollToWork}
             />
 
-            <main className={styles.grid}>
+            <main className={styles.grid} ref={workRef} style={{ scrollMarginTop: '6rem' }}>
                 <section className={styles.projectColumn}>
-                    {projectFiles.map((project) => (
-                        <Card
-                            key={project.data.title}
-                            title={project.data.title}
-                            footer={`${project.data.category} • ${project.data.year}`}
-                        >
-                            <ReactMarkdown>{project.content}</ReactMarkdown>
-                        </Card>
+                    {caseStudies.map((study) => (
+                        <Link key={study.slug} to={`/${study.slug}`} className={styles.caseCard}>
+                            <div className={styles.caseCardTop}>
+                                {isResolved(study.card) && (
+                                    <img src={study.card} alt="" className={styles.caseCardImg} loading="lazy" />
+                                )}
+                                <div className={styles.caseCardTitleBar}>{study.title}</div>
+                            </div>
+                            <div className={styles.caseCardBody}>
+                                {study.summary && <p className={styles.caseCardSummary}>{study.summary}</p>}
+                                <hr className={styles.caseCardDivider} />
+                                <div className={styles.caseCardTags}>
+                                    {(study.disciplines || []).join('  •  ')}
+                                </div>
+                            </div>
+                        </Link>
                     ))}
                 </section>
 
@@ -54,15 +72,22 @@ export const Home = () => {
                         <div className={styles.patternOverlay}></div>
                         <div className={styles.headshotWrapper}>
                             <img
-                                src={headshot}
+                                src={headshotHover}
                                 alt="Tim Pevey"
                                 className={styles.headshot}
+                            />
+                            <img
+                                src={headshot}
+                                alt=""
+                                aria-hidden="true"
+                                className={`${styles.headshot} ${styles.headshotTop}`}
                             />
                         </div>
                         <ReactMarkdown>{about.content}</ReactMarkdown>
                     </Card>
                 </section>
             </main>
+            <Footer />
         </div>
     );
 };

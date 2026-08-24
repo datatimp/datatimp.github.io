@@ -1,0 +1,37 @@
+/* Self-hosted, subsetted fonts (latin). Vite hashes + bundles these from
+   src/assets/fonts. font-display: swap shows the fallback stack, then swaps. */
+
+/* Inter — variable weight axis (body / UI) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../assets/fonts/inter-variable-latin.woff2') format('woff2');
+}
+
+/* Playfair Display — variable weight axis (display) */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('../assets/fonts/playfairdisplay-variable-latin.woff2') format('woff2');
+}
+
+/* Space Mono — static 400 + 700 (mono tags) */
+@font-face {
+    font-family: 'Space Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/space-mono-400-latin.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Space Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../assets/fonts/space-mono-700-latin.woff2') format('woff2');
+}

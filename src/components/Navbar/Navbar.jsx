@@ -1,7 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Navbar.module.css';
-import { Button } from '../Button/Button';
 
 const DEFAULT_ITEMS = [
     { label: 'Work', href: '#work' },
@@ -10,15 +9,32 @@ const DEFAULT_ITEMS = [
 ];
 
 export const Navbar = ({ items = DEFAULT_ITEMS }) => {
+    const [open, setOpen] = useState(false);
+
     return (
         <nav className={styles.navbar}>
             <a href="/" className={styles.logo}>
                 Tim Pevey
             </a>
-            <ul className={styles.navLinks}>
+
+            <button
+                type="button"
+                className={styles.toggle}
+                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-expanded={open}
+                onClick={() => setOpen((o) => !o)}
+            >
+                {open ? '✕' : '☰'}
+            </button>
+
+            <ul className={`${styles.navLinks} ${open ? styles.open : ''}`}>
                 {items.map((item) => (
                     <li key={item.label}>
-                        <a href={item.href} className={styles.link}>
+                        <a
+                            href={item.href}
+                            className={styles.link}
+                            onClick={() => setOpen(false)}
+                        >
                             {item.label}
                         </a>
                     </li>
@@ -36,4 +52,3 @@ Navbar.propTypes = {
         })
     ),
 };
-

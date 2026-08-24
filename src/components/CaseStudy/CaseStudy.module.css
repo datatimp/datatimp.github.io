@@ -1,0 +1,601 @@
+.page {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+/* ─── Hero (Zero-Negative style: dark section, centered framed screenshot) ─── */
+.hero {
+    background-color: var(--color-neutral-900);
+    color: #fff;
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    text-align: center;
+}
+
+.heroHead {
+    max-width: var(--container-width);
+    margin: 0 auto var(--space-lg);
+}
+
+.heroTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0 0 var(--space-sm);
+}
+
+.heroTags {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.95rem;
+    color: var(--color-neutral-200);
+    margin: 0;
+}
+
+.heroFrame {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* The hero export already has a black frame baked in; this is the only
+   chrome CSS adds — a thin white stroke so it reads on the dark section.
+   Tune --hero-frame-radius to match your baked corner radius. */
+.heroFrame .frameImg {
+    border-radius: var(--hero-frame-radius, 16px);
+    /* 1px (not 0.5px): a sub-pixel spread vanishes on the left/right edges
+       when the centered frame lands on a fractional pixel. */
+    box-shadow: 0 0 0 1px #ffffff;
+}
+
+/* ─── Media frame (plain; frames are baked into the exports) ─── */
+.frame {
+    position: relative;
+    width: 100%;
+}
+
+.frameImg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Opt-in modifiers — set `radius: true` / `border: true` on an image or row
+   block's frontmatter. Reusable anywhere, no per-item CSS needed. */
+.radius {
+    border-radius: var(--radius, 0.75rem);
+}
+
+.border {
+    border: 1px solid var(--color-neutral-200);
+}
+
+.frameRive {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+}
+
+.framePlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 10;
+    background-color: var(--color-neutral-100);
+    border: 1px dashed var(--color-neutral-200);
+    border-radius: 8px;
+    color: var(--color-neutral-800);
+    font-size: 0.85rem;
+}
+
+/* ─── Body ─── */
+.body {
+    /* One knob for every top-level vertical gap — change this, it all reflows. */
+    --stack: calc(var(--space-lg) * 1.5);
+    /* One knob for body copy size — rowText, blockLead, and prose all use it. */
+    --body-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: var(--stack) var(--space-lg) var(--space-xl);
+}
+
+.summary {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1.3;
+    max-width: 40ch;
+    margin: 0 0 var(--stack);
+}
+
+/* ─── Snapshot bar ─── */
+.snapshot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin: 0 0 var(--stack);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* border-top: 1px solid black;
+    border-bottom: 1px solid black; */
+    background:   #f0f3f7;
+    border-radius: 10px;
+}
+
+.snapItem {
+    margin: 0;
+    min-width: 8rem;
+    padding-right: 1rem;
+    border-right: 1px solid black;
+}
+
+.snapItem:last-child {
+    border-right: 0;
+    padding-right: 0; /* drop trailing padding so the group is optically centered */
+}
+
+.snapLabel {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: .075em;
+    font-size: 0.72rem;
+    color: var(--color-neutral-800);
+    margin: 0 0 0.25rem;
+}
+
+.snapValue {
+    font-family: var(--font-mono);
+    margin: 0;
+    font-weight: 400;
+}
+
+.snapValue a {
+    color: var(--color-primary);
+}
+
+/* ─── Prose blocks ─── */
+.prose {
+    max-width: 65ch;
+    /* Match row/lead body copy so overview/problem/process/impact aren't smaller. */
+    font-size: var(--body-size);
+    margin: 0 0 var(--stack);
+    line-height: 1.6;
+}
+
+.blockHeading {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-md);
+}
+
+.blockLead {
+    max-width: 60ch;
+    /* Match row body copy so image/subsection leads aren't smaller than row text. */
+    font-size: var(--body-size);
+    color: var(--color-neutral-800);
+    margin: 0 0 var(--space-md);
+    line-height: 1.6;
+}
+
+/* ─── Section / subsection hierarchy ─── */
+.eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    margin-bottom: var(--space-sm);
+}
+
+.sectionHeader {
+    margin: 0 0 var(--stack);
+    padding-top: var(--stack);
+    border-top: 2px dashed var(--color-text);
+}
+
+.sectionTitleRow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+}
+
+.sectionNumber {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+.sectionTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Problem as a callout — set apart from the body, one accent, not a color block. */
+.sectionProblem {
+    margin-top: var(--stack);
+    max-width: 60ch;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 5px solid var(--color-primary);
+    background: #f0f3f7;
+    border-radius: 0 10px 10px 0;
+}
+
+.sectionProblem .eyebrow {
+    color: var(--color-primary);
+}
+
+.problemText {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2vw, 2.0rem);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.subsection {
+    margin: 0 0 var(--stack);
+}
+
+.subsectionTitleRow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+}
+
+/* Section-style number label (e.g. 01a), the subsection's marker instead of
+   a tick — keeps it in the same header family as the numbered sections. */
+.subsectionNumber {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    color: var(--color-primary);
+}
+
+.subsectionTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* ─── Alternating media/text rows ─── */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    /* Top-align so a short image doesn't float in the middle of long text. */
+    align-items: start;
+    /* Media pieces get extra breathing room beyond the global stack. */
+    margin: 0 0 var(--space-xl);
+}
+
+.rowMediaLeft .rowMedia { order: 1; }
+.rowMediaLeft .rowText { order: 2; }
+.rowMediaRight .rowMedia { order: 2; }
+.rowMediaRight .rowText { order: 1; }
+
+/* Row headings are the same level as block headings (both are content blocks) —
+   match their treatment so siblings look consistent. */
+.rowHeading {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-sm);
+}
+
+
+.rowText {
+    line-height: 1.55;
+    font-size: var(--body-size);
+}
+
+/* Media Title — the 4th heading tier, one step below Section Header.
+   Opt in with `mediaTitle: true` on a row/image; a compact label for the
+   media pieces (business cards, flyer, etc.). No tick — keeps it quiet. */
+.mediaTitle {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--space-sm);
+}
+
+/* ─── Brand colors (native swatches) ─── */
+.brandColors,
+.brandDeck,
+.gallery {
+    margin: 0 0 var(--stack);
+}
+
+.brandGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3-up × 2 rows for symmetry */
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.brandCell {
+    position: relative;
+    margin: 0;
+    padding: var(--space-md);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+    background-color: var(--color-neutral-0);
+    text-align: center;
+}
+
+.brandChosen {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.chosenTag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background-color: var(--color-primary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+}
+
+.brandLogo {
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    margin: 0 auto var(--space-sm);
+}
+
+.brandLabel {
+    font-weight: 600;
+    margin: 0 0 var(--space-sm);
+}
+
+.swatchRow {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+}
+
+.swatchChip {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-neutral-200);
+}
+
+.swatchHex {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-neutral-800);
+}
+
+/* ─── Brand deck (thumbnail + modal carousel) ─── */
+.deckThumb {
+    display: block;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    max-width: 760px;                    /* larger preview */
+    margin: var(--space-md) auto 0;      /* centered in the column */
+}
+
+.deckThumbImg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.deckThumbLabel {
+    display: block;
+    padding: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.modalBody {
+    position: relative;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.modalImg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.modalClose {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    font-size: 2rem;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modalNav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+    color: #fff;
+}
+
+.modalNav button {
+    font-size: 2rem;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.modalCount {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+/* ─── Image block (e.g. logo iterations composite) ─── */
+.imageBlock {
+    margin: 0 0 var(--stack);
+}
+
+.imageBlockFrame {
+    max-width: 720px;
+    margin: var(--space-md) auto 0;
+}
+
+/* ─── Gallery (motion showcase) ─── */
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+/* Uniform neutral cards so a collection (e.g. print mockups) reads as one set. */
+.galleryItem {
+    margin: 0;
+    padding: var(--space-md);
+    background-color: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+}
+
+.galleryItem .frameRive {
+    aspect-ratio: 16 / 10;
+}
+
+.galleryCaption {
+    margin-top: var(--space-sm);
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--color-neutral-800);
+}
+
+/* ─── Back link / not found ─── */
+.backLink {
+    display: inline-block;
+    margin-top: var(--space-md);
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.notFound {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 720px) {
+    /* Issue 2: the 8rem top padding is huge on mobile — tighten it. */
+    .hero {
+        padding: var(--space-lg) var(--space-md) var(--space-md);
+    }
+    /* Issue 3: a fixed 16px radius over-rounds the scaled-down image on mobile
+       and cuts the baked frame's corners; shrink it to roughly match. */
+    .heroFrame .frameImg {
+        border-radius: 2px;
+    }
+    /* Tighten side gutters on mobile so text columns aren't crushed. */
+    .body {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+    }
+    .sectionProblem {
+        padding: var(--space-sm);
+    }
+    /* Playfair's 1.5rem min is too wide for a phone column — step it down. */
+    .summary,
+    .problemText {
+        font-size: 1.25rem;
+    }
+    .row {
+        grid-template-columns: 1fr;
+    }
+    .rowMediaLeft .rowMedia,
+    .rowMediaLeft .rowText,
+    .rowMediaRight .rowMedia,
+    .rowMediaRight .rowText {
+        order: initial;
+    }
+    .brandGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Snapshot stacks; the divider flips from right to bottom. */
+    .snapshot {
+        flex-direction: column;
+    }
+    .snapItem {
+        padding-right: 0;
+        padding-bottom: var(--space-sm);
+        border-right: 0;
+        border-bottom: 1px solid black;
+    }
+    .snapItem:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+@media (max-width: 460px) {
+    .brandGrid {
+        grid-template-columns: 1fr;
+    }
+}
