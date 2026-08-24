@@ -4,10 +4,23 @@ title:
 subtitle: Product Designer crafting clean, user-centric interfaces.
 linkedin: https://www.linkedin.com/in/timothypevey/
 github: https://www.github.com/datatimp
+tools:
+  - Illustrator
+  - Figma
+  - Rive
+  - InDesign
+skills:
+  - Print
+  - Product Design
+  - UI Design
+  - Branding
+  - Web Design
+  - Design Systems
+  - Motion
 ---
 
-I'm a Product and UI designer focused on simplicity, clarity, and systems thinking. I care about experiences that don't just look good but hold up in use — functional, accessible, and alive with motion.
+I'm a Product and UI designer focused on simplicity, clarity, and systems thinking — experiences that don't just look good, but are functional, accessible, and alive with motion.
 
-With a background in both design and front-end development, I bridge the gap between aesthetics and implementation, so my work is beautiful and feasible and performant.
+Front-end fluency means I understand how interfaces get built, not just how they look, so I can work closely with engineers.
 
-When I'm not designing, I'm building interactive animations in Rive, digging into design systems, or contributing to open-source design projects.
+When I'm not designing, I'm building interactive animations in Rive, or contributing to open-source design projects.

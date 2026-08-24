@@ -51,7 +51,9 @@ export const Home = () => {
                                 {study.summary && <p className={styles.caseCardSummary}>{study.summary}</p>}
                                 <hr className={styles.caseCardDivider} />
                                 <div className={styles.caseCardTags}>
-                                    {(study.disciplines || []).join('  •  ')}
+                                    {(study.disciplines || []).map((d) => (
+                                        <span key={d} className={styles.caseCardChip}>{d}</span>
+                                    ))}
                                 </div>
                             </div>
                         </Link>
@@ -84,6 +86,19 @@ export const Home = () => {
                             />
                         </div>
                         <ReactMarkdown>{about.content}</ReactMarkdown>
+                        {[['Tools', about.data.tools], ['Skills', about.data.skills]].map(
+                            ([label, items]) =>
+                                items?.length ? (
+                                    <div key={label} className={styles.aboutChipGroup}>
+                                        <span className={styles.aboutChipLabel}>{label}</span>
+                                        <div className={styles.aboutChips}>
+                                            {items.map((it) => (
+                                                <span key={it} className={styles.aboutChip}>{it}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : null,
+                        )}
                     </Card>
                 </section>
             </main>

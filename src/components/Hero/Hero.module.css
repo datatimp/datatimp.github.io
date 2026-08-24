@@ -34,7 +34,8 @@
 
 .subtitle {
     font-family: var(--font-display);
-    font-size: clamp(3.5rem, 3vw, 5rem);
+    /* Fluid: ~2.25rem on phones → 5rem on desktop (old 3vw never scaled). */
+    font-size: clamp(2.25rem, 8vw, 5rem);
     font-weight: 600;
     color: var(--color-gray-800);
     max-width: 800px;
@@ -45,4 +46,23 @@
 .actions {
     display: flex;
     gap: var(--space-sm);
+}
+
+/* Mobile: stack the CTAs and let each fill the width so they match. */
+@media (max-width: 768px) {
+    /* Shorter hero — the big space-xl padding wastes vertical space on phones
+       (the Rive gradient fills the hero, so this shrinks the canvas too). */
+    .hero {
+        padding: var(--space-lg) var(--space-md);
+    }
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .actions > a {
+        display: block;
+    }
+    .actions button {
+        width: 100%;
+    }
 }

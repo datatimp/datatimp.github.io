@@ -48,7 +48,7 @@
 }
 
 .aboutCard:hover .patternOverlay {
-    opacity: 0.1;
+    opacity: 0.07;
 }
 
 /* For the gradient border animation */
@@ -63,7 +63,7 @@
     color: #000000;
     box-shadow: 8px 8px 0px var(--color-primary);
     border-image: linear-gradient(var(--gradient-angle), green, yellow, white,  rgb(245, 120, 245), rgb(61, 141, 215)) 30;
-    border-width: 1px;
+    border-width: 1.5px;
     border-style: solid;
     transition: all 0.5s ease;
     animation: rotate-gradient 8s linear infinite;
@@ -207,9 +207,53 @@
 }
 
 .caseCardTags {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* About-card Tools/Skills chip groups. The card flips dark→light on hover, so
+   these adapt via currentColor (white-on-dark by default, black-on-white on hover). */
+.aboutChipGroup {
+    margin-top: var(--space-md);
+}
+
+.aboutChipLabel {
+    display: block;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0.65;
+    margin-bottom: var(--space-sm);
+}
+
+.aboutChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.aboutChip {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: inherit;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid color-mix(in srgb, currentColor 50%, transparent);
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+/* Discipline chips — subtle bordered pills (replaces the bullet-joined list). */
+.caseCardChip {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
     color: var(--color-neutral-800);
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-neutral-800);
+    border-radius: 6px;
+    white-space: nowrap;
 }
 
 /* Responsive Mobile Layout */
@@ -217,5 +261,16 @@
     .grid {
         grid-template-columns: 1fr;
         padding: 0 var(--space-sm) var(--space-lg);
+    }
+    /* About Me leads on mobile (on desktop it's the side column, always visible;
+       stacked, it would otherwise sink below the case studies). */
+    .aboutColumn {
+        order: -1;
+        margin-bottom: var(--space-md);
+    }
+    /* No :hover on touch — reveal the real photo (base layer) instead of the
+       illustration, so mobile visitors see the actual face. */
+    .headshotTop {
+        opacity: 0;
     }
 }

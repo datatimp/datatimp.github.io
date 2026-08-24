@@ -18,7 +18,7 @@ export const Hero = ({ title, subtitle, onCtaClick = undefined }) => {
         <section className={styles.hero}>
             <RiveComponent className={styles.riveBg} />
             <div className={styles.inner}>
-                <h1 className={styles.title}>{title}</h1>
+                {title && <h1 className={styles.title}>{title}</h1>}
                 <p className={styles.subtitle}>{subtitle}</p>
                 <div className={styles.actions}>
                     <Button label="View Work" variant="primary" onClick={onCtaClick} />
@@ -30,7 +30,7 @@ export const Hero = ({ title, subtitle, onCtaClick = undefined }) => {
 };
 
 Hero.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     subtitle: PropTypes.string.isRequired,
     onCtaClick: PropTypes.func,
 };

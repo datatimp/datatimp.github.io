@@ -1,6 +1,9 @@
+import { load as yamlLoad } from 'js-yaml';
+
 /**
- * Simple browser-friendly frontmatter parser
- * Parses YAML frontmatter from markdown strings
+ * Frontmatter parser: splits `---` YAML frontmatter from the markdown body and
+ * parses the frontmatter with js-yaml, so lists (tools:, skills:) and nested
+ * values work — not just flat `key: value` pairs. Matches the case-study loader.
  */
 export function parseMarkdown(raw) {
     const frontmatterRegex = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
@@ -11,29 +14,5 @@ export function parseMarkdown(raw) {
     }
 
     const [, frontmatter, content] = match;
-    const data = {};
-
-    // Parse simple YAML key: value pairs
-    frontmatter.split('\n').forEach(line => {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex > 0) {
-            const key = line.slice(0, colonIndex).trim();
-            let value = line.slice(colonIndex + 1).trim();
-
-            // Remove quotes if present
-            if ((value.startsWith('"') && value.endsWith('"')) ||
-                (value.startsWith("'") && value.endsWith("'"))) {
-                value = value.slice(1, -1);
-            }
-
-            // Convert numbers
-            if (!isNaN(value) && value !== '') {
-                value = Number(value);
-            }
-
-            data[key] = value;
-        }
-    });
-
-    return { data, content: content.trim() };
+    return { data: yamlLoad(frontmatter) || {}, content: content.trim() };
 }
