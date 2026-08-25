@@ -143,6 +143,17 @@ value's size. `font` must be a CSS family that's actually loaded.
           size: "2.5rem"
 ```
 
+### `phone` — media inside an iPhone mockup
+
+Shows a screen recording (animated AVIF works great — auto-loops, Safari-safe) or
+image inside a photoreal iPhone frame. Media should be iPhone-screen aspect (~19.5:9).
+
+```yaml
+- type: phone
+  media: ./assets/find-us-ios.avif
+  alt: "What the recording shows"
+```
+
 ### Prose blocks — `overview` / `problem` / `process` / `impact`
 
 Plain heading + body copy. All behave the same; the name is just for your own labelling.

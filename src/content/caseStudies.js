@@ -18,7 +18,7 @@ const rawFiles = import.meta.glob('./case-studies/*/index.md', {
 
 // Every colocated asset, resolved to its hashed/bundled URL.
 const assetUrls = import.meta.glob(
-    './case-studies/*/assets/**/*.{png,jpg,jpeg,webp,svg,gif,riv}',
+    './case-studies/*/assets/**/*.{png,jpg,jpeg,webp,svg,gif,riv,avif,mp4,webm}',
     { eager: true, query: '?url', import: 'default' },
 );
 

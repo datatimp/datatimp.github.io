@@ -5,7 +5,7 @@ import styles from './Navbar.module.css';
 const DEFAULT_ITEMS = [
     { label: 'Work', href: '#work' },
     { label: 'Resume', href: 'https://datatimp.github.io/resume' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Contact', href: 'mailto:datatimp@gmail.com' },
 ];
 
 export const Navbar = ({ items = DEFAULT_ITEMS }) => {

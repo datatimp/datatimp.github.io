@@ -146,7 +146,13 @@ blocks:
       to buy it, and reach the team — quickly, whether at home or standing at the
       market stall. The layout leads with those essentials and holds a clear
       hierarchy from phone to desktop, so the practical questions are answered
-      before the personality ever gets a word in. (Screens coming soon.)
+      before the personality ever gets a word in.
+
+  - type: phone
+    media: ./assets/find-us-ios.avif
+    screenBg: "#e0edd3"    # site nav colour, fills the strip behind the island
+    statusHeight: "9%"     # push the sticky nav down clear of the island
+    alt: "Heartful Gardens 'Find Us' button opening the location in Apple Maps on iPhone"
 
   - type: subsection
     number: "02b"
@@ -164,12 +170,7 @@ blocks:
     heading: "Animated hero graphic"
     mediaTitle: true
     body: >
-      The hero graphic started as custom line art drawn in Illustrator, then
-      rebuilt in Rive so it could come alive on page load instead of sitting
-      static. A state machine sequences the reveal, and vector feathering — which
-      only renders on Rive's WebGL2 runtime — gives the edges their soft,
-      hand-drawn warmth. Building it as live vector keeps it crisp at any size and
-      ships far lighter than an exported video ever could.
+      The hero graphic is custom line art drawn in Illustrator, then rebuilt in Rive so it could come alive on page load. A state machine sequences the reveal, and vector feathering gives the edges their soft, hand-drawn warmth. Two artboards are present with aspect ratio for desktop or mobile. Building it as live vector keeps it crisp at any size and ships lighter than an exported video.
     border: true
     radius: true
     background: white

@@ -78,6 +78,46 @@
     aspect-ratio: 16 / 10;
 }
 
+/* ─── Phone mockup (media behind a transparent-screen iPhone frame) ─── */
+.phone {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto var(--stack);
+    aspect-ratio: 1046 / 2158;   /* the mockup PNG's dimensions */
+}
+
+/* The screen cutout, clipped to rounded corners so nothing escapes the frame.
+   Its background shows behind the Dynamic Island (set via screenBg). Tune the
+   border-radius if the corners leak (too small) or gap (too large). */
+.phoneScreenInner {
+    position: absolute;
+    left: 3.73%;
+    top: 1.48%;
+    width: 92.35%;
+    height: 97.03%;
+    overflow: hidden;
+    border-radius: 12% / 5.5%;
+    z-index: 0;
+}
+
+/* Media fills the screen width; `top` (inline, = statusHeight) pushes it below
+   the island. Natural height ≈ screen height, so the bottom clips off. */
+.phoneScreen {
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+
+.phoneFrame {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
 .framePlaceholder {
     display: flex;
     align-items: center;

@@ -4,6 +4,7 @@ import { AltRow } from './AltRow';
 import { BrandColors } from './BrandColors';
 import { BrandDeck } from './BrandDeck';
 import { TypeSpec } from './TypeSpec';
+import { Phone } from './Phone';
 import { MediaFrame } from './MediaFrame';
 import styles from './CaseStudy.module.css';
 
@@ -88,6 +89,8 @@ export const Block = ({ block }) => {
             return <BrandDeck {...block} />;
         case 'typeSpec':
             return <TypeSpec {...block} />;
+        case 'phone':
+            return <Phone {...block} />;
         case 'gallery':
             return <Gallery {...block} />;
         case 'image':

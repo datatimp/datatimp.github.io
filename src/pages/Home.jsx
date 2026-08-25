@@ -37,7 +37,7 @@ export const Home = () => {
                 onCtaClick={scrollToWork}
             />
 
-            <main className={styles.grid} ref={workRef} style={{ scrollMarginTop: '6rem' }}>
+            <main id="work" className={styles.grid} ref={workRef} style={{ scrollMarginTop: '6rem' }}>
                 <section className={styles.projectColumn}>
                     {caseStudies.map((study) => (
                         <Link key={study.slug} to={`/${study.slug}`} className={styles.caseCard}>
