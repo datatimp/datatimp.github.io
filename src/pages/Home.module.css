@@ -47,8 +47,12 @@
     transition: opacity 0.2s ease;
 }
 
-.aboutCard:hover .patternOverlay {
-    opacity: 0.07;
+/* Hover visuals only on true hover pointers — a tap on a touch screen must NOT
+   latch the card into its hover state (mobile shows the flat, resting look). */
+@media (hover: hover) and (pointer: fine) {
+    .aboutCard:hover .patternOverlay {
+        opacity: 0.07;
+    }
 }
 
 /* For the gradient border animation */
@@ -58,15 +62,17 @@
     inherits: false;
 }
 
-.aboutCard:hover {
-    background-color: #ffffff;
-    color: #000000;
-    box-shadow: 8px 8px 0px var(--color-primary);
-    border-image: linear-gradient(var(--gradient-angle), green, yellow, white,  rgb(245, 120, 245), rgb(61, 141, 215)) 30;
-    border-width: 1.5px;
-    border-style: solid;
-    transition: all 0.5s ease;
-    animation: rotate-gradient 8s linear infinite;
+@media (hover: hover) and (pointer: fine) {
+    .aboutCard:hover {
+        background-color: #ffffff;
+        color: #000000;
+        box-shadow: 8px 8px 0px var(--color-primary);
+        border-image: linear-gradient(var(--gradient-angle), green, yellow, white,  rgb(245, 120, 245), rgb(61, 141, 215)) 30;
+        border-width: 1.5px;
+        border-style: solid;
+        transition: all 0.5s ease;
+        animation: rotate-gradient 8s linear infinite;
+    }
 }
 
 @keyframes rotate-gradient {
@@ -103,13 +109,11 @@
     transition: opacity 0.35s ease;
 }
 
-.aboutCard:hover .headshot {
-    /* box-shadow: 3px 4px var(--color-primary); */
-}
-
-.aboutCard:hover .headshotTop {
-    box-shadow: none;
-    opacity: 0;
+@media (hover: hover) and (pointer: fine) {
+    .aboutCard:hover .headshotTop {
+        box-shadow: none;
+        opacity: 0;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -140,6 +144,12 @@
 .caseCard:hover {
     box-shadow: 8px 8px 0 #000;
     transform: translate(-2px, -2px);
+}
+
+/* Work-section label. Hidden on desktop (the columns already read as "work");
+   shown on mobile where the cards would otherwise trail unlabeled off About Me. */
+.workHeading {
+    display: none;
 }
 
 /* Top media band: a 405px window showing the site screenshot, framed low so
@@ -272,5 +282,24 @@
        illustration, so mobile visitors see the actual face. */
     .headshotTop {
         opacity: 0;
+    }
+    /* The screenshot is a WIDE 1.79:1 desktop capture. In a narrow phone card,
+       object-fit:cover fits it by HEIGHT — so the whole page (incl. the empty
+       band + "What We Offer") showed, just shrunk; nothing ever cropped. Give
+       the band an aspect-ratio WIDER than 1.79 so cover fits by WIDTH instead
+       and crops the BOTTOM off, keeping nav + hero. Lower the first number to
+       show more, raise it to crop tighter. */
+    .caseCardTop {
+        height: auto;
+        aspect-ratio: 2.5 / 1;
+    }
+    /* Name the work section on mobile so it isn't mistaken for more About Me. */
+    .workHeading {
+        display: block;
+        font-family: var(--font-sans);
+        font-weight: 800;
+        font-size: 1.75rem;
+        letter-spacing: -0.02em;
+        margin: 0 0 var(--space-sm);
     }
 }

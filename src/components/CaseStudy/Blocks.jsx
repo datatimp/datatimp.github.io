@@ -5,6 +5,7 @@ import { BrandColors } from './BrandColors';
 import { BrandDeck } from './BrandDeck';
 import { TypeSpec } from './TypeSpec';
 import { Phone } from './Phone';
+import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
 import styles from './CaseStudy.module.css';
 
@@ -91,6 +92,8 @@ export const Block = ({ block }) => {
             return <TypeSpec {...block} />;
         case 'phone':
             return <Phone {...block} />;
+        case 'laptop':
+            return <Laptop {...block} />;
         case 'gallery':
             return <Gallery {...block} />;
         case 'image':

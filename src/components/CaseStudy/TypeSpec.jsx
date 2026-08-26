@@ -21,7 +21,9 @@ export const TypeSpec = ({ fonts = [], color }) => (
                         {field.label && <span className={styles.typeSpecFieldLabel}>{field.label}</span>}
                         <span
                             className={field.glyphs ? styles.typeSpecGlyphs : styles.typeSpecValue}
-                            style={{ fontFamily: f.font, color, fontSize: field.size }}
+                            /* `size` is the DESKTOP intent; CSS clamps it fluidly so it
+                               scales down and never overspills the panel on mobile. */
+                            style={{ fontFamily: f.font, color, '--type-size': field.size }}
                         >
                             {field.glyphs ? GLYPHS : field.value}
                         </span>

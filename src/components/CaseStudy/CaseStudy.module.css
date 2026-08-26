@@ -79,11 +79,33 @@
 }
 
 /* ─── Phone mockup (media behind a transparent-screen iPhone frame) ─── */
+/* Kept centered (not in the alternating print layout) to maximise visibility.
+   Optional caption above explains why the demo is here. */
+.phoneBlock {
+    margin: 0 auto var(--stack);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.phoneCaption {
+    max-width: 48ch;
+    margin: 0 auto var(--space-md);
+}
+
+.phoneCaption p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+    margin: 0;
+}
+
 .phone {
     position: relative;
     width: 100%;
     max-width: 300px;
-    margin: 0 auto var(--stack);
+    margin: 0 auto;
     aspect-ratio: 1046 / 2158;   /* the mockup PNG's dimensions */
 }
 
@@ -116,6 +138,68 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+}
+
+/* ─── Laptop mockup (looping mp4 inside a MacBook Pro frame) ─── */
+/* Centered like the phone. The video sits OVER the PNG, clipped to the screen
+   cutout, so it works whether the mockup's screen is transparent or white. */
+.laptopBlock {
+    margin: 0 auto var(--stack);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.laptopCaption {
+    max-width: 60ch;
+    margin: 0 auto var(--space-md);
+}
+
+.laptopCaption p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+    margin: 0;
+}
+
+.laptop {
+    position: relative;
+    width: 100%;
+    max-width: 620px;            /* SIZE KNOB — keep the demo modest, not dominating */
+    margin: 0 auto;
+    aspect-ratio: 2500 / 1419;   /* the mockup PNG's dimensions */
+}
+
+/* Frame sits ON TOP; its opaque bezel masks the video's edges through the
+   transparent screen cutout. */
+.laptopFrame {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* The video window, BEHIND the frame. Bounds measured from the PNG's transparent
+   cutout (left 11.64% / top 5.57% / 76.72% × 84.36%), bled ~0.4% under the bezel
+   on every edge so there's no seam. Nudge these if it ever drifts. */
+.laptopScreenInner {
+    position: absolute;
+    left: 11.2%;
+    top: 5.1%;
+    width: 77.6%;
+    height: 85.2%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.laptopScreen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* cutout is 1.602:1 — a matching recording fills it exactly */
 }
 
 .framePlaceholder {
@@ -156,8 +240,9 @@
     justify-content: center;
     gap: var(--space-sm);
     margin: 0 0 var(--stack);
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /* Horizontal padding so the items never touch the card edges (was missing —
+       fine when centered on desktop, but flush-left once stacked on mobile). */
+    padding: 20px var(--space-md);
     /* border-top: 1px solid black;
     border-bottom: 1px solid black; */
     background:   #f0f3f7;
@@ -322,17 +407,55 @@
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--space-lg);
+    /* Gap between the title and its body copy within the text column. */
+    row-gap: var(--space-sm);
     /* Top-align so a short image doesn't float in the middle of long text. */
     align-items: start;
     /* Media pieces get extra breathing room beyond the global stack. */
     margin: 0 0 var(--space-xl);
 }
 
-.rowMediaLeft .rowMedia { order: 1; }
-.rowMediaLeft .rowText { order: 2; }
-.rowMediaRight .rowMedia { order: 2; }
-.rowMediaRight .rowText { order: 1; }
+/* Title sits above the body in the text column; the media spans both rows on
+   the other side. On mobile these areas collapse to a single title → media →
+   body stack (see the responsive block) so each row reads as one grouped unit. */
+.rowMediaRight { grid-template-areas: "heading media" "body media"; }
+.rowMediaLeft  { grid-template-areas: "media heading" "media body"; }
+.rowHeadingEl  { grid-area: heading; margin-bottom: 0; }
+.rowMedia      { grid-area: media; position: relative; } /* anchor for the click hint */
+.rowText       { grid-area: body; }
+
+/* Friendly hand-lettered "click me" mark, tucked into an upper corner of a live
+   Rive piece (opt in with `hint:` on the row). Peeks above the frame; corners
+   alternate row-to-row. Decorative only — pointer-events off so it never blocks. */
+.clickHint {
+    position: absolute;
+    z-index: 3;
+    top: clamp(-2.25rem, -3vw, -1.25rem);
+    width: clamp(60px, 9vw, 92px);
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.15));
+}
+.clickHintLeft  { left: clamp(-1.25rem, -2vw, -0.5rem); transform: rotate(-9deg); }
+.clickHintRight { right: clamp(-1.25rem, -2vw, -0.5rem); transform: rotate(9deg); }
+
+/* Body is its own grid item now — strip the leading/trailing markdown margins
+   so the row-gap is the only thing setting the title→body spacing. */
+.rowText > :first-child { margin-top: 0; }
+.rowText > :last-child { margin-bottom: 0; }
+
+/* Inline "see it up close" trigger inside body copy — looks like a link. */
+.zoomLink {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 /* Row headings are the same level as block headings (both are content blocks) —
    match their treatment so siblings look consistent. */
@@ -405,18 +528,22 @@
     color: var(--color-neutral-800);
 }
 
-/* Value, rendered in its own face. Default size knob here; override per-field
-   with `size:` in the markdown. */
+/* Value, rendered in its own face. `--type-size` (from the markdown `size:`) is
+   the desktop ceiling; the clamp scales it with the viewport and floors it so it
+   stays legible — and it can't overspill the panel. */
 .typeSpecValue {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 13vw, var(--type-size, 2rem));
     font-weight: 500;
     line-height: 1.1;
+    max-width: 100%;
+    overflow-wrap: anywhere;   /* a long single value breaks instead of overflowing */
 }
 
 .typeSpecGlyphs {
-    font-size: 1.75rem;
+    font-size: clamp(1.25rem, 9vw, var(--type-size, 1.75rem));
     line-height: 1.3;
     word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .brandGrid {
@@ -666,17 +793,40 @@
     .problemText {
         font-size: 1.25rem;
     }
+    /* Every top-level block gap keys off --stack; the desktop value (~96px) is
+       far too airy on a phone. One knob tightens the whole vertical rhythm. */
+    .body {
+        --stack: var(--space-md);
+    }
+    /* Rows and subsections use their own hardcoded gaps — bring them in too. */
+    .row {
+        margin-bottom: var(--space-lg);
+    }
+    .subsection {
+        margin-bottom: var(--space-md);
+    }
+    /* Close the gap between the section number (01) and its title. */
+    .sectionTitleRow {
+        gap: var(--space-sm);
+    }
+    /* Collapse each row to one title → media → body stack (both sides), so the
+       heading, mockup, and copy read as a single grouped unit on mobile. */
     .row {
         grid-template-columns: 1fr;
+        grid-template-rows: none;
     }
-    .rowMediaLeft .rowMedia,
-    .rowMediaLeft .rowText,
-    .rowMediaRight .rowMedia,
-    .rowMediaRight .rowText {
-        order: initial;
+    .rowMediaLeft,
+    .rowMediaRight {
+        grid-template-areas: "heading" "media" "body";
     }
     .brandGrid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    /* The 64px panel padding eats a phone's width — tighten it so the specimen
+       has room and the sample type isn't crushed. */
+    .typeSpec {
+        padding: var(--space-md);
+        gap: var(--space-md);
     }
 
     /* Snapshot stacks; the divider flips from right to bottom. */

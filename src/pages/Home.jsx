@@ -37,8 +37,12 @@ export const Home = () => {
                 onCtaClick={scrollToWork}
             />
 
-            <main id="work" className={styles.grid} ref={workRef} style={{ scrollMarginTop: '6rem' }}>
-                <section className={styles.projectColumn}>
+            <main id="work" className={styles.grid}>
+                <section className={styles.projectColumn} ref={workRef} style={{ scrollMarginTop: '6rem' }}>
+                    {/* Mobile-only label: on desktop the two-column layout groups the
+                        work visually, but stacked under About Me it needs naming so
+                        visitors know it's the portfolio and the cards are clickable. */}
+                    <h2 className={styles.workHeading}>Selected Work</h2>
                     {caseStudies.map((study) => (
                         <Link key={study.slug} to={`/${study.slug}`} className={styles.caseCard}>
                             <div className={styles.caseCardTop}>

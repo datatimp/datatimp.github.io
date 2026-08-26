@@ -148,11 +148,28 @@ blocks:
       hierarchy from phone to desktop, so the practical questions are answered
       before the personality ever gets a word in.
 
+  - type: laptop
+    side: left
+    media: ./assets/vid-offer-720.mp4
+    heading: "Products Front & Center"
+    alt: "Screen recording of the Heartful Gardens 'What We Offer' product section on desktop"
+    body: >
+      The moment a visitor scrolls past the hero, the product lineup takes over —
+      what Heartful Gardens grows and bakes, each item with a clear name, price,
+      and photo. It's the first thing the site has to answer, so it leads.
+
   - type: phone
+    side: right
     media: ./assets/find-us-ios.avif
-    screenBg: "#e0edd3"    # site nav colour, fills the strip behind the island
+    screenBg: "#faf9f0"    # fills the strip behind the Dynamic Island (was #e0edd3)
     statusHeight: "9%"     # push the sticky nav down clear of the island
     alt: "Heartful Gardens 'Find Us' button opening the location in Apple Maps on iPhone"
+    heading: "Find Us, in one tap"
+    body: >
+      The whole site earns its keep at the market stall. The "Find Us" button
+      deep-links straight into the phone's native maps app for turn-by-turn
+      directions — no address to copy, no pinch-and-zoom. Shown live on device
+      because that's where it matters.
 
   - type: subsection
     number: "02b"
@@ -169,6 +186,7 @@ blocks:
       artboard: "Desktop"
     heading: "Animated hero graphic"
     mediaTitle: true
+    hint: right
     body: >
       The hero graphic is custom line art drawn in Illustrator, then rebuilt in Rive so it could come alive on page load. A state machine sequences the reveal, and vector feathering gives the edges their soft, hand-drawn warmth. Two artboards are present with aspect ratio for desktop or mobile. Building it as live vector keeps it crisp at any size and ships lighter than an exported video.
     border: true
@@ -197,6 +215,7 @@ blocks:
       stateMachines: "State Machine 1"
     heading: "Interactive CTA button"
     mediaTitle: true
+    hint: left
     body: >
       The call-to-action button responds to the visitor: a hover state lifts and
       warms it, and a click state gives a satisfying press before the page reacts.
@@ -237,8 +256,11 @@ blocks:
     media: ./assets/hg-flyer-mockup.webp
     heading: "Flyer"
     mediaTitle: true
+    zoom:
+      - ./assets/whysourdough-1.webp
+      - ./assets/whysourdough-2.webp
     body: >
-      A full-color, front and back, 5x7 flyer was designed and printed as an educational and promotional tool. Conveying the health benefits of sourdough bread was important the business owners, yet the data density needed to be paired with a scannable layout.
+      A full-color, front and back, 5x7 flyer was designed and printed as an educational and promotional tool. Conveying the health benefits of sourdough bread was important the business owners, yet the data density needed to be paired with a scannable layout. [See the flyer up close](#zoom).
     border: true
     radius: true
 
@@ -260,6 +282,18 @@ blocks:
     mediaTitle: true
     body: >
       Certain farmer's markets required identification for staff and volunteers. A badge with logo was a simple solution to that problem.
+    border: true
+    radius: true
+
+  - type: row
+    side: right
+    media: ./assets/hg-banner-mockup.webp
+    heading: "Banner"
+    mediaTitle: true
+    body: >
+      A large-format banner anchored the market stall — the logo and brand
+      colors scaled up to read from across the lot, prepped as a production-ready
+      file the client could hand straight to a wide-format printer.
     border: true
     radius: true
 
