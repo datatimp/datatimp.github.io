@@ -204,10 +204,13 @@
     padding: var(--space-md);
 }
 
-.caseCardSummary {
+/* Card logline — a short "what it is / who for" line, distinct from the case
+   study's own summary (which no longer appears on the card). */
+.caseCardTagline {
     margin: 0;
-    line-height: 1.55;
-    color: var(--color-text);
+    line-height: 1.4;
+    font-size: 2rem;
+    color: var(--color-neutral-800);
 }
 
 .caseCardDivider {
@@ -302,4 +305,8 @@
         letter-spacing: -0.02em;
         margin: 0 0 var(--space-sm);
     }
+
+    .caseCardTagline {
+    font-size: 1.5rem;
+}
 }

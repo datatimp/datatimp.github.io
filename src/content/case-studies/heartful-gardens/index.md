@@ -19,6 +19,7 @@ summary: >
   Heartful Gardens, a small-batch garden & bakery needed brand identity, web presence, and print materials. Deliverables included a  logo system, color decisions, marketing collateral, and a hand-built site featuring custom animated Rive graphics.
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
+tagline: "Brand & site for a small-batch garden bakery"   # short logline on the home card (not the summary)
 
 # ─── Body blocks ───────────────────────────────────────────────────────
 blocks:

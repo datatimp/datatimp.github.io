@@ -52,7 +52,7 @@ export const Home = () => {
                                 <div className={styles.caseCardTitleBar}>{study.title}</div>
                             </div>
                             <div className={styles.caseCardBody}>
-                                {study.summary && <p className={styles.caseCardSummary}>{study.summary}</p>}
+                                {study.tagline && <p className={styles.caseCardTagline}>{study.tagline}</p>}
                                 <hr className={styles.caseCardDivider} />
                                 <div className={styles.caseCardTags}>
                                     {(study.disciplines || []).map((d) => (
