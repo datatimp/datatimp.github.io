@@ -301,5 +301,5 @@ blocks:
   - type: impact
     heading: "Impact"
     body: >
-      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as a name became a business with a face customers could recognize across the market stall, the counter, and the screen.
+      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as an idea became a business with a face customers could recognize across the market stall, the counter, and the screen.
 ---

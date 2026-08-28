@@ -51,6 +51,18 @@ function ProseBlock({ heading, body }) {
 }
 ProseBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
+/** Impact panel — a boxed close-out set apart from the sections, with a centered
+    flanked-by-rules heading. Stands out so the study doesn't just trail off. */
+function ImpactBlock({ heading, body }) {
+    return (
+        <section className={styles.impact}>
+            {heading && <h2 className={styles.impactHeading}>{heading}</h2>}
+            {body && <div className={styles.impactBody}><ReactMarkdown>{body}</ReactMarkdown></div>}
+        </section>
+    );
+}
+ImpactBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
+
 function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box }) {
     return (
         <section className={styles.imageBlock} style={boxStyle(box)}>
@@ -103,10 +115,11 @@ export const Block = ({ block }) => {
             return <SectionHeader {...block} />;
         case 'subsection':
             return <SubsectionHeader {...block} />;
+        case 'impact':
+            return <ImpactBlock {...block} />;
         case 'overview':
         case 'problem':
         case 'process':
-        case 'impact':
         default:
             return <ProseBlock {...block} />;
     }

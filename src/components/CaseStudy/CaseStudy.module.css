@@ -250,6 +250,49 @@
     font-size: 0.9em;
 }
 
+/* ─── Impact panel (study close-out; opt in with `type: impact`) ─── */
+/* Boxed so it reads as a distinct wrap-up, not just another subsection. */
+.impact {
+    background: #f0f3f7;
+    /* border: 1px solid #e6e2d6; */
+    border: 1px solid var(--color-primary);
+    padding: 40px;
+    border-radius: 16px;
+    margin: 0 0var(--stack);
+}
+
+/* Centered title flanked by rules — the flourish that sets Impact apart. */
+.impactHeading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: 0 0 20px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+.impactHeading::before,
+.impactHeading::after {
+    content: "";
+    flex: 1;                        /* the rules fill each side, keeping the word centered */
+    height: 2px;
+    background: var(--color-primary);
+}
+
+.impactBody {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.impactBody p {
+    margin: 0;
+}
+
 .summary {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.5vw, 2.25rem);
