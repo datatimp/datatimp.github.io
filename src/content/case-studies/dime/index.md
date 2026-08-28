@@ -15,9 +15,7 @@ tools:
   - Figma
 platform: Web
 summary: >             # 1–3 sentence TL;DR under the hero
-  A foundational design system for a multi-role fintech platform — layout
-  standards, design tokens, and a scalable Figma component library that gave
-  developers ready-to-use components and cut redundant design work.
+  A foundational design system for a multi-role fintech platform — layout standards, design tokens, and a scalable Figma component library that gave developers ready-to-use components and cut redundant design work.
 card: ./assets/dime-screenshot.webp
 hero: ./assets/dime-hero-img.webp            
 
@@ -28,16 +26,14 @@ blocks:
   - type: problem
     heading: "The problem"
     body: >
-      TODO: The business/UX challenge — inconsistent UI across customer,
-      merchant, and admin roles; design drift; slow handoff.
+      TODO: The business/UX challenge — inconsistent UI across customer, merchant, and admin roles; design drift; slow handoff.
 
   - type: row
     side: right
     media: ./assets/process-tokens.png    # TODO
     heading: "Tokens & standards"
     body: >
-      TODO: How you established design tokens, layout standards, and
-      component governance.
+      TODO: How you established design tokens, layout standards, and component governance.
 
   - type: row
     side: left
@@ -49,8 +45,7 @@ blocks:
   - type: impact
     heading: "Impact"
     body: >
-      TODO: Results — reduced redundant design work, dev-ready components,
-      improved handoff clarity. Add metrics if you have them.
+      TODO: Results — reduced redundant design work, dev-ready components, improved handoff clarity. Add metrics if you have them.
 ---
 
 <!-- Prose here is optional; the template renders the `blocks` above.
