@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { MediaFrame } from './MediaFrame';
 import { Lightbox } from './Lightbox';
+import { boxStyle } from './boxStyle';
 import clickMe from '../../assets/icons/clickMe.svg';
 import styles from './CaseStudy.module.css';
 
@@ -14,23 +15,28 @@ import styles from './CaseStudy.module.css';
  * the block collapses to a single title → media → body stack, reading as one
  * optical unit. See `.row` / `.rowMedia*` grid-areas in CaseStudy.module.css.
  *
- * `zoom`: optional array of high-res images. When present, a markdown link to
- * `#zoom` in the body opens a full-screen Lightbox of them (a close-up viewer).
+ * `zoom`: optional array of images. A markdown link in the body opens them in a
+ * full-screen Lightbox: `#zoom` opens the whole set (carousel); `#zoom:N` opens
+ * just image N (e.g. named references — `[Duplo](#zoom:0)`). `zoomBg` puts a
+ * solid background behind the viewed image (e.g. white for transparent logos).
  */
-export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, zoom, hint }) => {
-    const [zoomOpen, setZoomOpen] = useState(false);
+export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, zoom, zoomBg, hint, box }) => {
+    // null = closed; 'all' = whole set; number = single image at that index.
+    const [zoomAt, setZoomAt] = useState(null);
     const hasZoom = Array.isArray(zoom) && zoom.length > 0;
     // `hint: left | right | true` drops a friendly "click me" mark in an upper
     // corner of the media (true → the corner opposite the text). Used to flag the
     // live/interactive Rive pieces. Corners alternate row-to-row for a hand-placed feel.
     const hintCorner = hint === true ? (side === 'left' ? 'right' : 'left') : hint;
 
-    // A `#zoom` link in the body opens the lightbox instead of navigating.
+    // `#zoom` / `#zoom:N` links in the body open the lightbox instead of navigating.
     const mdComponents = hasZoom
         ? {
             a: ({ href, children, ...rest }) => {
-                if (href === '#zoom') {
-                    return <button type="button" className={styles.zoomLink} onClick={() => setZoomOpen(true)}>{children}</button>;
+                const m = typeof href === 'string' && href.match(/^#zoom(?::(\d+))?$/);
+                if (m) {
+                    const at = m[1] === undefined ? 'all' : Number(m[1]);
+                    return <button type="button" className={styles.zoomLink} onClick={() => setZoomAt(at)}>{children}</button>;
                 }
                 delete rest.node; // react-markdown passes `node`; keep it off the DOM element
                 return <a href={href} {...rest}>{children}</a>;
@@ -38,8 +44,10 @@ export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, r
         }
         : undefined;
 
+    const zoomImages = zoomAt === 'all' ? zoom : (typeof zoomAt === 'number' ? [zoom[zoomAt]] : null);
+
     return (
-        <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`}>
+        <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`} style={boxStyle(box)}>
             {heading && (
                 <h3 className={`${mediaTitle ? styles.mediaTitle : styles.rowHeading} ${styles.rowHeadingEl}`}>{heading}</h3>
             )}
@@ -57,8 +65,8 @@ export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, r
             <div className={styles.rowText}>
                 {body && <ReactMarkdown components={mdComponents}>{body}</ReactMarkdown>}
             </div>
-            {hasZoom && zoomOpen && (
-                <Lightbox images={zoom} onClose={() => setZoomOpen(false)} label={`${heading || 'Image'} — up close`} />
+            {zoomImages && zoomImages.length > 0 && (
+                <Lightbox images={zoomImages} background={zoomBg} onClose={() => setZoomAt(null)} label={`${heading || 'Image'} — up close`} />
             )}
         </div>
     );
@@ -79,5 +87,7 @@ AltRow.propTypes = {
     padding: PropTypes.string,
     mediaTitle: PropTypes.bool,
     zoom: PropTypes.arrayOf(PropTypes.string),
+    zoomBg: PropTypes.string,
     hint: PropTypes.oneOf([true, 'left', 'right']),
+    box: PropTypes.object,   // style the whole row container from .md (background/border/padding/radius)
 };

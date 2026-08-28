@@ -7,6 +7,7 @@ import { TypeSpec } from './TypeSpec';
 import { Phone } from './Phone';
 import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
+import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 
 function SectionHeader({ number, heading, problem }) {
@@ -50,16 +51,16 @@ function ProseBlock({ heading, body }) {
 }
 ProseBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
-function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle }) {
+function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box }) {
     return (
-        <section className={styles.imageBlock}>
+        <section className={styles.imageBlock} style={boxStyle(box)}>
             {heading && <h2 className={mediaTitle ? styles.mediaTitle : styles.blockHeading}>{heading}</h2>}
             {body && <p className={styles.blockLead}>{body}</p>}
             <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
         </section>
     );
 }
-ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.bool, border: PropTypes.bool, mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool };
+ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.bool, border: PropTypes.bool, mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object };
 
 function Gallery({ heading, body, items = [] }) {
     return (

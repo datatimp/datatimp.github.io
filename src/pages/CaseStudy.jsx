@@ -39,14 +39,27 @@ export const CaseStudy = () => {
             />
 
             <div className={styles.body}>
-                <Snapshot
-                    role={study.role}
-                    timeline={study.timeline}
-                    client={study.client}
-                    tools={study.tools}
-                    platform={study.platform}
-                    liveUrl={study.liveUrl}
-                />
+                <div className={styles.snapshotGroup}>
+                    <Snapshot
+                        role={study.role}
+                        timeline={study.timeline}
+                        client={study.client}
+                        tools={study.tools}
+                        platform={study.platform}
+                    />
+                    {study.liveUrl && (
+                        <a className={styles.liveUrl} href={study.liveUrl} target="_blank" rel="noreferrer">
+                            <span className={styles.liveUrlText}>
+                                {study.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                            </span>
+                            <svg className={styles.liveUrlIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                        </a>
+                    )}
+                </div>
 
                 {study.summary && <p className={styles.summary}>{study.summary}</p>}
 

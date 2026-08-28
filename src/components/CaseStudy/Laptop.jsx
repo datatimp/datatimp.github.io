@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/macbook-pro-mockup.png';
 
@@ -34,12 +35,12 @@ Device.propTypes = { media: PropTypes.string, screenBg: PropTypes.string, poster
  *     the study; collapses to a title → media → body stack on mobile).
  *   • no `side` → centered, with the caption stacked above (max visibility).
  */
-export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, poster, side }) => {
+export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, poster, side, box }) => {
     const device = <Device media={media} screenBg={screenBg} poster={poster} alt={alt} />;
 
     if (side === 'left' || side === 'right') {
         return (
-            <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`}>
+            <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`} style={boxStyle(box)}>
                 {heading && <h3 className={`${styles.mediaTitle} ${styles.rowHeadingEl}`}>{heading}</h3>}
                 <div className={styles.rowMedia}>{device}</div>
                 <div className={styles.rowText}>{body && <ReactMarkdown>{body}</ReactMarkdown>}</div>
@@ -48,7 +49,7 @@ export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, post
     }
 
     return (
-        <figure className={styles.laptopBlock}>
+        <figure className={styles.laptopBlock} style={boxStyle(box)}>
             {(heading || body) && (
                 <figcaption className={styles.laptopCaption}>
                     {heading && <h3 className={styles.mediaTitle}>{heading}</h3>}
@@ -68,4 +69,5 @@ Laptop.propTypes = {
     body: PropTypes.string,
     poster: PropTypes.string,
     side: PropTypes.oneOf(['left', 'right']),   // omit → centered with caption above
+    box: PropTypes.object,   // style the whole block container from .md
 };

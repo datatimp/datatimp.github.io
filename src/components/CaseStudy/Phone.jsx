@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/iphone16-mockup.png';
 
@@ -22,12 +23,12 @@ Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: P
  *     collapses to a title → media → body stack on mobile).
  *   • no `side` → centered, with the caption stacked above (max visibility).
  */
-export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side }) => {
+export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side, box }) => {
     const device = <Device media={media} alt={alt} screenBg={screenBg} statusHeight={statusHeight} />;
 
     if (side === 'left' || side === 'right') {
         return (
-            <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`}>
+            <div className={`${styles.row} ${side === 'left' ? styles.rowMediaLeft : styles.rowMediaRight}`} style={boxStyle(box)}>
                 {heading && <h3 className={`${styles.mediaTitle} ${styles.rowHeadingEl}`}>{heading}</h3>}
                 <div className={styles.rowMedia}>{device}</div>
                 <div className={styles.rowText}>{body && <ReactMarkdown>{body}</ReactMarkdown>}</div>
@@ -36,7 +37,7 @@ export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%',
     }
 
     return (
-        <figure className={styles.phoneBlock}>
+        <figure className={styles.phoneBlock} style={boxStyle(box)}>
             {(heading || body) && (
                 <figcaption className={styles.phoneCaption}>
                     {heading && <h3 className={styles.mediaTitle}>{heading}</h3>}
@@ -56,4 +57,5 @@ Phone.propTypes = {
     heading: PropTypes.string,
     body: PropTypes.string,
     side: PropTypes.oneOf(['left', 'right']),   // omit → centered with caption above
+    box: PropTypes.object,   // style the whole block container from .md
 };

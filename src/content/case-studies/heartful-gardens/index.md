@@ -14,10 +14,9 @@ tools:
   - Rive
   - Illustrator
 platform: Web, Print
+liveUrl: "https://heartfulgardens.com"   # the live site — shown as the mono callout under the snapshot
 summary: >
-  Brand identity, web presence, and print materials for a small-batch garden & bakery —
-  logo system, color decisions, marketing collateral, and a hand-built site
-  featuring custom animated Rive graphics.
+  Heartful Gardens, a small-batch garden & bakery needed brand identity, web presence, and print materials. Deliverables included a  logo system, color decisions, marketing collateral, and a hand-built site featuring custom animated Rive graphics.
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
 
@@ -39,16 +38,22 @@ blocks:
     side: right
     media: ./assets/hg-logomark-fc.svg
     class: hg-logo
-    heading: "Logo concept"
+    heading: "Concept"
+    zoom:
+      - ./assets/duplo-logo-1977.svg
+      - ./assets/boc-logo.svg
+    zoomBg: "#ffffff"
     body: >
-      The Heartful Gardens logo merges a classic circular stamp design with
-      genuine warmth. Inspired by the curves found in late-'70s Duplo and Boards
-      of Canada logomarks, it's meant to project growth and friendliness. The
-      central landscape does double duty as a rolling countryside and a
-      fresh-baked loaf of bread.
+      The final Heartful Gardens logo merges a classic circular stamp design with genuine warmth. Inspired by the curves found in late-'70s [Duplo](#zoom:0) and [Boards of Canada](#zoom:1) logomarks, it's meant to project growth and friendliness. The
+      central landscape does double duty as a rolling countryside and a fresh-baked loaf of bread.
 
   - type: image
     heading: "Iterations"
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     body: >
       The logo was refined over the course of several rounds of discussion with the client. Distinctive points-of-interest - the bread hillside and symmetrical flower - were locked in early. Once the primary iconography was ratified, proportions were honed to arrive at the final version.
     media: ./assets/hg-logo-iterations.webp
@@ -62,10 +67,9 @@ blocks:
   # Hex values below: V04 (Final) uses the real values from the brand deck.
   # V01–V03, V05–V06 are still approximate — replace with exact Figma values.
   - type: brandColors
-    heading: "Choosing the brand colors"
+    heading: "Brand colors"
     body: >
-      The client reviewed six directions before settling on the primary
-      palette. These were the color decisions — not usable variations.
+      Two key notes were given for color choices: friendliness and recognizability. Essentially, on a bright market day, the logo needed to stand out amongst the other booths. The client reviewed six directions (shown below) before settling on the primary palette of warm green and vibrant orange. 
     options:
       - label: "V01"
         logo: ./assets/hg-logomark-v01.svg
@@ -133,50 +137,47 @@ blocks:
     number: "02"
     heading: "Site Design"
     problem: >
-      Give a small, local garden-and-bakery a web presence as warm and
-      hand-made as the brand itself — credible to first-time visitors, easy to
-      navigate on a phone at the market, and never mistaken for a template.
+      Give a small, local garden-and-bakery a web presence as warm and hand-made as the brand itself — credible to first-time visitors, easy to navigate on a phone at the market, and never mistaken for a template.
 
   - type: subsection
     number: "02a"
     heading: "Utility"
     body: >
-      Before it could charm anyone, the site had to earn its keep. Visitors
-      needed to find what Heartful Gardens grows and bakes, learn when and where
-      to buy it, and reach the team — quickly, whether at home or standing at the
-      market stall. The layout leads with those essentials and holds a clear
-      hierarchy from phone to desktop, so the practical questions are answered
-      before the personality ever gets a word in.
+      The mission: ensure visitors can quickly find what Heartful Gardens grows and bakes, learn when and where to buy it, and provide contact info.
 
   - type: laptop
     side: left
     media: ./assets/vid-offer-720.mp4
-    heading: "Products Front & Center"
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    heading: "Products front & center"
     alt: "Screen recording of the Heartful Gardens 'What We Offer' product section on desktop"
     body: >
-      The moment a visitor scrolls past the hero, the product lineup takes over —
-      what Heartful Gardens grows and bakes, each item with a clear name, price,
-      and photo. It's the first thing the site has to answer, so it leads.
+      The moment a visitor scrolls past the hero, the product lineup takes over. Showcasing the products first, including a nutritional chart, ensures the user doesn't feel their time is wasted hunting for the companies goods and services.
 
   - type: phone
     side: right
     media: ./assets/find-us-ios.avif
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     screenBg: "#faf9f0"    # fills the strip behind the Dynamic Island (was #e0edd3)
     statusHeight: "9%"     # push the sticky nav down clear of the island
     alt: "Heartful Gardens 'Find Us' button opening the location in Apple Maps on iPhone"
-    heading: "Find Us, in one tap"
+    heading: "Find Us"
     body: >
-      The whole site earns its keep at the market stall. The "Find Us" button
-      deep-links straight into the phone's native maps app for turn-by-turn
-      directions — no address to copy, no pinch-and-zoom. Shown live on device
-      because that's where it matters.
+      The business earns its keep at the market stall so the "Find Us" section allows the client to announce the days and locations of markets. Google Maps is embedded into the accordion dropdowns. As Apple Maps charges for embed, a solution was needed to ensure ease-of-use on iOS devices. The solution was to provide a link that opened in the native iOS maps app.
 
   - type: subsection
     number: "02b"
     heading: "Engagement"
     body: >
-      Custom Rive animations I built into the live site — each designed to add
-      warmth and life without slowing the page down.
+      Custom Rive animations I built into the live site — each designed to add warmth and life without slowing the page down.
 
   - type: row
     side: right
@@ -188,21 +189,26 @@ blocks:
     mediaTitle: true
     hint: right
     body: >
-      The hero graphic is custom line art drawn in Illustrator, then rebuilt in Rive so it could come alive on page load. A state machine sequences the reveal, and vector feathering gives the edges their soft, hand-drawn warmth. Two artboards are present with aspect ratio for desktop or mobile. Building it as live vector keeps it crisp at any size and ships lighter than an exported video.
+      The hero graphic is custom line art drawn in Illustrator, imported into Rive, and animated to come alive on page load. Building it as live vector keeps it crisp at any size and ships lighter than an exported video. Two artboards are present, allowing a state machine to select the proper aspect ratio depending on the user's device. 
     border: true
     radius: true
-    background: white
+    background: "#e6ddc6"
     padding: 10px
 
   - type: row
     side: left
     media: ./assets/booth.riv
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     riveProps:
       stateMachines: "State Machine 1"
     heading: "Market booth banner"
     mediaTitle: true
     body: >
-      The market booth banner is a line-art asset drawn in Illustrator then imported into Rive. There, the banner paths were isolated and a custom Lua script that warped vector paths was attached, allowing it to 'wave' in the breeze. Finally, the gusts were keyframed to blow across the illustration every five to eight seconds.
+      The market booth banner is a line-art asset drawn in Illustrator then imported into Rive. There, a custom Lua script was attached to the isolated banner paths, allowing it to 'wave' in the breeze procedurally. Finally, the gusts were keyframed to blow across the illustration every five to eight seconds.
     border: true
     radius: true
     background: white
@@ -217,12 +223,7 @@ blocks:
     mediaTitle: true
     hint: left
     body: >
-      The call-to-action button responds to the visitor: a hover state lifts and
-      warms it, and a click state gives a satisfying press before the page reacts.
-      Both are wired as a Rive state machine, so every transition is handled inside
-      the graphic itself — no extra JavaScript. A small touch like this rewards
-      interaction and keeps the brand's playful voice present right at the moment
-      of conversion.
+      I wanted the call-to-action button to reward interaction. The button was drawn and animated in Rive. A `hover` state on desktop lifts and warms it, and a click state gives a satisfying press before the page reacts. The Rive file allows all logic to be handled by the graphic itself with no extra Javascript.
     border: true
     radius: true
     background: white
@@ -232,14 +233,7 @@ blocks:
     number: "03"
     heading: "Print Materials"
     problem: >
-      The Heartful Gardens team needed to take the brand off-screen via custom, production-ready print pieces they
-      could hand to a printer and use at market.
-
-  - type: process
-    body: >
-      The brand system carried into print — each piece prepped production-ready
-      with proper CMYK, bleed, and crop marks, and packaged as press-ready
-      PDF/X-1a the client could hand straight to a printer.
+      The Heartful Gardens team needed to take the brand off-screen via custom, production-ready print pieces in CMYK color-space, formatted  as press-ready PDF/X-1a files they could hand to a printer and use at market.
 
   - type: row
     side: right
@@ -247,15 +241,20 @@ blocks:
     heading: "Business cards"
     mediaTitle: true
     body: >
-      A minimal design fit the brand best, and the business cards were designed around this philosophy: simply, friendly, eye-catching. The rounded corners mirrored the logo while the textured paper spoke to the rustic aspect of the business.
+      A minimal design fit the brand best, and the business cards were created around this philosophy to be simple, friendly,and eye-catching. The rounded corners mirrored the logo while the textured paper spoke to the rustic aspect of the business.
     border: true
     radius: true
-
   - type: row
     side: left
     media: ./assets/hg-flyer-mockup.webp
+    
     heading: "Flyer"
     mediaTitle: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     zoom:
       - ./assets/whysourdough-1.webp
       - ./assets/whysourdough-2.webp
@@ -270,14 +269,18 @@ blocks:
     heading: "Table tents"
     mediaTitle: true
     body: >
-      Table tents covering their entire product range were needed to offer  at-a-glance pricing/info for the stall, sized and
-      styled to read from a few feet away.
+      Table tents covering their entire product range were needed to offer  at-a-glance pricing/info for the stall, sized and styled to read from a few feet away.
     border: true
     radius: true
 
   - type: row
     side: left
     media: ./assets/hg-badge-mockup.webp
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     heading: "Badge"
     mediaTitle: true
     body: >
@@ -291,18 +294,12 @@ blocks:
     heading: "Banner"
     mediaTitle: true
     body: >
-      A large-format banner anchored the market stall — the logo and brand
-      colors scaled up to read from across the lot, prepped as a production-ready
-      file the client could hand straight to a wide-format printer.
+      A large-format banner anchored the market stall — the logo and brand colors scaled up to read from across the lot, prepped as a production-ready file the client could hand straight to a wide-format printer.
     border: true
     radius: true
 
   - type: impact
     heading: "Impact"
     body: >
-      Heartful Gardens walked away with a complete, cohesive brand — a logo
-      system, color and type, a set of production-ready print pieces, and a warm,
-      animated website, all speaking the same friendly language. What began as a
-      name became a business with a face customers could recognize across the
-      market stall, the counter, and the screen.
+      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as a name became a business with a face customers could recognize across the market stall, the counter, and the screen.
 ---
