@@ -461,7 +461,8 @@
 .sectionTitleRow {
     display: flex;
     align-items: baseline;
-    gap: var(--space-md);
+    /* Match the subsection's number→title gap so 01/Identity and 01a/Logo line up. */
+    gap: var(--space-sm);
 }
 
 .sectionNumber {
@@ -591,6 +592,50 @@
     color: var(--color-primary);
     text-decoration: underline;
     cursor: pointer;
+}
+
+/* Click-to-enlarge trigger wrapping a .riv media (opt in with `enlarge: true`). */
+.enlargeTrigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    position: relative;
+    cursor: zoom-in;
+}
+
+/* Small badge telling the visitor the animation is clickable. */
+.enlargeBadge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+/* The enlarged .riv inside the modal — a big, matted stage for the animation. */
+.modalRive {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modalRiveEmbed {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
 }
 
 /* Row headings are the same level as block headings (both are content blocks) —

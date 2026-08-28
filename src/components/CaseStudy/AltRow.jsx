@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { MediaFrame } from './MediaFrame';
 import { Lightbox } from './Lightbox';
+import { RiveModal } from './RiveModal';
 import { boxStyle } from './boxStyle';
 import clickMe from '../../assets/icons/clickMe.svg';
 import styles from './CaseStudy.module.css';
+
+const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
 
 /**
  * Alternating media/text row — the visual rhythm of the Solution section.
@@ -20,10 +23,14 @@ import styles from './CaseStudy.module.css';
  * just image N (e.g. named references — `[Duplo](#zoom:0)`). `zoomBg` puts a
  * solid background behind the viewed image (e.g. white for transparent logos).
  */
-export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, zoom, zoomBg, hint, box }) => {
+export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, zoom, zoomBg, hint, box, enlarge }) => {
     // null = closed; 'all' = whole set; number = single image at that index.
     const [zoomAt, setZoomAt] = useState(null);
+    const [enlarged, setEnlarged] = useState(false);
     const hasZoom = Array.isArray(zoom) && zoom.length > 0;
+    // `enlarge: true` on a .riv row → click the media to see it big in a modal
+    // (for subtle animations that read poorly at row size).
+    const canEnlarge = enlarge && isRiv(media);
     // `hint: left | right | true` drops a friendly "click me" mark in an upper
     // corner of the media (true → the corner opposite the text). Used to flag the
     // live/interactive Rive pieces. Corners alternate row-to-row for a hand-placed feel.
@@ -60,13 +67,23 @@ export const AltRow = ({ media, alt, heading, body, side = 'right', riveProps, r
                         className={`${styles.clickHint} ${hintCorner === 'left' ? styles.clickHintLeft : styles.clickHintRight}`}
                     />
                 )}
-                <MediaFrame src={media} alt={alt || heading || ''} riveProps={riveProps} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+                {canEnlarge ? (
+                    <button type="button" className={styles.enlargeTrigger} onClick={() => setEnlarged(true)} aria-label={`Enlarge ${heading || 'animation'}`}>
+                        <MediaFrame src={media} alt={alt || heading || ''} riveProps={riveProps} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+                        <span className={styles.enlargeBadge} aria-hidden="true">⤢ Enlarge</span>
+                    </button>
+                ) : (
+                    <MediaFrame src={media} alt={alt || heading || ''} riveProps={riveProps} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+                )}
             </div>
             <div className={styles.rowText}>
                 {body && <ReactMarkdown components={mdComponents}>{body}</ReactMarkdown>}
             </div>
             {zoomImages && zoomImages.length > 0 && (
                 <Lightbox images={zoomImages} background={zoomBg} onClose={() => setZoomAt(null)} label={`${heading || 'Image'} — up close`} />
+            )}
+            {enlarged && (
+                <RiveModal src={media} riveProps={riveProps} background={background} onClose={() => setEnlarged(false)} label={`${heading || 'Animation'} — enlarged`} />
             )}
         </div>
     );
@@ -90,4 +107,5 @@ AltRow.propTypes = {
     zoomBg: PropTypes.string,
     hint: PropTypes.oneOf([true, 'left', 'right']),
     box: PropTypes.object,   // style the whole row container from .md (background/border/padding/radius)
+    enlarge: PropTypes.bool, // .riv rows only: click media to view it big in a modal
 };

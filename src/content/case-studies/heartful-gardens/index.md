@@ -138,7 +138,7 @@ blocks:
     number: "02"
     heading: "Site Design"
     problem: >
-      Give a small, local garden-and-bakery a web presence as warm and hand-made as the brand itself — credible to first-time visitors, easy to navigate on a phone at the market, and never mistaken for a template.
+      Give a small, local business a web presence as warm and hand-made as the brand itself. Of primary concern was ease of navigation, especially on mobile, It needs to be credible to first-time visitors, easy to navigate on a phone at the market, and never mistaken for a template.
 
   - type: subsection
     number: "02a"
@@ -189,6 +189,7 @@ blocks:
     heading: "Animated hero graphic"
     mediaTitle: true
     hint: right
+    enlarge: true
     body: >
       The hero graphic is custom line art drawn in Illustrator, imported into Rive, and animated to come alive on page load. Building it as live vector keeps it crisp at any size and ships lighter than an exported video. Two artboards are present, allowing a state machine to select the proper aspect ratio depending on the user's device. 
     border: true
@@ -208,8 +209,9 @@ blocks:
       stateMachines: "State Machine 1"
     heading: "Market booth banner"
     mediaTitle: true
+    enlarge: true
     body: >
-      The market booth banner is a line-art asset drawn in Illustrator then imported into Rive. There, a custom Lua script was attached to the isolated banner paths, allowing it to 'wave' in the breeze procedurally. Finally, the gusts were keyframed to blow across the illustration every five to eight seconds.
+      Existing as a subtle animation asset near the close of the page, the booth banner is custom art animated in Rive using keyframes and scripting. Every eight seconds, keyframed wind blows across the image while the banner itself waves in the breeze via a Lua script running in the Rive state machine.
     border: true
     radius: true
     background: white
@@ -224,7 +226,7 @@ blocks:
     mediaTitle: true
     hint: left
     body: >
-      I wanted the call-to-action button to reward interaction. The button was drawn and animated in Rive. A `hover` state on desktop lifts and warms it, and a click state gives a satisfying press before the page reacts. The Rive file allows all logic to be handled by the graphic itself with no extra Javascript.
+      I wanted the call-to-action button to reward interaction. The button was drawn and animated in Rive. A hover state on desktop lifts and warms it, and a click state gives a satisfying press before the page reacts. The Rive file allows all logic to be handled by the graphic itself with no extra Javascript.
     border: true
     radius: true
     background: white
@@ -234,7 +236,7 @@ blocks:
     number: "03"
     heading: "Print Materials"
     problem: >
-      The Heartful Gardens team needed to take the brand off-screen via custom, production-ready print pieces in CMYK color-space, formatted  as press-ready PDF/X-1a files they could hand to a printer and use at market.
+      The Heartful Gardens team needed to take the brand off-screen with print-ready CMYK, PDF/X-1a assets that could be handed directly to a printer.
 
   - type: row
     side: right
@@ -302,5 +304,5 @@ blocks:
   - type: impact
     heading: "Impact"
     body: >
-      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as an idea became a business with a face customers could recognize across the market stall, the counter, and the screen.
+      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as an idea became a business with a brand customers could recognize across the market stall, the counter, and the screen.
 ---
