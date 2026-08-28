@@ -16,7 +16,7 @@ tools:
 platform: Web, Print
 liveUrl: "https://heartfulgardens.com"   # the live site — shown as the mono callout under the snapshot
 summary: >
-  Heartful Gardens, a small-batch garden & bakery needed brand identity, web presence, and print materials. Deliverables included a  logo system, color decisions, marketing collateral, and a hand-built site featuring custom animated Rive graphics.
+  Heartful Gardens, a small-batch bakery & garden needed brand identity, web presence, and print materials. Deliverables included a *logo system*, *print-ready marketing collateral*, and a *hand-built site* featuring *custom animated Rive graphics*.
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
 tagline: "Brand & site for a small-batch garden bakery"   # short logline on the home card (not the summary)
@@ -236,7 +236,7 @@ blocks:
     number: "03"
     heading: "Print Materials"
     problem: >
-      The Heartful Gardens team needed to take the brand off-screen with print-ready CMYK, PDF/X-1a assets that could be handed directly to a printer.
+      The Heartful Gardens team needed to take the brand off-screen with CMYK, PDF/X-1a assets that could be handed directly to a printer.
 
   - type: row
     side: right

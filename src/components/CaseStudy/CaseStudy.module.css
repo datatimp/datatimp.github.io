@@ -312,6 +312,20 @@
     margin: 0 0 var(--stack);
 }
 
+/* ReactMarkdown wraps the summary in its own <p> — strip the default margins so
+   the .summary wrapper keeps sole control of spacing. */
+.summary p {
+    margin: 0;
+}
+
+/* Emphasized phrases (*asterisks* in the summary): the teal-italic pull-outs.
+   NOTE: renders faux-italic until a Playfair italic @font-face is loaded. */
+.summary em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
 /* ─── Snapshot bar ─── */
 .snapshot {
     display: flex;

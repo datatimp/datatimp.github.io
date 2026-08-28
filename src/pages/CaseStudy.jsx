@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer/Footer';
 import { CaseStudyHero } from '../components/CaseStudy/CaseStudyHero';
 import { Snapshot } from '../components/CaseStudy/Snapshot';
 import { Block } from '../components/CaseStudy/Blocks';
+import ReactMarkdown from 'react-markdown';
 import { getCaseStudy } from '../content/caseStudies';
 import styles from '../components/CaseStudy/CaseStudy.module.css';
 import '../css/case-study-overrides.css'; // plain global CSS you edit directly
@@ -61,7 +62,11 @@ export const CaseStudy = () => {
                     )}
                 </div>
 
-                {study.summary && <p className={styles.summary}>{study.summary}</p>}
+                {study.summary && (
+                    <div className={styles.summary}>
+                        <ReactMarkdown>{study.summary}</ReactMarkdown>
+                    </div>
+                )}
 
                 {blocks.map((block, i) => (
                     <Block key={`${block.type}-${i}`} block={block} />

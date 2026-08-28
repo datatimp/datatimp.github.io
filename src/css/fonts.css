@@ -19,6 +19,17 @@
     src: url('../assets/fonts/playfairdisplay-variable-latin.woff2') format('woff2');
 }
 
+/* Playfair Display — TRUE italics (separate file; the upright font has no italic
+   axis). Lets `.summary em` resolve to real Playfair italic instead of an oblique
+   slant. Used at 600 (semibold), so the axis is narrowed. */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('../assets/fonts/playfairdisplay-variable-italic-latin.woff2') format('woff2');
+}
+
 /* Fredoka — variable weight axis (Heartful Gardens display face, type spec) */
 @font-face {
     font-family: 'Fredoka';
