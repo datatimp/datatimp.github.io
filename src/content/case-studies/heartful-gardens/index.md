@@ -96,7 +96,7 @@ blocks:
     number: "01c"
     heading: "Typography"
     body: >
-      The display type is Fredoka Medium — a rounded geometric sans that gives the logo and titles their friendly, hand-made warmth. Body copy is set in Inter which stay crisp and legible small, on screen and in print.
+      The display type is Fredoka Medium — a rounded geometric sans that gives the logo and titles their friendly, hand-made warmth. Body copy is set in Inter which stays crisp and legible even at small point sizes.
 
   - type: typeSpec
     color: "#1b7b01"          # HG green — tints every value
@@ -138,7 +138,7 @@ blocks:
     number: "02"
     heading: "Site Design"
     problem: >
-      Give a small, local business a web presence as warm and hand-made as the brand itself. Of primary concern was ease of navigation, especially on mobile, It needs to be credible to first-time visitors, easy to navigate on a phone at the market, and never mistaken for a template.
+      Give a small, local business a web presence as warm and hand-made as the brand itself. Of primary concern was ease of navigation, especially on mobile, highlight the product and direct customers to a market.
 
   - type: subsection
     number: "02a"
@@ -172,13 +172,13 @@ blocks:
     alt: "Heartful Gardens 'Find Us' button opening the location in Apple Maps on iPhone"
     heading: "Find Us"
     body: >
-      The business earns its keep at the market stall so the "Find Us" section allows the client to announce the days and locations of markets. Google Maps is embedded into the accordion dropdowns. As Apple Maps charges for embed, a solution was needed to ensure ease-of-use on iOS devices. The solution was to provide a link that opened in the native iOS maps app.
+      The business earns its keep at the market stall so the "Find Us" section allows the client to quickly find the days and locations of markets. Google Maps is embedded into the accordion dropdowns. As Apple Maps charges for embed, a solution was needed to ensure ease-of-use on iOS devices. The solution was to provide a link that opened in the native iOS maps app.
 
   - type: subsection
     number: "02b"
     heading: "Engagement"
     body: >
-      Custom Rive animations I built into the live site — each designed to add warmth and life without slowing the page down.
+      Custom Rive animations were built into the live site — each designed to add warmth and life without slowing the page down.
 
   - type: row
     side: right
@@ -191,7 +191,7 @@ blocks:
     hint: right
     enlarge: true
     body: >
-      The hero graphic is custom line art drawn in Illustrator, imported into Rive, and animated to come alive on page load. Building it as live vector keeps it crisp at any size and ships lighter than an exported video. Two artboards are present, allowing a state machine to select the proper aspect ratio depending on the user's device. 
+      The hero graphic is custom line art drawn in Illustrator, imported into Rive, and animated to come alive on page load. Two artboards are present, allowing a state machine to select the proper aspect ratio depending on the user's device. 
     border: true
     radius: true
     background: "#e6ddc6"
@@ -244,7 +244,7 @@ blocks:
     heading: "Business cards"
     mediaTitle: true
     body: >
-      A minimal design fit the brand best, and the business cards were created around this philosophy to be simple, friendly,and eye-catching. The rounded corners mirrored the logo while the textured paper spoke to the rustic aspect of the business.
+      A minimal design fit the brand best. The business cards were created to be simple, friendly, and eye-catching. The rounded corners mirrored the logo while the textured paper spoke to the rustic aspect of the business.
     border: true
     radius: true
   - type: row
@@ -262,7 +262,7 @@ blocks:
       - ./assets/whysourdough-1.webp
       - ./assets/whysourdough-2.webp
     body: >
-      A full-color, front and back, 5x7 flyer was designed and printed as an educational and promotional tool. Conveying the health benefits of sourdough bread was important the business owners, yet the data density needed to be paired with a scannable layout. [See the flyer up close](#zoom).
+      A full-color, front and back, 5x7 flyer was designed and printed as an educational and promotional tool. Conveying the health benefits of sourdough bread was important to the business owners, yet the data density needed to be paired with a scannable layout. [See the flyer up close](#zoom).
     border: true
     radius: true
 
@@ -272,7 +272,7 @@ blocks:
     heading: "Table tents"
     mediaTitle: true
     body: >
-      Table tents covering their entire product range were needed to offer  at-a-glance pricing/info for the stall, sized and styled to read from a few feet away.
+      Table tents covering their entire product range were needed to offer at-a-glance pricing/info for the stall, sized and styled to read from a few feet away.
     border: true
     radius: true
 
@@ -297,7 +297,7 @@ blocks:
     heading: "Banner"
     mediaTitle: true
     body: >
-      A large-format banner anchored the market stall — the logo and brand colors scaled up to read from across the lot, prepped as a production-ready file the client could hand straight to a wide-format printer.
+      A large-format banner anchors the market stall with the logo and brand colors scaled up to read from across the lot. The artwork was delivered production-ready file the client could hand straight to a wide-format printer.
     border: true
     radius: true
 

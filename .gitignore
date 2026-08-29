@@ -32,5 +32,8 @@ coverage
 # Claude Code
 .claude
 
+# Dev-only working files (never published)
+_dev/
+
 # Windows/WSL download metadata
 *:Zone.Identifier
