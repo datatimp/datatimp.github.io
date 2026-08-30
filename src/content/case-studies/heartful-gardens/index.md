@@ -45,8 +45,7 @@ blocks:
       - ./assets/boc-logo.svg
     zoomBg: "#ffffff"
     body: >
-      The final Heartful Gardens logo merges a classic circular stamp design with genuine warmth. Inspired by the curves found in late-'70s [Duplo](#zoom:0) and [Boards of Canada](#zoom:1) logomarks, it's meant to project growth and friendliness. The
-      central landscape does double duty as a rolling countryside and a fresh-baked loaf of bread.
+      The final Heartful Gardens logo merges a classic circular stamp design with genuine warmth. Inspired by the curves found in late-'70s [Duplo](#zoom:0) and [Boards of Canada](#zoom:1) logomarks, it's meant to project growth and friendliness. The central landscape does double duty as a rolling countryside and a fresh-baked loaf of bread.
 
   - type: image
     heading: "Iterations"
@@ -56,7 +55,7 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      The logo was refined over the course of several rounds of discussion with the client. Distinctive points-of-interest - the bread hillside and symmetrical flower - were locked in early. Once the primary iconography was ratified, proportions were honed to arrive at the final version.
+      The logo was refined over the course of several rounds of discussion with the client. Distinctive points-of-interest, namely the bread hillside and symmetrical flower, were locked in early. Once the primary iconography was ratified, proportions were honed to arrive at the final version.
     media: ./assets/hg-logo-iterations.webp
     radius: true
     border: true
@@ -65,8 +64,6 @@ blocks:
     number: "01b"
     heading: "Color"
 
-  # Hex values below: V04 (Final) uses the real values from the brand deck.
-  # V01–V03, V05–V06 are still approximate — replace with exact Figma values.
   - type: brandColors
     heading: "Brand colors"
     body: >

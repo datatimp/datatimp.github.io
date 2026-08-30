@@ -1,22 +1,13 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './CaseStudy.module.css';
 
+// Chip only — no visible hex (too small to read); still copyable on click,
+// with the value shown in the hover tooltip.
 function Swatch({ hex }) {
-    const [copied, setCopied] = useState(false);
-    const copy = async () => {
-        try {
-            await navigator.clipboard.writeText(hex);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1200);
-        } catch {
-            /* clipboard unavailable — no-op */
-        }
-    };
+    const copy = () => navigator.clipboard?.writeText(hex).catch(() => {});
     return (
         <button type="button" className={styles.swatch} onClick={copy} title={`Copy ${hex}`}>
             <span className={styles.swatchChip} style={{ backgroundColor: hex }} />
-            <span className={styles.swatchHex}>{copied ? 'Copied!' : hex}</span>
         </button>
     );
 }

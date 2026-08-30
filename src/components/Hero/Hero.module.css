@@ -34,8 +34,10 @@
 
 .subtitle {
     font-family: var(--font-display);
-    /* Fluid: ~2.25rem on phones → 5rem on desktop (old 3vw never scaled). */
-    font-size: clamp(2.25rem, 8vw, 5rem);
+    /* Fluid across the whole range: caps at 5rem only on wide monitors (~1780px+),
+       so laptops (~1280–1536px) scale DOWN (~57–69px) instead of being stuck at the
+       80px max — which reads "too big" on a narrower laptop canvas. */
+    font-size: clamp(2.25rem, 4.5vw, 5rem);
     font-weight: 600;
     color: var(--color-gray-800);
     max-width: 800px;
