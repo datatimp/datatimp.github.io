@@ -52,8 +52,9 @@ export const caseStudies = Object.entries(rawFiles)
         const { data, body } = splitFrontmatter(raw);
         return { ...resolveAssets(dir, data), body, path };
     })
-    // Hide `draft: true` studies (unfinished) from both the home grid and routes.
-    .filter((c) => !c.draft)
+    // Hide `draft: true` studies from the live site, but keep them visible in the
+    // dev server so you can build/preview them. (import.meta.env.DEV is dev-only.)
+    .filter((c) => import.meta.env.DEV || !c.draft)
     .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 
 export const getCaseStudy = (slug) => caseStudies.find((c) => c.slug === slug);
