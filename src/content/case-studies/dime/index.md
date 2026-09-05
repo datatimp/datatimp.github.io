@@ -72,38 +72,41 @@ blocks:
     number: "02c"
     heading: "Typography"
     body: >
-      Roboto carries the interface — clean and legible at UI sizes — while Roboto Mono gives the system its technical, developer-facing voice for code, tokens, and the design-system chrome itself.
+      Three families do the work. **Montserrat** sets titles; **Nunito** is the workhorse — headings, body, and labels; **Roboto Mono** carries code and tokens.
 
   - type: typeSpec
     color: "#31a449"          # Dime brand green — tints every value
     fonts:
-      - role: "Display / Titles"
-        font: "'Roboto', system-ui, sans-serif"
+      - role: "Titles"
+        font: "'Montserrat', system-ui, sans-serif"
         fields:
           - label: "Typeface"
-            value: "Roboto"
+            value: "Montserrat"
             size: "5rem"
           - label: "Weight"
-            value: "Bold"
+            value: "Bold 700"
             size: "3rem"
           - label: "Glyphs"
             glyphs: true
             size: "3rem"
-      - role: "Body / UI"
-        font: "'Roboto', system-ui, sans-serif"
+      - role: "Headings · Body · Labels"
+        font: "'Nunito', system-ui, sans-serif"
         fields:
           - label: "Typeface"
-            value: "Roboto"
+            value: "Nunito"
             size: "2.5rem"
-          - label: "Weight"
-            value: "Regular"
+          - label: "Weights"
+            value: "Regular 400 · Bold 700"
             size: "2rem"
-      - role: "Mono / Code"
+      - role: "Code"
         font: "'Roboto Mono', ui-monospace, monospace"
         fields:
           - label: "Typeface"
             value: "Roboto Mono"
             size: "2.5rem"
+          - label: "Weights"
+            value: "Regular 400 · Bold 700"
+            size: "2rem"
 
   - type: subsection
     number: "02d"
@@ -167,10 +170,14 @@ blocks:
 
   - type: image
     heading: "User flow"
-    media: ./assets/pay-user-flow.webp      # TODO — the flow chart (full-width centerpiece)
-    alt: "User flow chart for the Dime payment processing page"
-    radius: true
-    border: true
+    media: ./assets/ppp-flow.svg            # DONE — vertical flow chart, SVG (crisp at any zoom)
+    alt: "User flow chart for the Dime payment processing page: log in via phone or email, verify with a one-time code, then new users add a payment method (wallet checks out immediately; card or bank is entered and saved) while returning users choose a saved method and pay"
+    enlarge: true                           # click → full-screen pan/zoom viewer (readable on mobile)
+    box:
+      background: "#f0f3f7"     # standard box grey
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
 
   - type: subsection
     number: "04b"

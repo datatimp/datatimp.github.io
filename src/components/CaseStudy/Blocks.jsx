@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { AltRow } from './AltRow';
@@ -7,8 +8,11 @@ import { TypeSpec } from './TypeSpec';
 import { Phone } from './Phone';
 import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
+import { ImageZoomModal } from './ImageZoomModal';
 import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
+
+const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
 
 function SectionHeader({ number, heading, problem }) {
     return (
@@ -63,16 +67,31 @@ function ImpactBlock({ heading, body }) {
 }
 ImpactBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
-function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box }) {
+function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box, enlarge }) {
+    const [open, setOpen] = useState(false);
+    // `enlarge: true` on a static image → click to open the full-screen pan/zoom
+    // viewer (for large diagrams like the payment flow chart). .riv is out of scope.
+    const canEnlarge = enlarge && !isRiv(media);
+    const frame = (
+        <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+    );
     return (
         <section className={styles.imageBlock} style={boxStyle(box)}>
             {heading && <h2 className={mediaTitle ? styles.mediaTitle : styles.blockHeading}>{heading}</h2>}
             {body && <p className={styles.blockLead}>{body}</p>}
-            <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+            {canEnlarge ? (
+                <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'image'}`}>
+                    {frame}
+                    <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
+                </button>
+            ) : frame}
+            {open && (
+                <ImageZoomModal src={media} alt={alt || heading || ''} onClose={() => setOpen(false)} label={`${heading || 'Image'} — expanded`} />
+            )}
         </section>
     );
 }
-ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.bool, border: PropTypes.bool, mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object };
+ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.bool, border: PropTypes.bool, mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool };
 
 function Gallery({ heading, body, items = [] }) {
     return (

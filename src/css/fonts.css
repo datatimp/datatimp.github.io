@@ -55,3 +55,30 @@
     font-display: swap;
     src: url('../assets/fonts/space-mono-700-latin.woff2') format('woff2');
 }
+
+/* Montserrat — variable weight axis (Dime titles) */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../assets/fonts/montserrat-variable-latin.woff2') format('woff2');
+}
+
+/* Nunito — variable weight axis (Dime headings / body / labels) */
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 200 1000;
+    font-display: swap;
+    src: url('../assets/fonts/nunito-variable-latin.woff2') format('woff2');
+}
+
+/* Roboto Mono — variable weight axis (Dime code / tokens) */
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url('../assets/fonts/roboto-mono-variable-latin.woff2') format('woff2');
+}

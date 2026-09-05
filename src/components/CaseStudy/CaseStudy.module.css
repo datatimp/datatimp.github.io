@@ -918,6 +918,97 @@
     font-size: 0.9rem;
 }
 
+/* ─── Image pan/zoom viewer (enlarge: true on an image block) ─── */
+/* Enlarge trigger sized to the image so the badge hugs its corner (the shared
+   .enlargeTrigger is full-width, which floats the badge off to the right). */
+.enlargeImageBtn {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 720px;          /* match .imageBlockFrame so the badge sits on the image */
+    margin-inline: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: zoom-in;
+}
+
+.zoomBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: #f0f3f7;      /* standard box grey — lets the chart's #F0F3F7
+                                       break-boxes blend so the lines read as broken */
+    display: flex;
+    flex-direction: column;
+}
+
+.zoomToolbar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);   /* dark strip for contrast against the grey */
+}
+
+.zoomToolbar button {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    min-width: 2.4rem;
+    cursor: pointer;
+}
+
+.zoomToolbar button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.26);
+}
+
+.zoomToolbar button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.zoomLevel {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    min-width: 3.5rem;
+    text-align: center;
+}
+
+.zoomClose {
+    margin-left: auto;
+    font-size: 1.5rem !important;
+}
+
+.zoomScroll {
+    flex: 1 1 auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;   /* center; stay fully reachable when overflowing */
+    padding: 2rem;                  /* breathing room — never edge-to-edge (PAD=64 in JS) */
+}
+/* cursor (grab when pannable, default otherwise) is set inline per zoom state */
+
+.zoomImg {
+    display: block;
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    max-width: none;                /* allow overflow so both axes can scroll when zoomed */
+    user-select: none;              /* SVG carries its own #F0F3F7 background now */
+}
+
 /* ─── Image block (e.g. logo iterations composite) ─── */
 .imageBlock {
     margin: 0 0 var(--stack);
