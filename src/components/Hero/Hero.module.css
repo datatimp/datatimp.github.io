@@ -4,6 +4,20 @@
     isolation: isolate;
     padding: var(--space-xl) var(--space-lg);
     margin-bottom: 3rem;
+
+    /* Fallback for a dead WebGL2 context (blocklisted GPU, driver failure,
+       Firefox refusing to fall back to software). The Rive canvas below is
+       z-index: -1, which paints ABOVE this background but below the content,
+       so this only shows through when the canvas draws nothing. Without it a
+       failed context leaves the hero flat grey. Approximates the Rive palette. */
+    background:
+        linear-gradient(115deg,
+            #d6e7c8 0%,
+            #f3f7e2 18%,
+            #f8ee9a 40%,
+            #f6d79b 62%,
+            #efb87b 80%,
+            #faf3ea 100%);
 }
 
 /* Full-bleed animated gradient — the Rive "Blob Wobble" artboard (hero_gradient.riv)

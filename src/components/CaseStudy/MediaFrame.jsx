@@ -21,8 +21,8 @@ export const MediaFrame = ({ src, alt = '', riveProps = {}, className, radius = 
         if (mediaWidth) { frameStyle.maxWidth = mediaWidth; frameStyle.marginInline = 'auto'; } // cap + center
         if (background) { frameStyle.backgroundColor = background; }                             // mat behind transparent media (e.g. a .riv)
         if (padding) { frameStyle.padding = padding; }                                           // inset media, inside the border
-        if (border) { frameStyle.border = '1px solid var(--color-neutral-200)'; }
-        if (radius) { frameStyle.borderRadius = 'var(--radius)'; frameStyle.overflow = 'hidden'; } // round + clip the media to match
+        if (border) { frameStyle.border = typeof border === 'string' ? border : '1px solid var(--color-neutral-200)'; } // string = custom border, e.g. "2px solid #31a449"
+        if (radius) { frameStyle.borderRadius = typeof radius === 'string' ? radius : 'var(--radius)'; frameStyle.overflow = 'hidden'; } // round + clip; a string is a custom radius (e.g. "40px")
     }
     if (!isResolved(src)) {
         return <div className={cls} style={frameStyle}><div className={styles.framePlaceholder}>Asset pending</div></div>;
@@ -43,8 +43,8 @@ MediaFrame.propTypes = {
     alt: PropTypes.string,
     riveProps: PropTypes.object,
     className: PropTypes.string,
-    radius: PropTypes.bool,
-    border: PropTypes.bool,
+    radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     mediaWidth: PropTypes.string,
     mediaClass: PropTypes.string,
     background: PropTypes.string,

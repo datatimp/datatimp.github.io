@@ -14,6 +14,14 @@ import styles from './CaseStudy.module.css';
 
 const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
 
+// Inline markdown for short single-line fields (problem, subsection/image/gallery
+// body, captions): renders _em_, `code`, **strong**, and links WITHOUT ReactMarkdown's
+// wrapping <p>, so the text stays inside the existing styled element.
+const Inline = ({ children }) => (
+    <ReactMarkdown components={{ p: ({ children: c }) => c }}>{children}</ReactMarkdown>
+);
+Inline.propTypes = { children: PropTypes.string };
+
 function SectionHeader({ number, heading, problem }) {
     return (
         <header className={styles.sectionHeader}>
@@ -24,7 +32,7 @@ function SectionHeader({ number, heading, problem }) {
             {problem && (
                 <div className={styles.sectionProblem}>
                     <span className={styles.eyebrow}>The problem</span>
-                    <p className={styles.problemText}>{problem}</p>
+                    <p className={styles.problemText}><Inline>{problem}</Inline></p>
                 </div>
             )}
         </header>
@@ -39,7 +47,7 @@ function SubsectionHeader({ number, heading, body }) {
                 {number && <span className={styles.subsectionNumber}>{number}</span>}
                 <h3 className={styles.subsectionTitle}>{heading}</h3>
             </div>
-            {body && <p className={styles.blockLead}>{body}</p>}
+            {body && <p className={styles.blockLead}><Inline>{body}</Inline></p>}
         </div>
     );
 }
@@ -67,19 +75,24 @@ function ImpactBlock({ heading, body }) {
 }
 ImpactBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
-function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box, enlarge }) {
+function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box, enlarge, href, linkBadge }) {
     const [open, setOpen] = useState(false);
-    // `enlarge: true` on a static image → click to open the full-screen pan/zoom
-    // viewer (for large diagrams like the payment flow chart). .riv is out of scope.
-    const canEnlarge = enlarge && !isRiv(media);
+    // `enlarge: true` → click opens the full-screen pan/zoom viewer (large diagrams).
+    // `href` → the image becomes an external link that opens in a new tab; it wins over enlarge.
+    const canEnlarge = enlarge && !isRiv(media) && !href;
     const frame = (
         <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
     );
     return (
         <section className={styles.imageBlock} style={boxStyle(box)}>
             {heading && <h2 className={mediaTitle ? styles.mediaTitle : styles.blockHeading}>{heading}</h2>}
-            {body && <p className={styles.blockLead}>{body}</p>}
-            {canEnlarge ? (
+            {body && <p className={styles.blockLead}><Inline>{body}</Inline></p>}
+            {href ? (
+                <a href={href} target="_blank" rel="noreferrer" className={styles.enlargeImageBtn} style={{ cursor: 'pointer' }} aria-label={`${heading || 'Image'} — opens in a new tab`}>
+                    {frame}
+                    <span className={styles.enlargeBadge} aria-hidden="true">{linkBadge || 'Open ↗'}</span>
+                </a>
+            ) : canEnlarge ? (
                 <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'image'}`}>
                     {frame}
                     <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
@@ -91,18 +104,18 @@ function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, cla
         </section>
     );
 }
-ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.bool, border: PropTypes.bool, mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool };
+ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
 
 function Gallery({ heading, body, items = [] }) {
     return (
         <section className={styles.gallery}>
             {heading && <h2 className={styles.blockHeading}>{heading}</h2>}
-            {body && <p className={styles.blockLead}>{body}</p>}
+            {body && <p className={styles.blockLead}><Inline>{body}</Inline></p>}
             <div className={styles.galleryGrid}>
                 {items.map((it, idx) => (
                     <figure key={it.media || idx} className={styles.galleryItem}>
                         <MediaFrame src={it.media} alt={it.caption || ''} riveProps={it.riveProps} />
-                        {it.caption && <figcaption className={styles.galleryCaption}>{it.caption}</figcaption>}
+                        {it.caption && <figcaption className={styles.galleryCaption}><Inline>{it.caption}</Inline></figcaption>}
                     </figure>
                 ))}
             </div>
