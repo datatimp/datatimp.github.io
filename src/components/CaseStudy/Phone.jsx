@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { ImageZoomModal } from './ImageZoomModal';
 import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/iphone16-mockup.png';
@@ -23,8 +25,21 @@ Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: P
  *     collapses to a title → media → body stack on mobile).
  *   • no `side` → centered, with the caption stacked above (max visibility).
  */
-export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side, box }) => {
-    const device = <Device media={media} alt={alt} screenBg={screenBg} statusHeight={statusHeight} />;
+export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side, box, enlarge }) => {
+    const [open, setOpen] = useState(false);
+    // `enlarge: true` → click the mockup to open the pan/zoom viewer on the RAW
+    // screen at full resolution (no frame), same as an image block.
+    const canEnlarge = Boolean(enlarge && media);
+    const bare = <Device media={media} alt={alt} screenBg={screenBg} statusHeight={statusHeight} />;
+    const device = canEnlarge ? (
+        <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'screen'}`}>
+            {bare}
+            <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
+        </button>
+    ) : bare;
+    const viewer = open && (
+        <ImageZoomModal src={media} alt={alt || heading || ''} onClose={() => setOpen(false)} label={`${heading || 'Screen'} — expanded`} />
+    );
 
     if (side === 'left' || side === 'right') {
         return (
@@ -32,6 +47,7 @@ export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%',
                 {heading && <h3 className={`${styles.mediaTitle} ${styles.rowHeadingEl}`}>{heading}</h3>}
                 <div className={styles.rowMedia}>{device}</div>
                 <div className={styles.rowText}>{body && <ReactMarkdown>{body}</ReactMarkdown>}</div>
+                {viewer}
             </div>
         );
     }
@@ -45,6 +61,7 @@ export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%',
                 </figcaption>
             )}
             {device}
+            {viewer}
         </figure>
     );
 };
@@ -56,6 +73,7 @@ Phone.propTypes = {
     statusHeight: PropTypes.string, // how far to push the media down past the island
     heading: PropTypes.string,
     body: PropTypes.string,
+    enlarge: PropTypes.bool,   // click the mockup to open the pan/zoom viewer
     side: PropTypes.oneOf(['left', 'right']),   // omit → centered with caption above
     box: PropTypes.object,   // style the whole block container from .md
 };

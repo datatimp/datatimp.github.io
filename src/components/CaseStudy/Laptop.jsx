@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { ImageZoomModal } from './ImageZoomModal';
 import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/macbook-pro-mockup.png';
 
-/** The bare MacBook mockup: looping mp4 behind a transparent-screen PNG. */
+// Vite keeps the extension on hashed asset URLs, so we can tell a screen
+// recording from a still screenshot and pick the right element for each.
+const isVideo = (src) => /\.(mp4|webm|mov)(\?|#|$)/i.test(src);
+
+/** The bare MacBook mockup: an mp4 loop OR a still, behind a transparent-screen PNG. */
 const Device = ({ media, screenBg, poster, alt }) => (
     <div className={styles.laptop}>
         <div className={styles.laptopScreenInner} style={{ background: screenBg }}>
-            {media && (
+            {media && (isVideo(media) ? (
                 <video
                     className={styles.laptopScreen}
                     src={media}
@@ -20,7 +26,15 @@ const Device = ({ media, screenBg, poster, alt }) => (
                     preload="metadata"
                     aria-label={alt || undefined}
                 />
-            )}
+            ) : (
+                <img
+                    className={styles.laptopScreen}
+                    src={media}
+                    alt={alt}
+                    loading="lazy"
+                    decoding="async"
+                />
+            ))}
         </div>
         <img src={frame} alt="" aria-hidden="true" className={styles.laptopFrame} />
     </div>
@@ -35,8 +49,22 @@ Device.propTypes = { media: PropTypes.string, screenBg: PropTypes.string, poster
  *     the study; collapses to a title → media → body stack on mobile).
  *   • no `side` → centered, with the caption stacked above (max visibility).
  */
-export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, poster, side, box }) => {
-    const device = <Device media={media} screenBg={screenBg} poster={poster} alt={alt} />;
+export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, poster, side, box, enlarge }) => {
+    const [open, setOpen] = useState(false);
+    // `enlarge: true` → click the mockup to open the pan/zoom viewer on the RAW
+    // screen at full resolution (no frame), same as an image block. Stills only:
+    // the viewer takes an <img>, so a video mockup can't feed it.
+    const canEnlarge = enlarge && media && !isVideo(media);
+    const bare = <Device media={media} screenBg={screenBg} poster={poster} alt={alt} />;
+    const device = canEnlarge ? (
+        <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'screen'}`}>
+            {bare}
+            <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
+        </button>
+    ) : bare;
+    const viewer = open && (
+        <ImageZoomModal src={media} alt={alt || heading || ''} onClose={() => setOpen(false)} label={`${heading || 'Screen'} — expanded`} />
+    );
 
     if (side === 'left' || side === 'right') {
         return (
@@ -44,6 +72,7 @@ export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, post
                 {heading && <h3 className={`${styles.mediaTitle} ${styles.rowHeadingEl}`}>{heading}</h3>}
                 <div className={styles.rowMedia}>{device}</div>
                 <div className={styles.rowText}>{body && <ReactMarkdown>{body}</ReactMarkdown>}</div>
+                {viewer}
             </div>
         );
     }
@@ -57,6 +86,7 @@ export const Laptop = ({ media, alt = '', screenBg = '#fff', heading, body, post
                 </figcaption>
             )}
             {device}
+            {viewer}
         </figure>
     );
 };
@@ -68,6 +98,7 @@ Laptop.propTypes = {
     heading: PropTypes.string,
     body: PropTypes.string,
     poster: PropTypes.string,
+    enlarge: PropTypes.bool,   // stills only: click the mockup to open the pan/zoom viewer
     side: PropTypes.oneOf(['left', 'right']),   // omit → centered with caption above
     box: PropTypes.object,   // style the whole block container from .md
 };

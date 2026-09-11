@@ -51,8 +51,31 @@ blocks:
       padding: "2rem"
       radius: "16px"
 
+  - type: image
+    heading: "Two layers, one source of truth"
+    mediaTitle: true
+    media: ./assets/figma-variables.webp
+    alt: "The Figma Variables panel for the Dime system. Collections are split into Color and Color Primitives, and every semantic token's value is an alias to a primitive rather than a raw hex."
+    enlarge: true
+    shadow: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      The values live in Figma Variables, not on a canvas page, which is how a developer actually extracts them. Note the value column: every semantic token resolves to *another token*, never a hex. `Text / Brand / Primary` points at `Brand/200`. That indirection is the whole point. Retheme the primitive and every component downstream follows.
+
   - type: subsection
     number: "01b"
+    heading: "Governing the system"
+    body: >
+      **Primitives are deliberately not exposed to components.** A component can only reach the semantic layer, so a developer picks `border-focus-primary`, never `green-600`. That constraint is what keeps a design system a system: if any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything. It also means intent survives. `positive` and `brand` happen to share a green today, but they're separate tokens, so rebranding away from green won't quietly turn *success* into the new brand colour.
+
+      The same discipline runs past colour. Elevation isn't a pasted shadow, it's composed from depth and alpha tokens, so shadows stay consistent and adjust as a set. Icon stroke weight is tokenised alongside icon size, so a 12px icon and a 24px icon keep the same optical weight. Roughly 290 variables across eight collections, built to be consumed rather than admired.
+
+  - type: subsection
+    number: "01c"
     heading: "Type as tokens"
     body: >
       Type is tokenized the same way: each family is assigned to roles, and every size resolves through a shared numeric scale rather than one-off pixel values, so "Body / Medium" is a token, not a guess.
@@ -82,7 +105,7 @@ blocks:
       radius: "16px"
 
   - type: subsection
-    number: "01c"
+    number: "01d"
     heading: "Components"
     body: >
       Primitives and tokens compose into documented components, specified two ways: a full set of variants a developer picks from, and exact measurements for clean handoff.
@@ -90,8 +113,8 @@ blocks:
   - type: image
     heading: "Button variants"
     mediaTitle: true
-    media: ./assets/dime-ds-button-matrices.svg
-    alt: "The Dime Button across its three intents (Primary, Secondary, Destructive), each shown in Default, Hover, and Disabled states at both sizes, with and without icons."
+    media: ./assets/dime-ds-button-matrices.webp
+    alt: "The Dime Button across its three intents (Primary, Secondary, Destructive), each shown in Default, Hover, Disabled and Focus states at both sizes, with and without icons. Hover treatments follow the client's existing brand behavior."
     enlarge: true
     box:
       background: "#f0f3f7"
@@ -137,12 +160,16 @@ blocks:
     body: >
       The same tables, navigation, and layout primitives reskin per role. Shown here across roles: the point isn't the individual screen, it's that they're all the same system.
 
-  - type: image
+  - type: laptop
     heading: "Customer dashboard"
-    media: ./assets/shell-customer-dashboard.webp   # TODO — remake, desktop
+    media: ./assets/customer-dashboard-desktop.webp
     alt: "Dime Customer dashboard in the account shell"
-    radius: true
-    border: true
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
 
   - type: image
     heading: "Merchant online transactions"

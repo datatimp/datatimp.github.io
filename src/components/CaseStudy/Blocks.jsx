@@ -75,13 +75,13 @@ function ImpactBlock({ heading, body }) {
 }
 ImpactBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
-function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, mediaTitle, box, enlarge, href, linkBadge }) {
+function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, shadow, mediaTitle, box, enlarge, href, linkBadge }) {
     const [open, setOpen] = useState(false);
     // `enlarge: true` → click opens the full-screen pan/zoom viewer (large diagrams).
     // `href` → the image becomes an external link that opens in a new tab; it wins over enlarge.
     const canEnlarge = enlarge && !isRiv(media) && !href;
     const frame = (
-        <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} />
+        <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} shadow={shadow} />
     );
     return (
         <section className={styles.imageBlock} style={boxStyle(box)}>
@@ -104,7 +104,7 @@ function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, cla
         </section>
     );
 }
-ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
+ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
 
 function Gallery({ heading, body, items = [] }) {
     return (

@@ -10,17 +10,18 @@ const isResolved = (src) => typeof src === 'string' && !src.startsWith('.');
  * A framed media slot. Renders a live .riv when the source is a Rive file, a
  * static image otherwise, and a labelled placeholder when the asset is missing.
  */
-export const MediaFrame = ({ src, alt = '', riveProps = {}, className, radius = false, border = false, mediaWidth, mediaClass, background, padding }) => {
+export const MediaFrame = ({ src, alt = '', riveProps = {}, className, radius = false, border = false, mediaWidth, mediaClass, background, padding, shadow }) => {
     // `mediaClass` is a plain, un-hashed class you target from case-study-overrides.css.
     const cls = [styles.frame, className, mediaClass].filter(Boolean).join(' ');
     // ALL per-block tweaks live on this one element (the frame) so the box model
     // behaves normally: padding sits inside the border, background fills the pad.
     let frameStyle;
-    if (radius || border || mediaWidth || background || padding) {
+    if (radius || border || mediaWidth || background || padding || shadow) {
         frameStyle = {};
         if (mediaWidth) { frameStyle.maxWidth = mediaWidth; frameStyle.marginInline = 'auto'; } // cap + center
         if (background) { frameStyle.backgroundColor = background; }                             // mat behind transparent media (e.g. a .riv)
         if (padding) { frameStyle.padding = padding; }                                           // inset media, inside the border
+        if (shadow) { frameStyle.boxShadow = typeof shadow === 'string' ? shadow : '0 6px 24px rgba(0,0,0,0.18)'; } // lift the media off its box (true = default lift)
         if (border) { frameStyle.border = typeof border === 'string' ? border : '1px solid var(--color-neutral-200)'; } // string = custom border, e.g. "2px solid #31a449"
         if (radius) { frameStyle.borderRadius = typeof radius === 'string' ? radius : 'var(--radius)'; frameStyle.overflow = 'hidden'; } // round + clip; a string is a custom radius (e.g. "40px")
     }
