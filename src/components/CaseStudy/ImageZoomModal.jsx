@@ -7,8 +7,8 @@ const PAD = 64; // breathing room around the image; matches .zoomScroll padding 
 
 /**
  * Full-screen viewer for a large static image (e.g. a tall flow chart).
- * Opens FIT-to-screen (never larger than the viewport) and lets the visitor zoom
- * in past fit, then pan both axes:
+ * Opens fit-to-WIDTH, capped at the image's native device-pixel resolution, then
+ * lets the visitor zoom and pan both axes:
  *   • mobile → native touch scroll (up/down + left/right)
  *   • desktop → drag-to-pan (grab) once zoomed past fit, plus scroll/wheel
  * Toolbar: −/+ zoom, Fit (reset), ×. Esc closes; keys + − 0 mirror the buttons.
@@ -19,10 +19,12 @@ export const ImageZoomModal = ({ src, alt = '', onClose, label = 'Image viewer' 
     const drag = useRef(null);
     const [nat, setNat] = useState({ w: 0, h: 0 });
     const [avail, setAvail] = useState({ w: 0, h: 0 });
-    const [userZoom, setUserZoom] = useState(1); // 1 = fit-to-screen; up to 6× that
+    const [userZoom, setUserZoom] = useState(1); // 1 = default fit; 0.25×–6× that
 
     const zoom = useCallback(
-        (d) => setUserZoom((z) => Math.min(6, Math.max(1, +(z + d).toFixed(2)))),
+        // Zooming OUT below the default matters for tall images, where the default
+        // fills the width and runs off the bottom.
+        (d) => setUserZoom((z) => Math.min(6, Math.max(0.25, +(z + d).toFixed(2)))),
         [],
     );
 
@@ -52,9 +54,17 @@ export const ImageZoomModal = ({ src, alt = '', onClose, label = 'Image viewer' 
         };
     }, [onClose, zoom]);
 
-    // Fit = shrink a big chart to the screen; never upscale past natural by default.
-    const fit = (nat.w && nat.h && avail.w && avail.h)
-        ? Math.min(1, (avail.w - PAD) / nat.w, (avail.h - PAD) / nat.h)
+    // Fit to WIDTH, not to both axes. Fitting height too meant a tall image opened
+    // SMALLER than it rendered inline, which made "Expand" shrink things; the
+    // overflow scrolls instead.
+    //
+    // The cap is the image's native resolution in DEVICE pixels, not CSS pixels.
+    // On a HiDPI screen, 1 image px stretched over 1 CSS px covers `dpr` physical
+    // pixels and looks soft, so a 2418px-wide export tops out around 1612 CSS px
+    // on a 1.5× display — where it renders exactly 1:1 and stays crisp.
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    const fit = (nat.w && avail.w)
+        ? Math.min(1 / dpr, (avail.w - PAD) / nat.w)
         : 1;
     const scale = fit * userZoom;
     const dispW = nat.w ? nat.w * scale : undefined;
@@ -84,7 +94,7 @@ export const ImageZoomModal = ({ src, alt = '', onClose, label = 'Image viewer' 
     return createPortal(
         <div className={styles.zoomBackdrop} role="dialog" aria-modal="true" aria-label={label}>
             <div className={styles.zoomToolbar}>
-                <button type="button" onClick={() => zoom(-0.25)} aria-label="Zoom out" disabled={userZoom <= 1}>−</button>
+                <button type="button" onClick={() => zoom(-0.25)} aria-label="Zoom out" disabled={userZoom <= 0.25}>−</button>
                 <span className={styles.zoomLevel}>{Math.round(scale * 100)}%</span>
                 <button type="button" onClick={() => zoom(0.25)} aria-label="Zoom in" disabled={userZoom >= 6}>+</button>
                 <button type="button" onClick={() => setUserZoom(1)} aria-label="Fit to screen" disabled={userZoom === 1}>Fit</button>

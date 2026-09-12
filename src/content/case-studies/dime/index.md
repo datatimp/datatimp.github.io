@@ -154,11 +154,39 @@ blocks:
     problem: >
       The account shell served three roles (Customer, Merchant, and Admin) from one component set and the challenge was data density and consistency. Though each role sees different data, the product should feel seamless between them.
 
+  - type: image
+    heading: "Breakpoints as tokens"
+    mediaTitle: true
+    media: ./assets/shell-grid-tokens.webp
+    alt: "Layout token table across five breakpoints: device name, device width, padding X and Y, and root font size, with the pixel range each breakpoint covers."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      Each breakpoint is a *mode*, not a set of hand-tuned values. Padding resolves through the same `Space` scale everything else uses, so a component re-pads itself when the frame changes size instead of being adjusted five times. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable and stops iOS zooming the page on input focus.
+
+  - type: image
+    heading: "The shell, before anything fills it"
+    mediaTitle: true
+    media: ./assets/shell-grid-layout.webp
+    alt: "Shell layout frames across five breakpoints. Desktop S and Desktop L are expanded to show navigation changing from a collapsible overlay to a persistent sidebar, with padding measurements on each."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      Those tokens drive one skeleton across all five sizes. Navigation is a persistent sidebar from 1280 up and collapses to an overlay drawer below it, which is the only structural decision the shell makes. The content column scrolls while the sidebar stays fixed, and the header's system controls shift from center to right-aligned when the merchant select isn't present.
+
   - type: subsection
     number: "02a"
     heading: "One system, three roles"
     body: >
-      The same tables, navigation, and layout primitives reskin per role. Shown here across roles: the point isn't the individual screen, it's that they're all the same system.
+      The same tables, navigation, and layout primitives reskin per role. What changes is the data and the privileges, not the parts. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant: elevated permissions on a near-identical interface, so it shipped without needing a design of its own. That's the clearest result the system produced. A third role cost nothing to serve.
 
   - type: laptop
     heading: "Customer dashboard"
@@ -171,12 +199,16 @@ blocks:
       padding: "2rem"
       radius: "16px"
 
-  - type: image
+  - type: laptop
     heading: "Merchant online transactions"
-    media: ./assets/shell-merchant-transactions.webp   # TODO — remake, desktop
-    alt: "Dime Merchant online-transactions view in the account shell"
-    radius: true
-    border: true
+    media: ./assets/merchant-online-transactions.webp
+    alt: "Dime Merchant online-transactions view: a filterable, sortable transaction table with bulk selection, refund and export actions, and pagination."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
 
   - type: image
     heading: "Recurring payments (mobile)"

@@ -998,7 +998,10 @@
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x pan-y;
     display: flex;
-    align-items: safe center;
+    /* flex-start, not centre: a tall image that overflows must begin at its top
+       rather than being centred with the first rows scrolled off. `safe center`
+       still centres anything that fits. */
+    align-items: safe flex-start;
     justify-content: safe center;   /* center; stay fully reachable when overflowing */
     padding: 2rem;                  /* breathing room — never edge-to-edge (PAD=64 in JS) */
 }
@@ -1144,5 +1147,133 @@
 @media (max-width: 460px) {
     .brandGrid {
         grid-template-columns: 1fr;
+    }
+}
+
+
+/* ─── Outline nav (sticky section rail, desktop only) ───
+   Derived from the study's section/subsection blocks. Lives in the left gutter
+   beside .body, which is why it only appears once the viewport is wide enough to
+   have a gutter to spare. */
+.outlineNav {
+    display: none;
+}
+
+@media (min-width: 1280px) {
+    .outlineNav {
+        display: block;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        /* Sits in the gutter left of the centred content column. */
+        left: max(1rem, calc(50vw - (var(--container-width) / 2) + 1rem));
+        width: 190px;
+        max-height: 70vh;
+        overflow-y: auto;
+        z-index: 5;
+        /* Hidden over the hero, faded in once the reader reaches the body. */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 220ms ease, visibility 0s linear 220ms;
+    }
+
+    .outlineNavVisible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 220ms ease, visibility 0s;
+    }
+}
+
+/* Wider viewports have a real gutter, so give the rail more room to breathe. */
+@media (min-width: 1600px) {
+    .outlineNav {
+        width: 220px;
+    }
+}
+
+.outlineList,
+.outlineSubList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outlineList > li + li {
+    margin-top: 0.75rem;
+}
+
+.outlineLink {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-neutral-500, #7b7b7b);
+    /* The left rule doubles as the active indicator. */
+    border-left: 2px solid transparent;
+    padding: 0.125rem 0 0.125rem 0.625rem;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.outlineLink:hover {
+    color: var(--color-text, #202020);
+}
+
+.outlineLinkActive {
+    color: var(--color-text, #202020);
+    border-left-color: var(--color-primary, #0f8a72);
+}
+
+.outlineNumber {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    color: var(--color-primary, #0f8a72);
+}
+
+.outlineSubList {
+    margin: 0.375rem 0 0;
+    padding-left: 0.625rem;
+}
+
+.outlineSubList > li + li {
+    margin-top: 0.25rem;
+}
+
+.outlineSubLink {
+    display: block;
+    text-decoration: none;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--color-neutral-500, #7b7b7b);
+    border-left: 2px solid transparent;
+    padding: 0.125rem 0 0.125rem 0.625rem;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.outlineSubLink:hover {
+    color: var(--color-text, #202020);
+}
+
+.outlineSubLinkActive {
+    color: var(--color-text, #202020);
+    border-left-color: var(--color-primary, #0f8a72);
+}
+
+/* Anchors sit under the fixed navbar without the heading hiding beneath it. */
+.sectionHeader,
+.subsection {
+    scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .outlineLink,
+    .outlineSubLink,
+    .outlineNav,
+    .outlineNavVisible {
+        transition: none;
     }
 }

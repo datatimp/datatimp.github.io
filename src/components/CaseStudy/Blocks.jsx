@@ -10,6 +10,7 @@ import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
 import { ImageZoomModal } from './ImageZoomModal';
 import { boxStyle } from './boxStyle';
+import { sectionId } from './sectionId';
 import styles from './CaseStudy.module.css';
 
 const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
@@ -24,7 +25,7 @@ Inline.propTypes = { children: PropTypes.string };
 
 function SectionHeader({ number, heading, problem }) {
     return (
-        <header className={styles.sectionHeader}>
+        <header className={styles.sectionHeader} id={sectionId(number, heading)}>
             <div className={styles.sectionTitleRow}>
                 {number && <span className={styles.sectionNumber}>{number}</span>}
                 <h2 className={styles.sectionTitle}>{heading}</h2>
@@ -42,7 +43,7 @@ SectionHeader.propTypes = { number: PropTypes.string, heading: PropTypes.string,
 
 function SubsectionHeader({ number, heading, body }) {
     return (
-        <div className={styles.subsection}>
+        <div className={styles.subsection} id={sectionId(number, heading)}>
             <div className={styles.subsectionTitleRow}>
                 {number && <span className={styles.subsectionNumber}>{number}</span>}
                 <h3 className={styles.subsectionTitle}>{heading}</h3>

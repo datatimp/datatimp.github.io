@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer/Footer';
 import { CaseStudyHero } from '../components/CaseStudy/CaseStudyHero';
 import { Snapshot } from '../components/CaseStudy/Snapshot';
 import { Block } from '../components/CaseStudy/Blocks';
+import { OutlineNav } from '../components/CaseStudy/OutlineNav';
 import ReactMarkdown from 'react-markdown';
 import { getCaseStudy } from '../content/caseStudies';
 import styles from '../components/CaseStudy/CaseStudy.module.css';
@@ -67,6 +68,8 @@ export const CaseStudy = () => {
                         <ReactMarkdown>{study.summary}</ReactMarkdown>
                     </div>
                 )}
+
+                <OutlineNav blocks={blocks} />
 
                 {blocks.map((block, i) => (
                     <Block key={`${block.type}-${i}`} block={block} />
