@@ -8,7 +8,7 @@ const isResolved = (src) => typeof src === 'string' && !src.startsWith('.');
 
 /**
  * A framed media slot. Renders a live .riv when the source is a Rive file, a
- * static image otherwise, and a labelled placeholder when the asset is missing.
+ * static image otherwise, and a labeled placeholder when the asset is missing.
  */
 export const MediaFrame = ({ src, alt = '', riveProps = {}, className, radius = false, border = false, mediaWidth, mediaClass, background, padding, shadow }) => {
     // `mediaClass` is a plain, un-hashed class you target from case-study-overrides.css.

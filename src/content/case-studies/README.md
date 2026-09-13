@@ -115,7 +115,7 @@ Every item under `blocks:` needs a `type:`. Here are the types and their fields.
 
 ### `typeSpec` — native type-specimen panel
 
-A bordered box (snapshot-grey) with a role header and labelled fields, each value
+A bordered box (snapshot-grey) with a role header and labeled fields, each value
 rendered in its own face. `color` tints every value; each field's `size` sets that
 value's size. `font` must be a CSS family that's actually loaded.
 
@@ -146,13 +146,44 @@ value's size. `font` must be a CSS family that's actually loaded.
 ### `phone` — media inside an iPhone mockup
 
 Shows a screen recording (animated AVIF works great — auto-loops, Safari-safe) or
-image inside a photoreal iPhone frame. Media should be iPhone-screen aspect (~19.5:9).
+image inside a photoreal iPhone frame.
+
+**Canvas size.** The frame's screen cutout is exactly iPhone 16: design at
+**393 × 852** and export at 2x (786 × 1704) or 3x (1179 × 2556). 390 × 844 is fine
+too — the aspect differs by 0.18%, well under a pixel at render size. Export 3x if
+you set `enlarge: true`, since the viewer shows the raw screen at full resolution.
 
 ```yaml
 - type: phone
   media: ./assets/find-us-ios.avif
   alt: "What the recording shows"
+  statusHeight: "0%"       # see below — the one that bites
+  screenBg: "#ffffff"
+  maxWidth: "360px"
+  enlarge: true
+  side: right              # omit → centered with the caption above
+  box: { background: "#f0f3f7", padding: "2rem", radius: "16px" }
 ```
+
+| Option | What it does |
+|---|---|
+| `statusHeight` | How far to push the media down past the Dynamic Island. **Default `"9%"`.** |
+| `screenBg` | Color filling the strip behind the Dynamic Island. Default `#000`. |
+| `maxWidth` | Override the 300px mockup cap. A full-width `box:` wants ~360px. |
+| `enlarge` | Click the mockup to open the raw screen in the pan/zoom viewer. |
+| `side` | `left` / `right` for an alternating media+text row. Omit for centered. |
+| `box` | Style the whole block container (same keys as other blocks). |
+
+**`statusHeight` is the one that bites.** The media is top-aligned and the container
+clips, so the default `9%` pushes your export down and **cuts ~77pt off the bottom**.
+Two coherent setups:
+
+- Your export **includes** its own status bar → `statusHeight: "0%"`, `screenBg` set to
+  match that strip. Nothing clips.
+- Your export is **content only** → leave `statusHeight: "9%"` and let `screenBg` fake
+  the status strip. Design the canvas 393 × 775.
+
+Mixing them — a full 393 × 852 export left at the default — silently loses its bottom.
 
 ### Prose blocks — `overview` / `problem` / `process` / `impact`
 

@@ -7,15 +7,15 @@ import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/iphone16-mockup.png';
 
 /** The bare iPhone mockup: media behind a transparent-screen PNG. */
-const Device = ({ media, alt, screenBg, statusHeight }) => (
-    <div className={styles.phone}>
+const Device = ({ media, alt, screenBg, statusHeight, maxWidth }) => (
+    <div className={styles.phone} style={maxWidth ? { maxWidth } : undefined}>
         <div className={styles.phoneScreenInner} style={{ background: screenBg }}>
             <img src={media} alt={alt} className={styles.phoneScreen} style={{ top: statusHeight }} loading="lazy" />
         </div>
         <img src={frame} alt="" aria-hidden="true" className={styles.phoneFrame} />
     </div>
 );
-Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: PropTypes.string, statusHeight: PropTypes.string };
+Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: PropTypes.string, statusHeight: PropTypes.string, maxWidth: PropTypes.string };
 
 /**
  * A screen recording shown inside a photoreal iPhone mockup. `screenBg` fills
@@ -25,12 +25,12 @@ Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: P
  *     collapses to a title → media → body stack on mobile).
  *   • no `side` → centered, with the caption stacked above (max visibility).
  */
-export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side, box, enlarge }) => {
+export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%', heading, body, side, box, enlarge, maxWidth }) => {
     const [open, setOpen] = useState(false);
     // `enlarge: true` → click the mockup to open the pan/zoom viewer on the RAW
     // screen at full resolution (no frame), same as an image block.
     const canEnlarge = Boolean(enlarge && media);
-    const bare = <Device media={media} alt={alt} screenBg={screenBg} statusHeight={statusHeight} />;
+    const bare = <Device media={media} alt={alt} screenBg={screenBg} statusHeight={statusHeight} maxWidth={maxWidth} />;
     const device = canEnlarge ? (
         <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'screen'}`}>
             {bare}
@@ -69,8 +69,9 @@ export const Phone = ({ media, alt = '', screenBg = '#000', statusHeight = '9%',
 Phone.propTypes = {
     media: PropTypes.string,
     alt: PropTypes.string,
-    screenBg: PropTypes.string,   // colour behind the Dynamic Island (match the site nav)
+    screenBg: PropTypes.string,   // color behind the Dynamic Island (match the site nav)
     statusHeight: PropTypes.string, // how far to push the media down past the island
+    maxWidth: PropTypes.string,   // override the 300px mockup cap (a full-width box wants more)
     heading: PropTypes.string,
     body: PropTypes.string,
     enlarge: PropTypes.bool,   // click the mockup to open the pan/zoom viewer

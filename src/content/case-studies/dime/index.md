@@ -43,7 +43,7 @@ blocks:
     heading: "Naming & taxonomy"
     mediaTitle: true
     media: ./assets/dime-ds-token-naming.svg
-    alt: "The dpds- token naming schema on two examples (a semantic/component token and a primitive token), labelled system, category, property, role, and variant."
+    alt: "The dpds- token naming schema on two examples (a semantic/component token and a primitive token), labeled system, category, property, role, and variant."
     enlarge: true
     box:
       background: "#f0f3f7"
@@ -70,9 +70,9 @@ blocks:
     number: "01b"
     heading: "Governing the system"
     body: >
-      **Primitives are deliberately not exposed to components.** A component can only reach the semantic layer, so a developer picks `border-focus-primary`, never `green-600`. That constraint is what keeps a design system a system: if any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything. It also means intent survives. `positive` and `brand` happen to share a green today, but they're separate tokens, so rebranding away from green won't quietly turn *success* into the new brand colour.
+      **Primitives are deliberately not exposed to components.** A component can only reach the semantic layer, so a developer picks `border-focus-primary`, never `green-600`. That constraint is what keeps a design system a system: if any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything. It also means intent survives. `positive` and `brand` happen to share a green today, but they're separate tokens, so rebranding away from green won't quietly turn *success* into the new brand color.
 
-      The same discipline runs past colour. Elevation isn't a pasted shadow, it's composed from depth and alpha tokens, so shadows stay consistent and adjust as a set. Icon stroke weight is tokenised alongside icon size, so a 12px icon and a 24px icon keep the same optical weight. Roughly 290 variables across eight collections, built to be consumed rather than admired.
+      The same discipline runs past color. Elevation isn't a pasted shadow, it's composed from depth and alpha tokens, so shadows stay consistent and adjust as a set. Icon stroke weight is tokenized alongside icon size, so a 12px icon and a 24px icon keep the same optical weight. Roughly 290 variables across eight collections, built to be consumed rather than admired.
 
   - type: subsection
     number: "01c"
@@ -189,7 +189,7 @@ blocks:
       The same tables, navigation, and layout primitives reskin per role. What changes is the data and the privileges, not the parts. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant: elevated permissions on a near-identical interface, so it shipped without needing a design of its own. That's the clearest result the system produced. A third role cost nothing to serve.
 
   - type: laptop
-    heading: "Customer dashboard"
+    heading: "Customer: dashboard"
     media: ./assets/customer-dashboard-desktop.webp
     alt: "Dime Customer dashboard in the account shell"
     enlarge: true
@@ -200,7 +200,7 @@ blocks:
       radius: "16px"
 
   - type: laptop
-    heading: "Merchant online transactions"
+    heading: "Merchant: online transactions"
     media: ./assets/merchant-online-transactions.webp
     alt: "Dime Merchant online-transactions view: a filterable, sortable transaction table with bulk selection, refund and export actions, and pagination."
     enlarge: true
@@ -210,12 +210,19 @@ blocks:
       padding: "2rem"
       radius: "16px"
 
-  - type: image
-    heading: "Recurring payments (mobile)"
-    media: ./assets/shell-customer-mobile.webp   # TODO — remake, mobile (→ Phone frame)
-    alt: "Dime Customer recurring-payments screen on mobile"
-    radius: true
-    border: true
+  - type: phone
+    heading: "Customer: Recurring payments (mobile)"
+    media: ./assets/customer-recurring-payments-mobile.avif
+    alt: "Screen recording of the Dime Customer recurring-payments screen on mobile: a stacked list of recurring-payment cards showing organization, amount, Active or Paused status, method and dates. The list scrolls, and a card flips to reveal its actions."
+    statusHeight: "0%"      # the export already carries its own status-bar strip
+    maxWidth: "360px"       # bigger than the 300px default — the box is full width
+    screenBg: "#ffffff"     # matches that strip behind the Dynamic Island
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
 
   # ══════════════ 03 — PAYMENT PROCESSING PAGE ══════════════
   - type: section

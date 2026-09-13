@@ -79,10 +79,14 @@
 }
 
 /* ─── Phone mockup (media behind a transparent-screen iPhone frame) ─── */
-/* Kept centered (not in the alternating print layout) to maximise visibility.
+/* Kept centered (not in the alternating print layout) to maximize visibility.
    Optional caption above explains why the demo is here. */
 .phoneBlock {
     margin: 0 auto var(--stack);
+    /* See .laptopBlock: in .body's flex column, `margin: 0 auto` outranks
+       align-items:stretch, so without this the box shrink-wraps to the mockup
+       and sits narrower than every other block. */
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -247,7 +251,13 @@
 .body code {
     font-family: var(--font-mono);
     font-size: 0.88em;
-    background: var(--panel-bg);
+    /* TRANSLUCENT, not a fixed color. This used to be var(--panel-bg), the same
+       #f0f3f7 as the tinted boxes, so a chip inside a box was invisible. A dark
+       wash sits a constant step darker than whatever it lands on, so it reads on
+       white body copy, inside --panel-bg boxes, and on any box color added later. */
+    background: rgba(16, 32, 48, 0.085);
+    box-shadow: inset 0 0 0 1px rgba(16, 32, 48, 0.10);
+    color: var(--color-neutral-900);
     padding: 0.12em 0.4em;
     border-radius: 5px;
 }
@@ -999,7 +1009,7 @@
     touch-action: pan-x pan-y;
     display: flex;
     /* flex-start, not centre: a tall image that overflows must begin at its top
-       rather than being centred with the first rows scrolled off. `safe center`
+       rather than being centered with the first rows scrolled off. `safe center`
        still centres anything that fits. */
     align-items: safe flex-start;
     justify-content: safe center;   /* center; stay fully reachable when overflowing */
@@ -1165,7 +1175,7 @@
         position: fixed;
         top: 50%;
         transform: translateY(-50%);
-        /* Sits in the gutter left of the centred content column. */
+        /* Sits in the gutter left of the centered content column. */
         left: max(1rem, calc(50vw - (var(--container-width) / 2) + 1rem));
         width: 190px;
         max-height: 70vh;

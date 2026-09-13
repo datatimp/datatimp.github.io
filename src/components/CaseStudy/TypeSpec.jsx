@@ -5,7 +5,7 @@ const GLYPHS = 'abcdefghijklmnopqrstuvwxyz 0123456789';
 
 /**
  * A native type-specimen panel echoing the brand deck's typography slide:
- * a role header ("Logo / Titles") followed by labelled fields (Typeface,
+ * a role header ("Logo / Titles") followed by labeled fields (Typeface,
  * Weight, Glyphs), each value rendered in its own face. Data-driven.
  *
  * `color` tints every value (e.g. the HG green). Each field may set `size`

@@ -30,7 +30,7 @@ export const Lightbox = ({ images = [], onClose, label = 'Image viewer', backgro
     if (!count) return null;
 
     // Portal to <body> so the fixed overlay escapes the case-study grid/stacking
-    // context (rendered inline it mis-centred and under-covered on mobile).
+    // context (rendered inline it mis-centered and under-covered on mobile).
     return createPortal(
         <div className={styles.modalBackdrop} onClick={onClose} role="dialog" aria-modal="true" aria-label={label}>
             <div className={styles.modalBody} onClick={(e) => e.stopPropagation()}>
