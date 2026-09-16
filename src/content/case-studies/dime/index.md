@@ -252,18 +252,21 @@ blocks:
     number: "03b"
     heading: "The flow, screen by screen"
     body: >
-      Four moments carry the experience. Each screen earns its place by showing a decision, not just a state.
+      Three moments carry the experience. Each screen earns its place by showing a decision, not just a state.
 
   - type: gallery
+    phone: true             # frame every item in the iPhone mockup
+    statusHeight: "0%"      # these exports run edge-to-edge, no status strip
     items:
-      - media: ./assets/pay-01-amount.webp       # TODO — remake, mobile
-        caption: "1 · Enter amount: a trustworthy first impression"
-      - media: ./assets/pay-02-verify.webp       # TODO — remake, mobile
-        caption: "2 · Verify by phone: identity without forcing an account"
-      - media: ./assets/pay-03-method.webp       # TODO — remake, mobile
-        caption: "3 · Choose method: Apple Pay, Google Pay, card, or bank"
-      - media: ./assets/pay-04-confirm.webp      # TODO — remake, mobile
-        caption: "4 · Confirmation: clear close and receipt"
+      - media: ./assets/ppp-mobile-flow01.webp   # DONE — mobile
+        label: "Screen 1"
+        body: "User can enter amount manually or choose from a preset amount (determined by merchant). Login is passwordless and handled by an OTP delivered via text or email."
+      - media: ./assets/ppp-mobile-flow02.webp   # DONE — mobile
+        label: "Screen 2"
+        body: "Everything needed to review before paying, on one screen: the fee the payer chose to cover, wallets first for speed, and a saved card that can be swapped inline. Nothing here navigates away."
+      - media: ./assets/ppp-mobile-flow03.webp   # incoming — confirmation
+        label: "Screen 3"
+        body: "Confirmation — a clear close and a receipt."
 
   - type: image
     heading: "Desktop"

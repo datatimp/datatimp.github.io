@@ -42,6 +42,79 @@
     color: var(--color-primary);
 }
 
+/* ─── Work dropdown ─── */
+.hasSubmenu {
+    position: relative;
+}
+
+/* The trigger is a <button>, so it needs resetting back to link appearance. */
+.workTrigger {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font: inherit;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.caret {
+    font-size: 0.7em;
+    transition: transform 0.2s ease;
+}
+
+.workTrigger[aria-expanded='true'] .caret {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: calc(100% + var(--space-sm));
+    left: 0;
+    min-width: 230px;
+    margin: 0;
+    padding: var(--space-xs) 0;
+    list-style: none;
+    background-color: rgba(0, 0, 0, 0.97);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.submenuOpen {
+    display: block;
+}
+
+.submenuLink {
+    display: block;
+    padding: 0.6rem var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.submenuLink:hover,
+.submenuLink:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-primary);
+}
+
+.submenuDivider {
+    height: 1px;
+    margin: var(--space-xs) 0;
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
 /* Hamburger toggle — hidden on desktop, shown on mobile */
 .toggle {
     display: none;
@@ -93,5 +166,33 @@
 
     .link {
         font-size: 1.25rem;
+    }
+
+    /* In the drawer the studies read better as a flat indented list than as a
+       nested dropdown, so the submenu is always open and sits in flow. */
+    .submenu {
+        display: block;
+        position: static;
+        min-width: 0;
+        margin: var(--space-xs) 0 0;
+        padding: 0;
+        background: none;
+        backdrop-filter: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .submenuLink {
+        padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
+        font-size: 1.05rem;
+    }
+
+    .submenuDivider {
+        margin: var(--space-xs) 0 var(--space-xs) var(--space-md);
+    }
+
+    .caret {
+        display: none;
     }
 }

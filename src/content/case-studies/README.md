@@ -86,6 +86,32 @@ Every item under `blocks:` needs a `type:`. Here are the types and their fields.
       riveProps: { stateMachines: "State Machine 1" }
 ```
 
+**Item captions — two styles.** `caption:` is the original: one centered line under the
+media, on the neutral card. Use it for print mockups and anything where a short label is
+enough. `label:` + `body:` is the richer style: a mono, uppercase label with a rule under
+it, then Inter copy left-aligned below. Mixing is fine; each item chooses. `alt:` sets the
+image's alt text independently (it falls back to `body`, then `caption`).
+
+**Phone-framed galleries** — set `phone: true` to put every item inside the iPhone
+mockup (good for a screen-by-screen flow). Phone items sit on the standard tinted panel
+rather than the neutral card. `screenBg` and `statusHeight` work exactly as they do on
+the `phone` block, and any item can override them. Items whose file isn't on disk yet
+fall back to the normal missing-asset placeholder, so a half-finished flow still reads.
+
+```yaml
+- type: gallery
+  phone: true
+  statusHeight: "0%"      # these exports run edge-to-edge, no status strip
+  items:
+    - media: ./assets/flow01.webp
+      label: "Screen 1"
+      body: "What the screen does and why it earns its place."
+    - media: ./assets/flow02.webp
+      label: "Screen 2"
+      body: "..."
+      statusHeight: "9%"  # per-item override
+```
+
 ### `brandColors` — color-decision swatch grid
 
 ```yaml

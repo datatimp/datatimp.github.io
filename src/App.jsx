@@ -3,12 +3,32 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { CaseStudy } from './pages/CaseStudy';
 
-// Reset scroll to the top whenever the route changes.
+// Reset scroll on route change — but honor a #hash target (e.g. "/#work" from the
+// nav). Without this, navigating to /#work from a case study lands at the top of
+// home instead of the work grid, because this ran unconditionally.
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return undefined;
+    }
+    // The target may not be mounted on the first frame after a route change,
+    // so retry briefly before giving up.
+    let frames = 0;
+    let raf;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tryScroll = () => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        return;
+      }
+      if (frames += 1, frames < 30) raf = requestAnimationFrame(tryScroll);
+    };
+    raf = requestAnimationFrame(tryScroll);
+    return () => cancelAnimationFrame(raf);
+  }, [pathname, hash]);
   return null;
 }
 

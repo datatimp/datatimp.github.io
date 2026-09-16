@@ -6,8 +6,9 @@ import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/iphone16-mockup.png';
 
-/** The bare iPhone mockup: media behind a transparent-screen PNG. */
-const Device = ({ media, alt, screenBg, statusHeight, maxWidth }) => (
+/** The bare iPhone mockup: media behind a transparent-screen PNG.
+    Exported so `gallery` can frame its items without the Phone block's layout. */
+export const Device = ({ media, alt, screenBg, statusHeight, maxWidth }) => (
     <div className={styles.phone} style={maxWidth ? { maxWidth } : undefined}>
         <div className={styles.phoneScreenInner} style={{ background: screenBg }}>
             <img src={media} alt={alt} className={styles.phoneScreen} style={{ top: statusHeight }} loading="lazy" />

@@ -1059,11 +1059,85 @@
     aspect-ratio: 16 / 10;
 }
 
+/* Phone galleries pin to 2 columns instead of auto-fit. A screen-by-screen flow
+   of four reads as 2x2; auto-fit gave 3 + an orphan and squeezed every phone.
+   Scoped to phone galleries so print/mockup grids keep their own density. */
+.galleryGridPhone {
+    grid-template-columns: repeat(3, 1fr);
+    /* Cards size to their own content. Default `stretch` made every card as tall
+       as the tallest in the row and stranded its caption at the bottom. */
+    align-items: start;
+}
+
+/* Pending items in a phone gallery preview at phone proportions, so the layout
+   reads correctly before the exports land. */
+.galleryItemPhone .framePlaceholder {
+    aspect-ratio: 1046 / 2158;
+    max-width: 300px;
+    margin-inline: auto;
+}
+
+@media (max-width: 720px) {
+    .galleryGridPhone {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Phone-framed gallery items sit on the standard tinted panel, same as every
+   other boxed insert on the page. */
+.galleryItemPhone {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+}
+
+/* The 300px cap on .phone is for a solo block; in a multi-up flow it must be
+   narrower or the row stops fitting. */
+.galleryItemPhone .phone {
+    max-width: 260px;
+}
+
+/* Screen label — a filled mono chip. Reads as a marker rather than a heading,
+   which is what a numbered step wants. */
+.galleryLabel {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: var(--color-neutral-0);
+    background: var(--color-neutral-600);
+    padding: 5px 15px;
+    border-radius: 999px;
+}
+
+/* Supporting copy — Inter, left-aligned. Spacing comes from the caption's gap. */
+.galleryBody {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+}
+
 .galleryCaption {
     margin-top: var(--space-sm);
     font-size: 0.85rem;
     text-align: center;
     color: var(--color-neutral-800);
+}
+
+/* A label + copy caption is a block of prose, not a one-line figure caption.
+   One flex column at a single gap keeps phone → chip → copy evenly spaced;
+   align-items shrink-wraps the chip to its text. */
+.galleryItemPhone .galleryCaption {
+    /* 32px off the mockup, 16px between chip and copy — the device needs more
+       air beneath it than the caption's own parts need from each other. */
+    margin-top: var(--space-md);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
 }
 
 /* ─── Back link / not found ─── */

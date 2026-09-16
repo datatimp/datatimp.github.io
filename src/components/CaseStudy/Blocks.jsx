@@ -5,7 +5,7 @@ import { AltRow } from './AltRow';
 import { BrandColors } from './BrandColors';
 import { BrandDeck } from './BrandDeck';
 import { TypeSpec } from './TypeSpec';
-import { Phone } from './Phone';
+import { Phone, Device } from './Phone';
 import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
 import { ImageZoomModal } from './ImageZoomModal';
@@ -14,6 +14,9 @@ import { sectionId } from './sectionId';
 import styles from './CaseStudy.module.css';
 
 const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
+// Vite's glob rewrites real assets to hashed URLs; a path still starting with '.'
+// never resolved, i.e. the file isn't on disk yet.
+const isResolved = (s) => typeof s === 'string' && !s.startsWith('.');
 
 // Inline markdown for short single-line fields (problem, subsection/image/gallery
 // body, captions): renders _em_, `code`, **strong**, and links WITHOUT ReactMarkdown's
@@ -107,23 +110,49 @@ function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, cla
 }
 ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
 
-function Gallery({ heading, body, items = [] }) {
+function Gallery({ heading, body, items = [], phone, screenBg = '#000', statusHeight = '9%' }) {
     return (
         <section className={styles.gallery}>
             {heading && <h2 className={styles.blockHeading}>{heading}</h2>}
             {body && <p className={styles.blockLead}><Inline>{body}</Inline></p>}
-            <div className={styles.galleryGrid}>
-                {items.map((it, idx) => (
-                    <figure key={it.media || idx} className={styles.galleryItem}>
-                        <MediaFrame src={it.media} alt={it.caption || ''} riveProps={it.riveProps} />
-                        {it.caption && <figcaption className={styles.galleryCaption}><Inline>{it.caption}</Inline></figcaption>}
-                    </figure>
-                ))}
+            <div className={`${styles.galleryGrid}${(phone || items.some((it) => it.phone)) ? ` ${styles.galleryGridPhone}` : ''}`}>
+                {items.map((it, idx) => {
+                    // `phone: true` (per block or per item) frames the media in the
+                    // iPhone mockup instead of a plain MediaFrame. An unresolved path
+                    // (asset not on disk yet) still falls back to MediaFrame so it
+                    // renders the labeled placeholder rather than a broken <img>.
+                    // Styling follows INTENT (the phone flag); only the media render
+                    // falls back when the file isn't on disk yet. Keying both off
+                    // resolution made pending items a different card entirely.
+                    const wantsPhone = it.phone ?? phone;
+                    const usePhone = wantsPhone && isResolved(it.media);
+                    return (
+                        <figure key={it.media || idx} className={`${styles.galleryItem}${wantsPhone ? ` ${styles.galleryItemPhone}` : ''}`}>
+                            {usePhone ? (
+                                <Device
+                                    media={it.media}
+                                    alt={it.alt || it.body || it.caption || ''}
+                                    screenBg={it.screenBg ?? screenBg}
+                                    statusHeight={it.statusHeight ?? statusHeight}
+                                />
+                            ) : (
+                                <MediaFrame src={it.media} alt={it.alt || it.body || it.caption || ''} riveProps={it.riveProps} />
+                            )}
+                            {(it.label || it.body || it.caption) && (
+                                <figcaption className={styles.galleryCaption}>
+                                    {it.label && <span className={styles.galleryLabel}>{it.label}</span>}
+                                    {it.body && <p className={styles.galleryBody}><Inline>{it.body}</Inline></p>}
+                                    {!it.label && !it.body && <Inline>{it.caption}</Inline>}
+                                </figcaption>
+                            )}
+                        </figure>
+                    );
+                })}
             </div>
         </section>
     );
 }
-Gallery.propTypes = { heading: PropTypes.string, body: PropTypes.string, items: PropTypes.array };
+Gallery.propTypes = { heading: PropTypes.string, body: PropTypes.string, items: PropTypes.array, phone: PropTypes.bool, screenBg: PropTypes.string, statusHeight: PropTypes.string };
 
 /** Dispatch a content block to its renderer based on `type`. */
 export const Block = ({ block }) => {
