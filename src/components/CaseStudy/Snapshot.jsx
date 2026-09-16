@@ -18,6 +18,7 @@ export const Snapshot = ({ role, timeline, client, tools, platform, liveUrl }) =
     return (
         <dl className={styles.snapshot}>
             <Item label="Role" value={role} />
+            <Item label="Timeline" value={timeline} />
             <Item label="Client" value={client} />
             <Item label="Tools" value={toolsText} />
             <Item label="Platform" value={platform} />

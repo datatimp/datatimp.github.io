@@ -13,21 +13,38 @@ function ScrollToTop() {
       window.scrollTo(0, 0);
       return undefined;
     }
-    // The target may not be mounted on the first frame after a route change,
-    // so retry briefly before giving up.
-    let frames = 0;
+
+    let cancelled = false;
     let raf;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const tryScroll = () => {
+    let timer;
+    let frames = 0;
+
+    const align = (behavior) => {
       const el = document.querySelector(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      if (el) el.scrollIntoView({ behavior, block: 'start' });
+    };
+
+    const tryScroll = () => {
+      if (cancelled) return;
+      if (document.querySelector(hash)) {
+        // Snap immediately, then realign once: lazy-loaded images above the
+        // target finish decoding after first paint and shift it out from under
+        // us, which is what made this overshoot.
+        align('auto');
+        timer = setTimeout(() => { if (!cancelled) align('auto'); }, 350);
         return;
       }
-      if (frames += 1, frames < 30) raf = requestAnimationFrame(tryScroll);
+      frames += 1;
+      // The target isn't mounted on the first frame after a route change.
+      if (frames < 60) raf = requestAnimationFrame(tryScroll);
     };
+
     raf = requestAnimationFrame(tryScroll);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
   }, [pathname, hash]);
   return null;
 }
