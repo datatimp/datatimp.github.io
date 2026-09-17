@@ -79,8 +79,10 @@
 }
 
 /* ─── Phone mockup (media behind a transparent-screen iPhone frame) ─── */
-/* Kept centered (not in the alternating print layout) to maximize visibility.
-   Optional caption above explains why the demo is here. */
+/* The MOCKUP is centered (not in the alternating print layout) to maximize
+   visibility, but the heading and copy stay left-aligned like every other block
+   on the page — .phone centers itself via its own auto margins, so the column
+   does not need to center its children to achieve that. */
 .phoneBlock {
     margin: 0 auto var(--stack);
     /* See .laptopBlock: in .body's flex column, `margin: 0 auto` outranks
@@ -89,13 +91,13 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    text-align: left;
 }
 
 .phoneCaption {
     max-width: 48ch;
-    margin: 0 auto var(--space-md);
+    margin: 0 0 var(--space-md);
 }
 
 .phoneCaption p {
@@ -146,8 +148,9 @@
 }
 
 /* ─── Laptop mockup (looping mp4 inside a MacBook Pro frame) ─── */
-/* Centered like the phone. The video sits OVER the PNG, clipped to the screen
-   cutout, so it works whether the mockup's screen is transparent or white. */
+/* Mockup centered like the phone, heading and copy left-aligned. The video sits
+   OVER the PNG, clipped to the screen cutout, so it works whether the mockup's
+   screen is transparent or white. */
 .laptopBlock {
     margin: 0 auto var(--stack);
     /* Without this the flex column shrink-wraps to its widest child (the heading
@@ -156,13 +159,13 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    text-align: left;
 }
 
 .laptopCaption {
     max-width: 60ch;
-    margin: 0 auto var(--space-md);
+    margin: 0 0 var(--space-md);
 }
 
 .laptopCaption p {
@@ -1064,9 +1067,10 @@
    Scoped to phone galleries so print/mockup grids keep their own density. */
 .galleryGridPhone {
     grid-template-columns: repeat(3, 1fr);
-    /* Cards size to their own content. Default `stretch` made every card as tall
-       as the tallest in the row and stranded its caption at the bottom. */
-    align-items: start;
+    /* Cards stretch to a common height (grid's default) so the boxes match across
+       the row — copy length must not decide how tall a screen's container is.
+       Content stays top-aligned; the slack falls to the bottom of the card. */
+    align-items: stretch;
 }
 
 /* Pending items in a phone gallery preview at phone proportions, so the layout

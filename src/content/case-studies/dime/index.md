@@ -2,7 +2,7 @@
 # ─── Meta (shown in the hero + snapshot bar) ───────────────────────────
 title: "Dime Payments"
 slug: dime
-draft: true              # unfinished — hidden from the site + routes until content is ready
+draft: false             # LIVE
 order: 1
 disciplines:            # rendered as the hero subtitle + card tags
   - Product Design
@@ -52,7 +52,7 @@ blocks:
       radius: "16px"
 
   - type: image
-    heading: "Two layers, one source of truth"
+    heading: "Single Source of Truth"
     mediaTitle: true
     media: ./assets/figma-variables.webp
     alt: "The Figma Variables panel for the Dime system. Collections are split into Color and Color Primitives, and every semantic token's value is an alias to a primitive rather than a raw hex."
@@ -64,21 +64,21 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      The values live in Figma Variables, not on a canvas page, which is how a developer actually extracts them. Note the value column: every semantic token resolves to *another token*, never a hex. `Text / Brand / Primary` points at `Brand/200`. That indirection is the whole point. Retheme the primitive and every component downstream follows.
+      The Figma Variables panel for the Dime system. Every semantic token resolves to another token, never a hex. `Text / Brand / Primary` points at `Brand/200`. A primitive can be rethemed and every component downstream follows.
 
   - type: subsection
     number: "01b"
     heading: "Governing the system"
     body: >
-      **Primitives are deliberately not exposed to components.** A component can only reach the semantic layer, so a developer picks `border-focus-primary`, never `green-600`. That constraint is what keeps a design system a system: if any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything. It also means intent survives. `positive` and `brand` happen to share a green today, but they're separate tokens, so rebranding away from green won't quietly turn *success* into the new brand color.
-
-      The same discipline runs past color. Elevation isn't a pasted shadow, it's composed from depth and alpha tokens, so shadows stay consistent and adjust as a set. Icon stroke weight is tokenized alongside icon size, so a 12px icon and a 24px icon keep the same optical weight. Roughly 290 variables across eight collections, built to be consumed rather than admired.
+     If any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything.To prevent this, primitives are deliberately not exposed to components. 
+     
+     The same discipline is used in all elements. Elevation tokens, for example, are composed from depth and alpha tokens, so shadows stay consistent and adjusts as a set.
 
   - type: subsection
     number: "01c"
     heading: "Type as tokens"
     body: >
-      Type is tokenized the same way: each family is assigned to roles, and every size resolves through a shared numeric scale rather than one-off pixel values, so "Body / Medium" is a token, not a guess.
+      Type is tokenized the same way: each family is assigned to roles, and every size resolves through a shared numeric scale rather than one-off pixel values.
 
   - type: image
     heading: "Family roles"
@@ -166,7 +166,7 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      Each breakpoint is a *mode*, not a set of hand-tuned values. Padding resolves through the same `Space` scale everything else uses, so a component re-pads itself when the frame changes size instead of being adjusted five times. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable and stops iOS zooming the page on input focus.
+      Each breakpoint is a modes and follows the Tailwind breakpoint standards. Padding resolves through the same `Space` scale everything else uses, so a component re-pads itself when the frame changes size. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable.
 
   - type: image
     heading: "The shell, before anything fills it"
@@ -180,13 +180,13 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      Those tokens drive one skeleton across all five sizes. Navigation is a persistent sidebar from 1280 up and collapses to an overlay drawer below it, which is the only structural decision the shell makes. The content column scrolls while the sidebar stays fixed, and the header's system controls shift from center to right-aligned when the merchant select isn't present.
+     Navigation is a persistent sidebar from 1280 up and collapses to an overlay drawer below it, which is the only structural decision the shell makes. The content column scrolls while the sidebar stays fixed.
 
   - type: subsection
     number: "02a"
     heading: "One system, three roles"
     body: >
-      The same tables, navigation, and layout primitives reskin per role. What changes is the data and the privileges, not the parts. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant: elevated permissions on a near-identical interface, so it shipped without needing a design of its own. That's the clearest result the system produced. A third role cost nothing to serve.
+      The same tables, navigation, and layout primitives reskin per role. What changes is the data and the privileges, not the parts. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant: elevated permissions on a near-identical interface, so it shipped without needing a design of its own.
 
   - type: laptop
     heading: "Customer: dashboard"
@@ -229,7 +229,7 @@ blocks:
     number: "03"
     heading: "Payment Processing Page"
     problem: >
-      This is the page an organization sends people to in order to donate or pay. It is public, conversion-critical, and used by people with no Dime account. It had to feel trustworthy on first contact and let anyone complete a payment without signing up.
+      The Payments Page is a white-labeled page an organization sends their customers in order to donate or pay. It is public, conversion-critical, and used by people with no Dime account. It had to feel trustworthy on first contact and let anyone complete a payment without signing up.
 
   - type: subsection
     number: "03a"
@@ -264,16 +264,13 @@ blocks:
       - media: ./assets/ppp-mobile-flow02.webp   # DONE — mobile
         label: "Screen 2"
         body: "Everything needed to review before paying, on one screen: the fee the payer chose to cover, wallets first for speed, and a saved card that can be swapped inline. Nothing here navigates away."
-      - media: ./assets/ppp-mobile-flow03.webp   # incoming — confirmation
+      - media: ./assets/ppp-mobile-flow03.webp   # DONE — mobile
         label: "Screen 3"
-        body: "Confirmation — a clear close and a receipt."
+        body: "Confirmation arrives as an overlay on the screen just paid. Holding the context behind it means there is never a question about which payment succeeded."
 
-  - type: image
-    heading: "Desktop"
-    media: ./assets/pay-desktop.webp        # TODO — remake, desktop (responsive range)
-    alt: "Dime payment processing page on desktop"
-    radius: true
-    border: true
+  # No desktop payment-page mockup by design: the client never asked for one —
+  # mobile was the priority and desktop was to be served by the same responsive
+  # view. Optional future addition, not a gap.
 
   # ══════════════ 05 — IMPACT ══════════════
   - type: impact
@@ -286,5 +283,5 @@ blocks:
      Skeleton status — screens still to remake (then I frame them):
        • 01 Design System: Button variant matrix (taxonomy + type tables done, SVG)
        • 02 Shell: Customer dashboard, Merchant transactions, mobile shell (Admin optional)
-       • 03 Payment: user-flow chart (done) + 4 mobile money-moments + 1 desktop
+       • 03 Payment: user-flow chart (done) + 3 mobile money-moments
      Real token values / node IDs live in _dev/figma-map.md. -->
