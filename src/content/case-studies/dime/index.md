@@ -23,21 +23,19 @@ hero: ./assets/dime-hero-img.webp
 tagline: "A design system and payment flow for a scaling fintech platform"
 
 # ─── Body blocks (rendered in order by the CaseStudy template) ─────────
-# Skeleton: real copy is first-draft (edit freely); every `Asset pending`
-# slot is a screen you'll remake, then I wrap in Phone/Laptop frames.
 blocks:
   # ══════════════ 01 — DESIGN SYSTEM ══════════════
   - type: section
     number: "01"
     heading: "Design System"
     problem: >
-      Dime's interface involved two different surfaces, Payment Processing Page and Account Shell. The fix had to be foundational: a consistent naming system, tokens that carried meaning and intent, and components documented well enough to hand off cleanly.
+      Dime's interface involved two different surfaces, Payment Processing Page and Account Shell. The solution was to construct a solid foundation from which to build.  This meant creating consistent naming system, implementing semantic tokens, and deploying well-documented components.
 
   - type: subsection
     number: "01a"
     heading: "Token architecture"
     body: >
-      Tokens follow a strict `system / category / property / role / variant` schema. Semantic tokens like `dpds-color-background-brand-primary` resolve on top of raw primitives like `dpds-typography-family-mono`. Primitives hold the values; semantic tokens assign them meaning, so one change propagates everywhere it's used.
+      Tokens follow a strict `system / category / property / role / variant` schema. Semantic tokens like `dpds-color-background-brand-primary` resolve on top of raw primitives like `dpds-typography-family-mono`. Primitives hold the values; semantic tokens assign them meaning.
 
   - type: image
     heading: "Naming & taxonomy"
@@ -55,7 +53,7 @@ blocks:
     heading: "Single Source of Truth"
     mediaTitle: true
     media: ./assets/figma-variables.webp
-    alt: "The Figma Variables panel for the Dime system. Collections are split into Color and Color Primitives, and every semantic token's value is an alias to a primitive rather than a raw hex."
+    alt: "The Figma Variables panel for the Dime system. Collections are split into Color and Color Primitives."
     enlarge: true
     shadow: true
     box:
@@ -64,21 +62,31 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      The Figma Variables panel for the Dime system. Every semantic token resolves to another token, never a hex. `Text / Brand / Primary` points at `Brand/200`. A primitive can be rethemed and every component downstream follows.
+      The Figma Variables panel for the Dime system. Every semantic token resolves to another token, never a hex. `Text / Brand / Primary` points at `Brand/200`. A primitive can be rethemed and every component would inherit the change.
 
   - type: subsection
     number: "01b"
     heading: "Governing the system"
     body: >
-     If any component can grab any raw value, the semantic layer becomes decoration and the first redesign breaks everything.To prevent this, primitives are deliberately not exposed to components. 
-     
-     The same discipline is used in all elements. Elevation tokens, for example, are composed from depth and alpha tokens, so shadows stay consistent and adjusts as a set.
+     If any component can grab a raw value, the semantic layer becomes useless and design debt will accrue. To prevent this, primitives are deliberately not exposed to components. The same discipline is used in all elements. Elevation tokens, for example, are composed from depth and alpha tokens, so shadows stay consistent and adjust as a set.
+
+  - type: image
+    heading: "Elevation tokens"
+    mediaTitle: true
+    media: ./assets/dime-ds-elevation.webp
+    alt: ""
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
 
   - type: subsection
     number: "01c"
     heading: "Type as tokens"
     body: >
-      Type is tokenized the same way: each family is assigned to roles, and every size resolves through a shared numeric scale rather than one-off pixel values.
+      Type is tokenized as well. Each family is assigned to roles, and every size resolves through a shared numeric  scale.
 
   - type: image
     heading: "Family roles"
@@ -108,7 +116,7 @@ blocks:
     number: "01d"
     heading: "Components"
     body: >
-      Primitives and tokens compose into documented components, specified two ways: a full set of variants a developer picks from, and exact measurements for clean handoff.
+      Components are built from semantic tokens. Each is specified in two ways: a full set of variants a developer picks from, and exact measurements for clean handoff.
 
   - type: image
     heading: "Button variants"
@@ -166,10 +174,10 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      Each breakpoint is a modes and follows the Tailwind breakpoint standards. Padding resolves through the same `Space` scale everything else uses, so a component re-pads itself when the frame changes size. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable.
+      Each breakpoint is a mode and follows the Tailwind breakpoint standards. Padding resolves the system-wide `Space` tokens. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable.
 
   - type: image
-    heading: "The shell, before anything fills it"
+    heading: "The shell layout, unpopulated"
     mediaTitle: true
     media: ./assets/shell-grid-layout.webp
     alt: "Shell layout frames across five breakpoints. Desktop S and Desktop L are expanded to show navigation changing from a collapsible overlay to a persistent sidebar, with padding measurements on each."
@@ -180,13 +188,13 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-     Navigation is a persistent sidebar from 1280 up and collapses to an overlay drawer below it, which is the only structural decision the shell makes. The content column scrolls while the sidebar stays fixed.
+     Navigation is a persistent sidebar from 1280 up and collapses to an overlay drawer below it. The content column scrolls while the sidebar stays fixed.
 
   - type: subsection
     number: "02a"
     heading: "One system, three roles"
     body: >
-      The same tables, navigation, and layout primitives reskin per role. What changes is the data and the privileges, not the parts. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant: elevated permissions on a near-identical interface, so it shipped without needing a design of its own.
+      The same tables, navigation, and layout primitives reskin per role. Customer and Merchant are shown here. *Admin* is an internal Dime staff role sitting above Merchant with elevated permissions on a near-identical interface.
 
   - type: laptop
     heading: "Customer: dashboard"
@@ -229,17 +237,18 @@ blocks:
     number: "03"
     heading: "Payment Processing Page"
     problem: >
-      The Payments Page is a white-labeled page an organization sends their customers in order to donate or pay. It is public, conversion-critical, and used by people with no Dime account. It had to feel trustworthy on first contact and let anyone complete a payment without signing up.
+      The Payments Processing Page is a white-labeled page an organization sends their customers in order to donate or pay. The page is conversion-critical and used by people with no Dime account. It had to feel trustworthy and let anyone complete a payment with as little friction as possible.
 
   - type: subsection
     number: "03a"
     heading: "User flow"
     body: >
-      I mapped the full flow before touching a screen, from landing on an amount through payment and confirmation, so the interface follows the decision path, not the other way around.
+      I mapped the full flow from landing on an amount through payment and confirmation. The interface was designed on this decision path.
 
   - type: image
-    heading: "User flow"
-    media: ./assets/ppp-flow.svg            # DONE — vertical flow chart, SVG (crisp at any zoom)
+    heading: "Login to payment"
+    mediaTitle: true
+    media: ./assets/ppp-flow.svg
     alt: "User flow chart for the Dime payment processing page: log in via phone or email, verify with a one-time code, then new users add a payment method (wallet checks out immediately; card or bank is entered and saved) while returning users choose a saved method and pay"
     enlarge: true                           # click → full-screen pan/zoom viewer (readable on mobile)
     box:
@@ -252,36 +261,29 @@ blocks:
     number: "03b"
     heading: "The flow, screen by screen"
     body: >
-      Three moments carry the experience. Each screen earns its place by showing a decision, not just a state.
+      The payment process runs on three screens. Secondary tasks, like changing a payment method or shipping address, open in modals. I worked to keep screen transitions to a minimum, thereby reducing user confusion or frustration.
 
   - type: gallery
     phone: true             # frame every item in the iPhone mockup
     statusHeight: "0%"      # these exports run edge-to-edge, no status strip
     items:
-      - media: ./assets/ppp-mobile-flow01.webp   # DONE — mobile
+      - media: ./assets/ppp-mobile-flow01.webp
         label: "Screen 1"
-        body: "User can enter amount manually or choose from a preset amount (determined by merchant). Login is passwordless and handled by an OTP delivered via text or email."
-      - media: ./assets/ppp-mobile-flow02.webp   # DONE — mobile
+        body: "A user can enter an amount manually or choose from a preset amount (determined by merchant). Login is passwordless and handled by an OTP delivered via text or email."
+      - media: ./assets/ppp-mobile-flow02.webp
         label: "Screen 2"
-        body: "Everything needed to review before paying, on one screen: the fee the payer chose to cover, wallets first for speed, and a saved card that can be swapped inline. Nothing here navigates away."
-      - media: ./assets/ppp-mobile-flow03.webp   # DONE — mobile
+        body: "The user can review everything in one screen prior to submitting a payment while still able to change payment methods, amounts, or shipping addresses."
+      - media: ./assets/ppp-mobile-flow03.webp
         label: "Screen 3"
-        body: "Confirmation arrives as an overlay on the screen just paid. Holding the context behind it means there is never a question about which payment succeeded."
+        body: "Confirmation is shown as an overlay on the same screen. The company's logo remains visible at the top, visually reinforcing which payment completed."
 
   # No desktop payment-page mockup by design: the client never asked for one —
   # mobile was the priority and desktop was to be served by the same responsive
-  # view. Optional future addition, not a gap.
+  # view. Optional future addition.
 
-  # ══════════════ 05 — IMPACT ══════════════
+  # ══════════════ 04 — IMPACT ══════════════
   - type: impact
     heading: "Impact"
     body: >
-      Dime came away with a documented, token-driven design system its expanding services could be built from. It cut redundant design work, gave developers ready-to-use components, and turned a drifting set of screens into one coherent product across three roles and two surfaces.
+      Dime came away with a documented, token-driven design system its expanding services could be built from. It cut redundant design work, gave developers ready-to-use components, and produced one coherent product across three roles and two surfaces.
 ---
-
-<!-- Prose here is optional; the template renders the `blocks` above.
-     Skeleton status — screens still to remake (then I frame them):
-       • 01 Design System: Button variant matrix (taxonomy + type tables done, SVG)
-       • 02 Shell: Customer dashboard, Merchant transactions, mobile shell (Admin optional)
-       • 03 Payment: user-flow chart (done) + 3 mobile money-moments
-     Real token values / node IDs live in _dev/figma-map.md. -->
