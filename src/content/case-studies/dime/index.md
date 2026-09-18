@@ -17,7 +17,7 @@ platform: Web
 liveUrl: "https://www.figma.com/design/QaE6JEJ1vNFc1Y8XOrcogl/Dime-Payment-Design-System?node-id=12-67"
 liveLabel: "View the design system in Figma"   # friendly label for the snapshot callout (falls back to the URL)
 summary: >             # 1–3 sentence TL;DR under the hero — carries the story for skimmers
-  Ahead of a major service expansion, Dime needed its public payment pages and multi-role account shell rebuilt for three user types. Starting at the foundation, I *completed a design system* to keep development consistent at scale, *mapped user flows* and *rebuilt the payment pages and account shell*.
+  Ahead of a major service expansion, Dime needed its public payment pages and multi-role account shell rebuilt for three user types. I *completed a design system* to keep development consistent, *mapped user flows* and *rebuilt the payment pages and account shell*.
 card: ./assets/dime-screenshot.webp
 hero: ./assets/dime-hero-img.webp
 tagline: "A design system and payment flow for a scaling fintech platform"
@@ -29,7 +29,7 @@ blocks:
     number: "01"
     heading: "Design System"
     problem: >
-      Dime's interface involved two different surfaces, Payment Processing Page and Account Shell. The solution was to construct a solid foundation from which to build.  This meant creating consistent naming system, implementing semantic tokens, and deploying well-documented components.
+      Dime's interface spans two surfaces, Payment Processing Page and Account Shell. The solution was to construct a solid foundation on which to build. This meant creating a consistent naming system, implementing semantic tokens, and deploying well-documented components.
 
   - type: subsection
     number: "01a"
@@ -74,7 +74,7 @@ blocks:
     heading: "Elevation tokens"
     mediaTitle: true
     media: ./assets/dime-ds-elevation.webp
-    alt: ""
+    alt: "Elevation tokens ranging in height from Elevation 02 to Elevation 04"
     enlarge: true
     box:
       background: "#f0f3f7"
@@ -86,7 +86,7 @@ blocks:
     number: "01c"
     heading: "Type as tokens"
     body: >
-      Type is tokenized as well. Each family is assigned to roles, and every size resolves through a shared numeric  scale.
+      Type is tokenized as well. Each family is assigned to roles, and every size resolves through a shared numeric scale.
 
   - type: image
     heading: "Family roles"
@@ -153,14 +153,14 @@ blocks:
     radius: "20px"
     border: "1.5px solid #e6e2d6"
     body: >
-      The Dime Design System is fully viewable. Open the Figma link to explore the system firsthand.
+      The Dime Design System is fully viewable. Open the Figma link to explore it firsthand.
 
   # ══════════════ 02 — THE SHELL ══════════════
   - type: section
     number: "02"
     heading: "Account Shell"
     problem: >
-      The account shell served three roles (Customer, Merchant, and Admin) from one component set and the challenge was data density and consistency. Though each role sees different data, the product should feel seamless between them.
+      The account shell served three roles (Customer, Merchant, and Admin) from one component set. The challenge was data density and consistency. Though each role sees different data, the product should feel seamless between them.
 
   - type: image
     heading: "Breakpoints as tokens"
@@ -174,7 +174,7 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      Each breakpoint is a mode and follows the Tailwind breakpoint standards. Padding resolves the system-wide `Space` tokens. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable.
+      Each breakpoint is a mode and follows the Tailwind breakpoint standards. Padding resolves through the system-wide `Space` tokens. Root font size holds at `Scale 04` at every breakpoint including mobile, which keeps body copy readable.
 
   - type: image
     heading: "The shell layout, unpopulated"
@@ -237,7 +237,7 @@ blocks:
     number: "03"
     heading: "Payment Processing Page"
     problem: >
-      The Payments Processing Page is a white-labeled page an organization sends their customers in order to donate or pay. The page is conversion-critical and used by people with no Dime account. It had to feel trustworthy and let anyone complete a payment with as little friction as possible.
+      The Payment Processing Page is a white-labeled page an organization sends to their customers in order to donate or pay. The page is conversion-critical and used by people with no Dime account. It had to feel trustworthy and let anyone complete a payment with as little friction as possible.
 
   - type: subsection
     number: "03a"
@@ -272,10 +272,10 @@ blocks:
         body: "A user can enter an amount manually or choose from a preset amount (determined by merchant). Login is passwordless and handled by an OTP delivered via text or email."
       - media: ./assets/ppp-mobile-flow02.webp
         label: "Screen 2"
-        body: "The user can review everything in one screen prior to submitting a payment while still able to change payment methods, amounts, or shipping addresses."
+        body: "The user can review everything in one screen prior to submitting a payment, and can still change payment methods, amounts, or shipping addresses."
       - media: ./assets/ppp-mobile-flow03.webp
         label: "Screen 3"
-        body: "Confirmation is shown as an overlay on the same screen. The company's logo remains visible at the top, visually reinforcing which payment completed."
+        body: "Confirmation is shown as an overlay on the same screen. The company's logo remains visible at the top, visually reinforcing which transaction went through."
 
   # No desktop payment-page mockup by design: the client never asked for one —
   # mobile was the priority and desktop was to be served by the same responsive
@@ -284,6 +284,10 @@ blocks:
   # ══════════════ 04 — IMPACT ══════════════
   - type: impact
     heading: "Impact"
-    body: >
-      Dime came away with a documented, token-driven design system its expanding services could be built from. It cut redundant design work, gave developers ready-to-use components, and produced one coherent product across three roles and two surfaces.
+    body: |
+      Dime came away with a documented, token-driven design system covering color, type, and components across three roles and two surfaces.
+
+      > "The design system he created became the basis for how we build product UI today."
+      >
+      > — Ben Habeck, CEO, Dime Payments
 ---

@@ -237,6 +237,7 @@
        section-problem…) references these. Change once here, or override per study
        on that study's page, to re-tint the whole set. */
     --panel-bg: #f0f3f7;
+    --quote-bg: #e2e8f0;                 /* one step darker than --panel-bg, same cool cast */
     --panel-border: #e6e2d6;
     /* Flex column so block margins DON'T collapse into each other — a top or
        bottom margin on any block now adds space predictably (no "margin a div
@@ -286,7 +287,6 @@
     border: 1px solid var(--color-primary);
     padding: 40px;
     border-radius: 16px;
-    margin: 0 0var(--stack);
 }
 
 /* Centered title flanked by rules — the flourish that sets Impact apart. */
@@ -319,6 +319,38 @@
 
 .impactBody p {
     margin: 0;
+}
+
+/* ─── Impact pull quote ──────────────────────────────────────────────────
+   Client testimony, boxed so it reads as evidence rather than more body
+   copy. Impact is the only block rendered through ReactMarkdown, so a
+   blockquote can only ever appear here. */
+.impactBody blockquote {
+    margin: var(--space-md) 0 0;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--quote-bg);
+    border-radius: var(--radius);
+}
+
+/* ReactMarkdown emits the quote and the attribution as sibling <p>s, and
+   `.impactBody p` above zeroes every margin, so respace them here. */
+.impactBody blockquote p {
+    margin: 0;
+}
+
+.impactBody blockquote p:first-child {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    /* Evens the two lines instead of orphaning "today." on its own. */
+    text-wrap: balance;
+    margin: 0 0 var(--space-xs);
+}
+
+/* Attribution reads as a byline: quieter, smaller, never italic. */
+.impactBody blockquote p:last-child {
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    color: var(--color-neutral-600);
 }
 
 .summary {
