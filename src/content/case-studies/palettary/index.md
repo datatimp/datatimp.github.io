@@ -298,13 +298,17 @@ blocks:
   # ══════════════ 05 — IMPACT ══════════════
   - type: impact
     heading: "Impact"
-    body: >
+    body: |
       Palettary runs at its own domain with four tools, nineteen curated palettes, and
       no accounts, subscriptions, or tracking. It has been published to Product Hunt,
       its Figma library to Figma Community, and its CMYK engine to PyPI as
       `rosette-halftone` — three channels, three audiences, one person designing,
       building, and shipping all of it. It is MIT licensed and open to palette
       submissions. TODO: swap in real usage numbers if you want them cited.
+
+      > "I did a great job."
+      >
+      > — Tim Pevey
 ---
 
 <!-- Prose here is optional; the template renders the `blocks` above.

@@ -300,6 +300,11 @@ blocks:
 
   - type: impact
     heading: "Impact"
-    body: >
-      Heartful Gardens walked away with a complete, cohesive brand — a logo system, color and type, a set of production-ready print pieces, and a warm, animated website, all speaking the same friendly language. What began as an idea became a business with a brand customers could recognize across the market stall, the counter, and the screen.
+    body: |
+      I made a complete, cohesive brand for Heartful Gardens that included a logo system, a set of production-ready print pieces, and a warm, animated website. 
+      
+      > "What began as an idea became a business with a brand
+      > customers could recognize. People spot the logo before anything else!"
+      >
+      > — Patricia McKeon, Owner, Heartful Gardens
 ---

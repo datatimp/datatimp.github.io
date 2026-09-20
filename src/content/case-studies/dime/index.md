@@ -62,7 +62,7 @@ blocks:
       padding: "2rem"
       radius: "16px"
     body: >
-      The Figma Variables panel for the Dime system. Every semantic token resolves to another token, never a hex. `Text / Brand / Primary` points at `Brand/200`. A primitive can be rethemed and every component would inherit the change.
+      The Figma Variables panel for the Dime system is shown below. Every semantic token resolves to another token, never a hex. `Text / Brand / Primary`, for example, points at `Brand/200`. This way, a primitive can be rethemed, and every component will inherit the change.
 
   - type: subsection
     number: "01b"
