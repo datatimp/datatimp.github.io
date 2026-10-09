@@ -246,9 +246,8 @@ blocks:
     radius: true
   - type: row
     side: left
-    media: ./assets/hg-flyer-mockup.webp
-    
-    heading: "Flyer"
+    media: ./assets/hg-sourdough-flyer-mockup.webp
+    heading: "Sourdough flyer"
     mediaTitle: true
     box:
       background: "#f0f3f7"
@@ -265,7 +264,25 @@ blocks:
 
   - type: row
     side: right
+    media: ./assets/hg-granola-flyer-mockup.webp
+    heading: "Granola flyer"
+    mediaTitle: true
+    zoom:
+      - ./assets/whygranola-1.webp
+      - ./assets/whygranola-2.webp
+    body: >
+      A companion flyer for the granola line extends the same system with its own plum palette. Like the sourdough flyer, an “ORDER ONLINE!” QR code converts market shoppers to online buyers. All illustrations, including the granola hero image, are hand drawn. [See the flyer up close](#zoom).
+    border: true
+    radius: true
+
+  - type: row
+    side: left
     media: ./assets/hg-table-tent-mockup.webp
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     heading: "Table tents"
     mediaTitle: true
     body: >
@@ -274,13 +291,8 @@ blocks:
     radius: true
 
   - type: row
-    side: left
+    side: right
     media: ./assets/hg-badge-mockup.webp
-    box:
-      background: "#f0f3f7"
-      border: "1px solid #e6e2d6"
-      padding: "2rem"
-      radius: "16px"
     heading: "Badge"
     mediaTitle: true
     body: >
@@ -289,8 +301,13 @@ blocks:
     radius: true
 
   - type: row
-    side: right
+    side: left
     media: ./assets/hg-banner-mockup.webp
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
     heading: "Banner"
     mediaTitle: true
     body: >
