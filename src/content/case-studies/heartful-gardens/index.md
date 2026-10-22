@@ -45,7 +45,7 @@ blocks:
       - ./assets/boc-logo.svg
     zoomBg: "#ffffff"
     body: >
-      The final Heartful Gardens logo merges a classic circular stamp design with genuine warmth. Inspired by the curves found in late-'70s [Duplo](#zoom:0) and [Boards of Canada](#zoom:1) logomarks, it's meant to project growth and friendliness. The central landscape does double duty as a rolling countryside and a fresh-baked loaf of bread.
+      The final Heartful Gardens logo merges a classic circular stamp design with genuine warmth. Inspired by the curves found in late-'70s [Duplo](#zoom:0) and mid-2000s [Boards of Canada](#zoom:1) logomarks, while utilizing more organic shapes, it's meant to project growth and friendliness. The central landscape does double duty as a rolling countryside and a fresh-baked loaf of bread.
 
   - type: image
     heading: "Iterations"
