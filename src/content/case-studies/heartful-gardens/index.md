@@ -7,6 +7,7 @@ disciplines:
   - Brand
   - Web Design
   - UI/UX
+  - Product Design
 role: Brand & Web Design
 client: Heartful Gardens
 tools:
@@ -16,10 +17,10 @@ tools:
 platform: Web, Print
 liveUrl: "https://heartfulgardens.com"   # the live site — shown as the mono callout under the snapshot
 summary: >
-  Heartful Gardens, a small-batch bakery & garden needed brand identity, web presence, and print materials. Deliverables included a *logo system*, *print-ready marketing collateral*, and a *hand-built site* featuring *custom animated Rive graphics*.
+  Heartful Gardens, a small-batch bakery & garden needed brand identity, web presence, and print materials. As the business grew, it also needed a way to take orders online. Deliverables included a *logo system*, *print-ready marketing collateral*, a *hand-built site* featuring *custom animated Rive graphics*, and an *online ordering system* with an admin page for the owner.
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
-tagline: "Brand & site for a small-batch garden bakery"   # short logline on the home card (not the summary)
+tagline: "A brand, website and ordering system for a small-batch garden bakery"   # short logline on the home card (not the summary)
 
 # ─── Body blocks ───────────────────────────────────────────────────────
 blocks:
@@ -158,15 +159,15 @@ blocks:
 
   - type: phone
     side: right
-    media: ./assets/find-us-ios.avif
+    media: ./assets/vid-findus-ios.mp4
     box:
       background: "#f0f3f7"
       border: "1px solid #e6e2d6"
       padding: "2rem"
       radius: "16px"
-    screenBg: "#faf9f0"    # fills the strip behind the Dynamic Island (was #e0edd3)
-    statusHeight: "9%"     # push the sticky nav down clear of the island
-    alt: "Heartful Gardens 'Find Us' button opening the location in Apple Maps on iPhone"
+    screenBg: "#f9f7ef"    # the clip's nav cream after video encoding
+    statusHeight: "6.8%"   # recorded at 393x793 (below the status bar); lands its bottom on the screen edge
+    alt: "Heartful Gardens 'Find Us' market card on iPhone, with Copy address and Open in Apple Maps links above an embedded map"
     heading: "Find Us"
     body: >
       The business earns its keep at the market stall so the "Find Us" section allows the client to quickly find the days and locations of markets. Google Maps is embedded into the accordion dropdowns. As Apple Maps charges for embed, a solution was needed to ensure ease-of-use on iOS devices. The solution was to provide a link that opened in the native iOS maps app.
@@ -228,9 +229,181 @@ blocks:
     radius: true
     background: white
 
-  # ══════════════ SECTION 03 — PRINT MATERIALS ══════════════
+  # ══════════════ SECTION 03 — ORDERING & OPERATIONS ══════════════
+  # Media below are placeholders ("Asset pending") until the files land in ./assets/.
+  # Screenshots: use test orders only, and crop or blur Patricia's cell number.
   - type: section
     number: "03"
+    heading: "Ordering & Operations"
+    problem: >
+      Heartful Gardens took orders by email and kept its baking schedule and inventory by hand. The team needed one place to manage all of it, set up around the way they already worked. Customers needed an easy way to order ahead and see what they owed.
+
+  - type: subsection
+    number: "03a"
+    heading: "Customer flow"
+    body: >
+      Most customers order about once a week. I wanted ordering ahead to feel as easy as buying at the market stall, with no account to create and no password to remember.
+
+  - type: image
+    heading: "From browsing to pickup"
+    mediaTitle: true
+    media: ./assets/hg-customer-flow.svg
+    alt: "User flow chart in two lanes, Customer and Heartful Gardens. The customer browses the product list, opens the order form, picks items and a date, and sends the order. Heartful Gardens gets the order email, reviews it, and replies with an order link. The customer opens the order page and sends payment. Heartful Gardens marks it paid, picks a baking day and bakes. They agree on a time and place by email, and the customer picks up."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      I mapped the customer's path from the product list to pickup. Payment happens outside the site, so the flow had to pass smoothly from the customer to the business and back again.
+
+  - type: gallery
+    heading: "Placing an order"
+    phone: true
+    statusHeight: "0%"
+    items:
+      - media: ./assets/vid-orderform-01.mp4
+        statusHeight: "6.8%"   # recorded at 393x793 (below the status bar); this lands its bottom on the screen edge
+        screenBg: "#f9f7ef"   # the clip's nav cream after video encoding
+        label: "Opening the form"
+        body: "The order form opens over the page, so visitors who came to browse aren't met with a long form. It can be reached from the menu, the product list, or a link shared on Instagram."
+      - media: ./assets/vid-orderform-02.mp4
+        statusHeight: "6.8%"
+        screenBg: "#70716c"   # the nav dimmed behind the open form
+        label: "Picking items"
+        body: "A stepper sets each quantity and the total updates as you go. Items that come in more than one size list each bag size with its own price."
+      - media: ./assets/vid-orderform-03.mp4
+        statusHeight: "6.8%"
+        screenBg: "#70716c"   # the nav dimmed behind the open form
+        label: "Choosing a date"
+        body: "The bakery can change its lead time in the admin panel, with the default set to three days. The date picker starts that many days out, so customers can’t ask for a date the team can’t meet."
+
+  - type: gallery
+    heading: "Customer order page"
+    body: >
+      The reply email from Heartful Gardens includes a link to a page for that order. The customer can come back to it to check on their order or find the payment details.
+    phone: true
+    scroll: true
+    statusHeight: "6.8%"
+    screenBg: "#fff"
+    items:
+      - media: ./assets/hg-customer-order01-mobile.webp
+        alt: "Order page for HG-0006 before payment: New and Awaiting payment labels, the payment card with a QR code, and the receipt below."
+        label: "Awaiting payment"
+        body: "The business wanted a way to get paid with no processing fees. My job was to make a manual payment feel as trustworthy as any automated checkout. The card shows the amount due, a QR code, and a copy button for anyone paying from their phone."
+      - media: ./assets/hg-customer-order02-mobile.webp
+        alt: "The same order page after payment: the payment card dimmed with a PAID stamp, and the receipt below."
+        label: "Paid"
+        body: "Two labels at the top show where the order stands and whether it has been paid. Once the team marks the order paid, the card dims and a PAID stamp appears. The receipt below can be saved as an image or a PDF, and a black and white version prints on one page."
+
+  - type: subsection
+    number: "03b"
+    heading: "Owner workflow"
+    body: >
+      The team tracked orders with Gmail labels. Each order was retyped into a reply email, and the baking schedule was kept by hand. I designed an admin page to take that work off their plate.
+
+  - type: image
+    heading: "From order to completion"
+    mediaTitle: true
+    media: ./assets/hg-owner-flow.svg
+    alt: "Workflow chart for the Heartful Gardens team: a new order arrives, they review it and reply with the order link, mark it paid, pick a baking day, bake, and mark it completed after pickup. An order can go on hold for a question to the customer, then return to the flow or be canceled."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      I mapped the steps an order goes through on the business side. Each step became a single action in the admin page.
+
+  - type: image
+    heading: "Orders list"
+    mediaTitle: true
+    media: ./assets/hg-admin-orders-01.webp
+    alt: "Heartful Gardens admin orders list with search, status filters, and a row for each order."
+    enlarge: true
+    border: "1px solid rgba(0, 0, 0, 0.2)"
+    shadow: "0 2px 8px rgba(0, 0, 0, 0.12)"
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      The list opens on all orders, with new ones at the top. One search box finds an order by its number, a customer's name, or an email address.
+
+  - type: image
+    heading: "Status and payment"
+    mediaTitle: true
+    media: ./assets/hg-admin-orders-detail.webp
+    alt: "An order drawer in the Heartful Gardens admin, with its status menu and Paid checkbox magnified."
+    enlarge: true
+    border: "1px solid rgba(0, 0, 0, 0.2)"
+    shadow: "0 2px 8px rgba(0, 0, 0, 0.12)"
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      Status moves from New to In Process to Completed with one tap. I kept Paid as its own checkbox because an order can be finished and still be unpaid.
+
+  - type: image
+    heading: "Baking Schedule"
+    mediaTitle: true
+    media: ./assets/hg-admin-baking.webp
+    alt: "Heartful Gardens baking calendar showing orders on each day, with the selected day's orders and bake totals beside it."
+    enlarge: true
+    border: "1px solid rgba(0, 0, 0, 0.2)"
+    shadow: "0 2px 8px rgba(0, 0, 0, 0.12)"
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    body: >
+      Moving an order to In Process asks for a baking day. Each day on the calendar lists its orders and how many of each product to bake. That replaced the handwritten bake list.
+
+  - type: gallery
+    heading: "Inventory"
+    body: >
+      The team found Square's inventory tools hard to use, so I designed an inventory page tied to the online orders. Open orders set aside their items, so the team can see what to bake at a glance.
+    enlarge: true
+    border: "1px solid rgba(0, 0, 0, 0.2)"
+    shadow: "0 2px 8px rgba(0, 0, 0, 0.12)"
+    items:
+      - media: ./assets/hg-admin-inventory-01.webp
+        label: "Dashboard"
+        alt: "Heartful Gardens inventory dashboard: summary tiles, filter chips, and a card for each product category with available stock and a status label for each product."
+        body: "Tiles at the top flag what needs attention, like sold-out items or stock running low. Color-coded labels on each product make the whole list quick to scan."
+      - media: ./assets/hg-admin-inventory-02.webp
+        label: "Product panel"
+        alt: "A product panel open on the inventory page, showing On hand, Reserved and Available counts, a form to change stock, settings, and a history of changes."
+        body: "Clicking a product opens its stock, settings and history. On hand, Reserved and Available sit side by side."
+      - media: ./assets/hg-admin-inventory-03.webp
+        label: "Add batch"
+        alt: "The Add batch form, listing every product with a quantity stepper, grouped by category."
+        body: "After a bake, the team logs everything in one form. It uses the same steppers as the customer order form."
+
+  - type: phone
+    side: right
+    media: ./assets/vid-admin-orders-mobile.mp4
+    box:
+      background: "#f0f3f7"
+      border: "1px solid #e6e2d6"
+      padding: "2rem"
+      radius: "16px"
+    screenBg: "#f9f7ef"    # the admin header's cream, behind the Dynamic Island
+    statusHeight: "6.8%"   # clip (686×1386) is shorter than the screen; this pins its bottom to the screen's bottom
+    alt: "Screen recording of the Heartful Gardens admin on a phone: status tiles above a list of order cards, and an order's details sliding up as a sheet."
+    heading: "At the market"
+    body: >
+      The team often checks orders from the market booth, so the admin page works on a phone too. Status tiles at the top show how many orders are open, unpaid or completed. Tapping an order slides its details up from the bottom of the screen.
+
+  # ══════════════ SECTION 04 — PRINT MATERIALS ══════════════
+  - type: section
+    number: "04"
     heading: "Print Materials"
     problem: >
       The Heartful Gardens team needed to take the brand off-screen with CMYK, PDF/X-1a assets that could be handed directly to a printer.
@@ -318,7 +491,7 @@ blocks:
   - type: impact
     heading: "Impact"
     body: |
-      I made a complete, cohesive brand for Heartful Gardens that included a logo system, a set of production-ready print pieces, and a warm, animated website. 
+      I made a complete, cohesive brand for Heartful Gardens that included a logo system, a set of production-ready print pieces, and a warm, animated website. I also designed the ordering system the business now runs on. Customers order ahead without an account, and the team tracks orders in one place, from request to payment.
       
       > "What began as an idea became a business with a brand
       > customers could recognize. People spot the logo before anything else!"

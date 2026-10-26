@@ -87,17 +87,11 @@ export const OutlineNav = ({ blocks }) => {
         (s) => s.id === activeId || s.children.some((c) => c.id === activeId),
     );
 
-    // The rail stays hidden over the hero: activeId is null until the first
-    // section header scrolls past, so it fades in once the reader is in the body
-    // and fades back out if they scroll up to the top.
-    const shown = Boolean(activeId);
-
+    // The rail is always shown on desktop, so readers can see the study's shape
+    // from the hero onward. No entry is highlighted until the first section
+    // header scrolls past.
     return (
-        <nav
-            className={`${styles.outlineNav} ${shown ? styles.outlineNavVisible : ''}`}
-            aria-label="Case study sections"
-            aria-hidden={shown ? undefined : 'true'}
-        >
+        <nav className={styles.outlineNav} aria-label="Case study sections">
             <ul className={styles.outlineList}>
                 {tree.map((s) => {
                     const isActive = activeSection?.id === s.id;

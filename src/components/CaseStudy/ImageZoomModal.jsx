@@ -125,7 +125,7 @@ export const ImageZoomModal = ({ src, alt = '', onClose, label = 'Image viewer' 
                 <img
                     src={src}
                     alt={alt}
-                    className={styles.zoomImg}
+                    className={isVector ? styles.zoomImg : `${styles.zoomImg} ${styles.zoomImgRaster}`}
                     style={dispW ? { width: `${dispW}px` } : undefined}
                     onLoad={(e) => setNat({ w: e.currentTarget.naturalWidth || 1200, h: e.currentTarget.naturalHeight || 800 })}
                     draggable="false"

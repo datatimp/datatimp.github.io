@@ -147,6 +147,37 @@
     pointer-events: none;
 }
 
+/* `scroll: true` — a full-page grab scrolls inside the screen. The frame has
+   pointer-events: none, so the wheel and touch reach the screen under it. */
+.phoneScroll .phoneScreenInner {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+.phoneScroll .phoneScreenInner::-webkit-scrollbar { display: none; }
+.phoneScroll .phoneScreen {
+    position: static;
+    display: block;
+}
+.phoneScrollHint {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    z-index: 2;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.phoneScroll:hover .phoneScrollHint,
+.phoneScroll:focus-within .phoneScrollHint { opacity: 0; }
+
 /* ─── Laptop mockup (looping mp4 inside a MacBook Pro frame) ─── */
 /* Mockup centered like the phone, heading and copy left-aligned. The video sits
    OVER the PNG, clipped to the screen cutout, so it works whether the mockup's
@@ -1061,6 +1092,13 @@
     user-select: none;              /* SVG carries its own #F0F3F7 background now */
 }
 
+/* Screenshots go white-on-grey here, so give rasters an edge and a little lift.
+   drop-shadow follows the pixels, not the box, so transparent PNGs get no frame.
+   SVGs are skipped: they carry the backdrop grey and would show as a box. */
+.zoomImgRaster {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.35)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
+}
+
 /* ─── Image block (e.g. logo iterations composite) ─── */
 .imageBlock {
     margin: 0 0 var(--stack);
@@ -1079,12 +1117,13 @@
     margin-top: var(--space-md);
 }
 
-/* Uniform neutral cards so a collection (e.g. print mockups) reads as one set. */
+/* Uniform cards so a collection (e.g. print mockups) reads as one set. They use
+   the panel tokens like every other box; a neutral grey here read as a second hue. */
 .galleryItem {
     margin: 0;
     padding: var(--space-md);
-    background-color: var(--color-neutral-100);
-    border: 1px solid var(--color-neutral-200);
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
     border-radius: var(--radius);
     display: flex;
     flex-direction: column;
@@ -1117,15 +1156,6 @@
     .galleryGridPhone {
         grid-template-columns: 1fr;
     }
-}
-
-/* Phone-framed gallery items sit on the standard tinted panel, same as every
-   other boxed insert on the page. */
-.galleryItemPhone {
-    background: var(--panel-bg);
-    border: 1px solid var(--panel-border);
-    border-radius: var(--radius);
-    padding: var(--space-md);
 }
 
 /* The 300px cap on .phone is for a solo block; in a multi-up flow it must be
@@ -1165,6 +1195,7 @@
 /* A label + copy caption is a block of prose, not a one-line figure caption.
    One flex column at a single gap keeps phone → chip → copy evenly spaced;
    align-items shrink-wraps the chip to its text. */
+.galleryCaptionStacked,
 .galleryItemPhone .galleryCaption {
     /* 32px off the mockup, 16px between chip and copy — the device needs more
        air beneath it than the caption's own parts need from each other. */
@@ -1287,29 +1318,13 @@
         transform: translateY(-50%);
         /* Sits in the gutter left of the centered content column. */
         left: max(1rem, calc(50vw - (var(--container-width) / 2) + 1rem));
-        width: 190px;
+        /* Exactly the gap between the rail and the hero frame (.heroFrame, 1100px),
+           so a long label wraps instead of running onto the hero. Past 1408px the
+           gap is the same at every width. */
+        width: calc((var(--container-width) - 1100px) / 2 - 2rem);
         max-height: 70vh;
         overflow-y: auto;
         z-index: 5;
-        /* Hidden over the hero, faded in once the reader reaches the body. */
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity 220ms ease, visibility 0s linear 220ms;
-    }
-
-    .outlineNavVisible {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transition: opacity 220ms ease, visibility 0s;
-    }
-}
-
-/* Wider viewports have a real gutter, so give the rail more room to breathe. */
-@media (min-width: 1600px) {
-    .outlineNav {
-        width: 220px;
     }
 }
 
@@ -1340,7 +1355,7 @@
 }
 
 .outlineLink:hover {
-    color: var(--color-text, #202020);
+    color: var(--color-primary, #0f8a72);
 }
 
 .outlineLinkActive {
@@ -1375,7 +1390,7 @@
 }
 
 .outlineSubLink:hover {
-    color: var(--color-text, #202020);
+    color: var(--color-primary, #0f8a72);
 }
 
 .outlineSubLinkActive {
@@ -1391,9 +1406,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .outlineLink,
-    .outlineSubLink,
-    .outlineNav,
-    .outlineNavVisible {
+    .outlineSubLink {
         transition: none;
     }
 }

@@ -110,7 +110,12 @@ function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, cla
 }
 ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
 
-function Gallery({ heading, body, items = [], phone, screenBg = '#000', statusHeight = '9%' }) {
+function Gallery({ heading, body, items = [], phone, scroll, enlarge, border, shadow, screenBg = '#000', statusHeight = '9%' }) {
+    // `enlarge: true` (per block or per item) → clicking a plain image opens the
+    // same full-screen pan/zoom viewer as image blocks. Multi-up screenshots are
+    // too small to read in the grid, so this is how the detail stays reachable.
+    // `border` and `shadow` (per block or per item) style each frame, same as image blocks.
+    const [zoomed, setZoomed] = useState(null);
     return (
         <section className={styles.gallery}>
             {heading && <h2 className={styles.blockHeading}>{heading}</h2>}
@@ -126,20 +131,27 @@ function Gallery({ heading, body, items = [], phone, screenBg = '#000', statusHe
                     // resolution made pending items a different card entirely.
                     const wantsPhone = it.phone ?? phone;
                     const usePhone = wantsPhone && isResolved(it.media);
+                    const alt = it.alt || it.body || it.caption || '';
+                    const canEnlarge = (it.enlarge ?? enlarge) && !wantsPhone && isResolved(it.media) && !isRiv(it.media);
+                    const frame = <MediaFrame src={it.media} alt={alt} riveProps={it.riveProps} border={it.border ?? border} shadow={it.shadow ?? shadow} />;
                     return (
                         <figure key={it.media || idx} className={`${styles.galleryItem}${wantsPhone ? ` ${styles.galleryItemPhone}` : ''}`}>
                             {usePhone ? (
                                 <Device
                                     media={it.media}
-                                    alt={it.alt || it.body || it.caption || ''}
+                                    alt={alt}
                                     screenBg={it.screenBg ?? screenBg}
                                     statusHeight={it.statusHeight ?? statusHeight}
+                                    scroll={it.scroll ?? scroll}
                                 />
-                            ) : (
-                                <MediaFrame src={it.media} alt={it.alt || it.body || it.caption || ''} riveProps={it.riveProps} />
-                            )}
+                            ) : canEnlarge ? (
+                                <button type="button" className={styles.enlargeImageBtn} onClick={() => setZoomed({ src: it.media, alt, label: it.label })} aria-label={`Expand ${it.label || 'image'}`}>
+                                    {frame}
+                                    <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
+                                </button>
+                            ) : frame}
                             {(it.label || it.body || it.caption) && (
-                                <figcaption className={styles.galleryCaption}>
+                                <figcaption className={`${styles.galleryCaption}${(it.label || it.body) ? ` ${styles.galleryCaptionStacked}` : ''}`}>
                                     {it.label && <span className={styles.galleryLabel}>{it.label}</span>}
                                     {it.body && <p className={styles.galleryBody}><Inline>{it.body}</Inline></p>}
                                     {!it.label && !it.body && <Inline>{it.caption}</Inline>}
@@ -149,10 +161,13 @@ function Gallery({ heading, body, items = [], phone, screenBg = '#000', statusHe
                     );
                 })}
             </div>
+            {zoomed && (
+                <ImageZoomModal src={zoomed.src} alt={zoomed.alt} onClose={() => setZoomed(null)} label={`${zoomed.label || heading || 'Image'} — expanded`} />
+            )}
         </section>
     );
 }
-Gallery.propTypes = { heading: PropTypes.string, body: PropTypes.string, items: PropTypes.array, phone: PropTypes.bool, screenBg: PropTypes.string, statusHeight: PropTypes.string };
+Gallery.propTypes = { heading: PropTypes.string, body: PropTypes.string, items: PropTypes.array, phone: PropTypes.bool, scroll: PropTypes.bool, enlarge: PropTypes.bool, border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), screenBg: PropTypes.string, statusHeight: PropTypes.string };
 
 /** Dispatch a content block to its renderer based on `type`. */
 export const Block = ({ block }) => {

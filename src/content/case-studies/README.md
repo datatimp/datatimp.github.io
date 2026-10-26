@@ -181,7 +181,7 @@ you set `enlarge: true`, since the viewer shows the raw screen at full resolutio
 
 ```yaml
 - type: phone
-  media: ./assets/find-us-ios.avif
+  media: ./assets/vid-findus-ios.mp4
   alt: "What the recording shows"
   statusHeight: "0%"       # see below — the one that bites
   screenBg: "#ffffff"

@@ -6,17 +6,33 @@ import { boxStyle } from './boxStyle';
 import styles from './CaseStudy.module.css';
 import frame from '../../assets/images/iphone16-mockup.png';
 
-/** The bare iPhone mockup: media behind a transparent-screen PNG.
-    Exported so `gallery` can frame its items without the Phone block's layout. */
-export const Device = ({ media, alt, screenBg, statusHeight, maxWidth }) => (
-    <div className={styles.phone} style={maxWidth ? { maxWidth } : undefined}>
-        <div className={styles.phoneScreenInner} style={{ background: screenBg }}>
-            <img src={media} alt={alt} className={styles.phoneScreen} style={{ top: statusHeight }} loading="lazy" />
+// Same test as Laptop.jsx: a screen recording plays as a muted loop, anything else is a still.
+const isVideo = (src) => /\.(mp4|webm|mov)(\?|#|$)/i.test(src);
+
+/** The bare iPhone mockup: an mp4 loop OR a still, behind a transparent-screen PNG.
+    Exported so `gallery` can frame its items without the Phone block's layout.
+    `scroll: true` → a full-page grab taller than the screen scrolls inside it. */
+export const Device = ({ media, alt, screenBg, statusHeight, maxWidth, scroll }) => (
+    <div className={`${styles.phone}${scroll ? ` ${styles.phoneScroll}` : ''}`} style={maxWidth ? { maxWidth } : undefined}>
+        <div className={styles.phoneScreenInner} style={{ background: screenBg }} tabIndex={scroll ? 0 : undefined} aria-label={scroll ? `${alt || 'Screen'} (scrolls)` : undefined}>
+            {isVideo(media) ? (
+                <video src={media} className={styles.phoneScreen} style={{ top: statusHeight }} autoPlay muted loop playsInline preload="metadata" aria-label={alt || undefined} />
+            ) : scroll ? (
+                // A spacer, not margin: a % height reads off the screen's height,
+                // like `top` does for the non-scrolling still.
+                <>
+                    <div style={{ height: statusHeight }} aria-hidden="true" />
+                    <img src={media} alt={alt} className={styles.phoneScreen} loading="lazy" />
+                </>
+            ) : (
+                <img src={media} alt={alt} className={styles.phoneScreen} style={{ top: statusHeight }} loading="lazy" />
+            )}
         </div>
         <img src={frame} alt="" aria-hidden="true" className={styles.phoneFrame} />
+        {scroll && <span className={styles.phoneScrollHint} aria-hidden="true">Scroll</span>}
     </div>
 );
-Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: PropTypes.string, statusHeight: PropTypes.string, maxWidth: PropTypes.string };
+Device.propTypes = { media: PropTypes.string, alt: PropTypes.string, screenBg: PropTypes.string, statusHeight: PropTypes.string, maxWidth: PropTypes.string, scroll: PropTypes.bool };
 
 /**
  * A screen recording shown inside a photoreal iPhone mockup. `screenBg` fills
