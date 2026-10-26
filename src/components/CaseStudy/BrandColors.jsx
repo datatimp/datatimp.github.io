@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { getAssetDims } from '../../content/caseStudies';
 import styles from './CaseStudy.module.css';
 
 // Chip only — no visible hex (too small to read); still copyable on click,
@@ -33,7 +34,7 @@ export const BrandColors = ({ heading, body, options = [] }) => {
                     >
                         {opt.chosen && <span className={styles.chosenTag}>Final</span>}
                         {isResolved(opt.logo) && (
-                            <img src={opt.logo} alt={`${opt.label} logo`} className={styles.brandLogo} />
+                            <img src={opt.logo} alt={`${opt.label} logo`} className={styles.brandLogo} {...getAssetDims(opt.logo)} />
                         )}
                         <figcaption className={styles.brandLabel}>{opt.label}</figcaption>
                         <div className={styles.swatchRow}>

@@ -75,7 +75,22 @@ export const OutlineNav = ({ blocks }) => {
         const el = document.getElementById(id);
         if (!el) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        const jump = () => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        jump();
+        // Safety net: images now reserve their space, but anything that still
+        // changes height mid-scroll (a Rive canvas, a late font) moves the target.
+        // Re-aim whenever the page resizes, for a moment, unless the reader
+        // takes over the scroll themselves.
+        const ro = new ResizeObserver(jump);
+        const stop = () => {
+            ro.disconnect();
+            window.removeEventListener('wheel', stop);
+            window.removeEventListener('touchstart', stop);
+        };
+        ro.observe(document.body);
+        window.addEventListener('wheel', stop, { passive: true, once: true });
+        window.addEventListener('touchstart', stop, { passive: true, once: true });
+        setTimeout(stop, 1500);
         // Keep the URL shareable without triggering the browser's own jump.
         window.history.replaceState(null, '', `#${id}`);
     };

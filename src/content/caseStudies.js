@@ -1,4 +1,5 @@
 import { load as yamlLoad } from 'js-yaml';
+import assetDims from 'virtual:asset-dims';
 
 /**
  * Case-study content loader.
@@ -21,6 +22,18 @@ const assetUrls = import.meta.glob(
     './case-studies/*/assets/**/*.{png,jpg,jpeg,webp,svg,gif,riv,avif,mp4,webm}',
     { eager: true, query: '?url', import: 'default' },
 );
+
+// Each image's [width, height], looked up by its bundled URL (see the
+// asset-dims plugin in vite.config.js). Components put these on <img> so the
+// page reserves the space before a lazy image loads.
+const dimsByUrl = {};
+for (const [key, url] of Object.entries(assetUrls)) {
+    if (assetDims[key]) dimsByUrl[url] = assetDims[key];
+}
+export const getAssetDims = (url) => {
+    const d = dimsByUrl[url];
+    return d ? { width: d[0], height: d[1] } : {};
+};
 
 function splitFrontmatter(raw) {
     const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);

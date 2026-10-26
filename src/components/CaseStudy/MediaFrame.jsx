@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { RiveEmbed } from './RiveEmbed';
+import { getAssetDims } from '../../content/caseStudies';
 import styles from './CaseStudy.module.css';
 
 const isRiv = (src) => typeof src === 'string' && src.split('?')[0].endsWith('.riv');
@@ -33,7 +34,7 @@ export const MediaFrame = ({ src, alt = '', riveProps = {}, className, radius = 
             {isRiv(src) ? (
                 <RiveEmbed src={src} className={styles.frameRive} {...riveProps} />
             ) : (
-                <img src={src} alt={alt} className={styles.frameImg} loading="lazy" />
+                <img src={src} alt={alt} className={styles.frameImg} loading="lazy" {...getAssetDims(src)} />
             )}
         </div>
     );

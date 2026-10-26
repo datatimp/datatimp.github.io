@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { getAssetDims } from '../../content/caseStudies';
 import styles from './CaseStudy.module.css';
 
 /**
@@ -38,7 +39,7 @@ export const BrandDeck = ({ heading, body, slides = [] }) => {
             {body && <p className={styles.blockLead}>{body}</p>}
 
             <button type="button" className={styles.deckThumb} onClick={() => { setI(0); setOpen(true); }}>
-                <img src={slides[0]} alt="" className={styles.deckThumbImg} loading="lazy" />
+                <img src={slides[0]} alt="" className={styles.deckThumbImg} loading="lazy" {...getAssetDims(slides[0])} />
                 <span className={styles.deckThumbLabel}>View the brand deck ({count} slides)</span>
             </button>
 
