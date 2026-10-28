@@ -71,7 +71,7 @@ ProseBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
     flanked-by-rules heading. Stands out so the study doesn't just trail off. */
 function ImpactBlock({ heading, body }) {
     return (
-        <section className={styles.impact}>
+        <section className={styles.impact} id={sectionId(null, heading || 'Impact')}>
             {heading && <h2 className={styles.impactHeading}>{heading}</h2>}
             {body && <div className={styles.impactBody}><ReactMarkdown>{body}</ReactMarkdown></div>}
         </section>

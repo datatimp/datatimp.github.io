@@ -15,12 +15,19 @@ import styles from './CaseStudy.module.css';
  * Below that breakpoint the same tree drives a pill pinned under the navbar
  * (current section + reading progress) that opens the full outline in a
  * bottom sheet (see .outlineMobile).
+ *
+ * `summary` adds a leading "Summary" entry for the frontmatter summary and
+ * quote, which the page anchors at SUMMARY_ID.
  */
-export const OutlineNav = ({ blocks }) => {
+export const SUMMARY_ID = 'sec-summary';
+
+export const OutlineNav = ({ blocks, summary = false }) => {
     // [{ id, number, heading, children: [...] }] — subsections nest under the
     // section they follow.
     const tree = useMemo(() => {
-        const out = [];
+        const out = summary
+            ? [{ id: SUMMARY_ID, number: null, heading: 'Summary', intro: true, children: [] }]
+            : [];
         for (const b of blocks) {
             if (b?.type === 'section') {
                 out.push({ id: sectionId(b.number, b.heading), number: b.number, heading: b.heading, children: [] });
@@ -28,10 +35,15 @@ export const OutlineNav = ({ blocks }) => {
                 out[out.length - 1].children.push({
                     id: sectionId(b.number, b.heading), number: b.number, heading: b.heading,
                 });
+            } else if (b?.type === 'impact') {
+                // The close-out isn't numbered, but readers should be able to
+                // jump straight to it.
+                const heading = b.heading || 'Impact';
+                out.push({ id: sectionId(null, heading), number: null, heading, children: [] });
             }
         }
         return out;
-    }, [blocks]);
+    }, [blocks, summary]);
 
     const [activeId, setActiveId] = useState(null);
     // Every id in document order, so we can resolve "which is furthest down but
@@ -199,6 +211,10 @@ export const OutlineNav = ({ blocks }) => {
 
     const activeSub = activeSection?.children.find((c) => c.id === activeId);
 
+    // The pill keeps saying "Contents" over the Summary, so it still reads as
+    // a menu until the first numbered section.
+    const pillSection = activeSection?.intro ? null : activeSection;
+
     // The rail is always shown on desktop, so readers can see the study's shape
     // from the hero onward. No entry is highlighted until the first section
     // header scrolls past.
@@ -252,14 +268,14 @@ export const OutlineNav = ({ blocks }) => {
                 aria-expanded={sheetOpen}
                 aria-controls="outline-sheet"
             >
-                {activeSection && (
-                    <span className={styles.outlinePillNumber}>{(activeSub || activeSection).number}</span>
+                {pillSection?.number && (
+                    <span className={styles.outlinePillNumber}>{(activeSub || pillSection).number}</span>
                 )}
                 <span className={styles.outlinePillText}>
-                    {activeSection ? activeSection.heading : 'Contents'}
-                    {(activeSub || !activeSection) && (
+                    {pillSection ? pillSection.heading : 'Contents'}
+                    {(activeSub || !pillSection) && (
                         <span className={styles.outlinePillSub}>
-                            {activeSection ? activeSub.heading : `${tree.length} sections`}
+                            {pillSection ? activeSub.heading : `${tree.length} sections`}
                         </span>
                     )}
                 </span>
@@ -334,4 +350,5 @@ export const OutlineNav = ({ blocks }) => {
 
 OutlineNav.propTypes = {
     blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
+    summary: PropTypes.bool,
 };

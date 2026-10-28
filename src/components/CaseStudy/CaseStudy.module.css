@@ -1483,6 +1483,8 @@
 }
 
 .outlineNumber {
+    /* Holds the column for the unnumbered Impact entry too. */
+    min-width: 2ch;
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.6875rem;
     color: var(--color-primary, #0f8a72);
@@ -1519,7 +1521,10 @@
 
 /* Anchors sit under the fixed navbar without the heading hiding beneath it. */
 .sectionHeader,
-.subsection {
+.subsection,
+.impact,
+.summary,
+.heroQuote {
     scroll-margin-top: 6rem;
 }
 
@@ -1537,7 +1542,10 @@
 
     /* Clear the navbar and the pill when jumping to a heading. */
     .sectionHeader,
-    .subsection {
+    .subsection,
+    .impact,
+    .summary,
+    .heroQuote {
         scroll-margin-top: calc(var(--navbar-h, 64px) + 5rem);
     }
 }

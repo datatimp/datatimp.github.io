@@ -5,7 +5,7 @@ import { Footer } from '../components/Footer/Footer';
 import { CaseStudyHero } from '../components/CaseStudy/CaseStudyHero';
 import { Snapshot } from '../components/CaseStudy/Snapshot';
 import { Block } from '../components/CaseStudy/Blocks';
-import { OutlineNav } from '../components/CaseStudy/OutlineNav';
+import { OutlineNav, SUMMARY_ID } from '../components/CaseStudy/OutlineNav';
 import ReactMarkdown from 'react-markdown';
 import { getCaseStudy } from '../content/caseStudies';
 import styles from '../components/CaseStudy/CaseStudy.module.css';
@@ -90,15 +90,20 @@ export const CaseStudy = () => {
                     )}
                 </div>
 
+                {/* Summary and quote share one outline entry, anchored on
+                    whichever comes first. */}
                 {study.summary && (
-                    <div className={styles.summary}>
+                    <div className={styles.summary} id={SUMMARY_ID}>
                         <ReactMarkdown>{study.summary}</ReactMarkdown>
                     </div>
                 )}
 
                 {/* Client testimony up front, so it's seen in the first screen. */}
                 {study.quote && (
-                    <figure className={`${styles.heroQuote} ${styles[study.quoteStroke] || ''}`}>
+                    <figure
+                        className={`${styles.heroQuote} ${styles[study.quoteStroke] || ''}`}
+                        id={study.summary ? undefined : SUMMARY_ID}
+                    >
                         <blockquote className={styles.heroQuoteText}>
                             <p>&ldquo;{study.quote}&rdquo;</p>
                         </blockquote>
@@ -109,7 +114,7 @@ export const CaseStudy = () => {
                     </figure>
                 )}
 
-                <OutlineNav blocks={blocks} />
+                <OutlineNav blocks={blocks} summary={Boolean(study.summary || study.quote)} />
 
                 {blocks.map((block, i) => (
                     <Block key={`${block.type}-${i}`} block={block} />
