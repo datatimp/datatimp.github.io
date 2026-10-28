@@ -64,6 +64,9 @@ export const Navbar = ({ items = DEFAULT_ITEMS, studies = caseStudies }) => {
                         Work
                         <span className={styles.caret} aria-hidden="true">▾</span>
                     </button>
+                    {/* In the mobile drawer the studies are always listed, so
+                        Work is just a heading there, not a button. */}
+                    <span className={`${styles.link} ${styles.workLabel}`}>Work</span>
 
                     <ul className={`${styles.submenu} ${workOpen ? styles.submenuOpen : ''}`}>
                         {studies.map((study) => (

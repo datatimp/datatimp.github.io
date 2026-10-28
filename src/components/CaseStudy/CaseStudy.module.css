@@ -486,12 +486,12 @@
     opacity: 0;
     transform-origin: 50% 80%;
 }
-/* Pops in, then wiggles once every 10s. The wiggle is the first 0.8s of
-   each cycle; the rest of the cycle is rest. */
+/* Pops in, waits 6s so the eye has time to get there, then wiggles once
+   every 8s. The wiggle is the first 0.8s of each cycle; the rest is rest. */
 .quoteEmojiPop .quoteEmojiGlyph {
     animation:
         quoteEmojiPop 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) both,
-        quoteEmojiWiggle 10s ease-in-out 4s infinite;
+        quoteEmojiWiggle 6s ease-in-out 5s infinite;
 }
 @keyframes quoteEmojiPop {
     0%   { transform: scale(0.3) rotate(-25deg); opacity: 0; }
@@ -500,10 +500,10 @@
 }
 @keyframes quoteEmojiWiggle {
     0%   { transform: scale(1) rotate(0); }
-    2%   { transform: scale(1.06) rotate(-10deg); }
-    4%   { transform: scale(1.06) rotate(8deg); }
-    6%   { transform: scale(1.03) rotate(-4deg); }
-    8%, 100% { transform: scale(1) rotate(0); }
+    2.5% { transform: scale(1.06) rotate(-10deg); }
+    5%   { transform: scale(1.06) rotate(8deg); }
+    7.5% { transform: scale(1.03) rotate(-4deg); }
+    10%, 100% { transform: scale(1) rotate(0); }
 }
 @media (prefers-reduced-motion: reduce) {
     .quoteEmojiGlyph { opacity: 1; }

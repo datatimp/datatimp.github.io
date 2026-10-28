@@ -63,6 +63,11 @@
     text-transform: uppercase;
 }
 
+/* Mobile-only stand-in for the trigger; see the drawer rules below. */
+.workLabel {
+    display: none;
+}
+
 .caret {
     font-size: 0.7em;
     transition: transform 0.2s ease;
@@ -195,5 +200,20 @@
 
     .caret {
         display: none;
+    }
+
+    /* The list never closes here, so the toggle would do nothing. Swap it
+       for a plain heading. */
+    .workTrigger {
+        display: none;
+    }
+
+    .workLabel {
+        display: block;
+        cursor: default;
+    }
+
+    .workLabel:hover {
+        color: #fff;
     }
 }
