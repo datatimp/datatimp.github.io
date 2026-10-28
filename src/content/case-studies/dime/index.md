@@ -18,6 +18,9 @@ liveUrl: "https://www.figma.com/design/QaE6JEJ1vNFc1Y8XOrcogl/Dime-Payment-Desig
 liveLabel: "View the design system in Figma"   # friendly label for the snapshot callout (falls back to the URL)
 summary: >             # 1–3 sentence TL;DR under the hero — carries the story for skimmers
   Ahead of a major service expansion, Dime needed its public payment pages and multi-role account shell rebuilt for three user types. I *completed a design system* to keep development consistent, *mapped user flows* and *rebuilt the payment pages and account shell*.
+quote: "The design system he created became the basis for how we build product UI today."
+quoteBy: "Ben Habeck, CEO, Dime Payments"
+quoteEmoji: "🥳"
 card: ./assets/dime-screenshot.webp
 hero: ./assets/dime-hero-img.webp
 tagline: "A design system and payment flow for a scaling fintech platform"
@@ -286,8 +289,4 @@ blocks:
     heading: "Impact"
     body: |
       Dime came away with a documented, token-driven design system covering color, type, and components across three roles and two surfaces.
-
-      > "The design system he created became the basis for how we build product UI today."
-      >
-      > — Ben Habeck, CEO, Dime Payments
 ---

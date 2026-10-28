@@ -18,6 +18,9 @@ platform: Web, Print
 liveUrl: "https://heartfulgardens.com"   # the live site — shown as the mono callout under the snapshot
 summary: >
   Heartful Gardens, a small-batch bakery & garden needed brand identity, web presence, and print materials. As the business grew, it also needed a way to take orders online. Deliverables included a *logo system*, *print-ready marketing collateral*, a *hand-built site* featuring *custom animated Rive graphics*, and an *online ordering system* with an admin page for the owner.
+quote: "What began as an idea became a business with a brand customers could recognize. People spot the logo before anything else!"
+quoteBy: "Patricia McKeon, Owner, Heartful Gardens"
+quoteEmoji: "👍"
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
 tagline: "A brand, website and ordering system for a small-batch garden bakery"   # short logline on the home card (not the summary)
@@ -236,7 +239,7 @@ blocks:
     number: "03"
     heading: "Ordering & Operations"
     problem: >
-      Heartful Gardens took orders by email and kept its baking schedule and inventory by hand. The team needed one place to manage all of it, set up around the way they already worked. Customers needed an easy way to order ahead and see what they owed.
+      Heartful Gardens took orders by email and kept its baking schedule and inventory by hand. The team needed one place to manage all of it. Customers needed an easy way to order ahead and see what they owed.
 
   - type: subsection
     number: "03a"
@@ -301,7 +304,7 @@ blocks:
     number: "03b"
     heading: "Owner workflow"
     body: >
-      The team tracked orders with Gmail labels. Each order was retyped into a reply email, and the baking schedule was kept by hand. I designed an admin page to take that work off their plate.
+      I interviewed the team to find where the order-tracking process broke down; those findings shaped an admin portal built around how they already worked. 
 
   - type: image
     heading: "From order to completion"
@@ -492,9 +495,4 @@ blocks:
     heading: "Impact"
     body: |
       I made a complete, cohesive brand for Heartful Gardens that included a logo system, a set of production-ready print pieces, and a warm, animated website. I also designed the ordering system the business now runs on. Customers order ahead without an account, and the team tracks orders in one place, from request to payment.
-      
-      > "What began as an idea became a business with a brand
-      > customers could recognize. People spot the logo before anything else!"
-      >
-      > — Patricia McKeon, Owner, Heartful Gardens
 ---

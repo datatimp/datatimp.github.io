@@ -406,6 +406,107 @@
     color: var(--color-primary);
 }
 
+/* ─── Hero quote (opt in with `quote` + `quoteBy` in frontmatter) ───
+   Sits under the summary, pulled up half a stack so it reads as part of the
+   intro. Same boxed treatment as the old Impact pull quote. */
+.heroQuote {
+    position: relative;
+    width: fit-content;     /* hug the text so every side gets the same 20px */
+    max-width: 48ch;
+    margin: calc(var(--stack) * -0.5) 0 var(--stack);
+    padding: 20px;
+    border-radius: var(--radius);
+    /* Gradient stroke: the fill paints the padding box, the chrome ramp the
+       border box, so the ramp shows only through the transparent border. */
+    border: 1px solid transparent;
+    background:
+        linear-gradient(var(--quote-bg), var(--quote-bg)) padding-box,
+        var(--quote-stroke) border-box;
+    --quote-stroke: var(--pewter);
+    box-shadow:
+        0 10px 28px -12px rgba(30, 41, 59, 0.28),
+        0 2px 6px -2px rgba(30, 41, 59, 0.10);
+}
+
+/* Metallic strokes. Pewter is the default: highlights sit near the corners.
+   Tim's two blues, from his Figma gradient panels, stay available per study
+   with `quoteStroke:` in frontmatter. */
+.heroQuote {
+    --pewter: linear-gradient(108deg,
+        #5f6569 0%, #e3e6e8 10%, #a9afb3 22%, #8d9397 52%, #a9afb3 76%, #d9dcde 90%, #6f757a 100%);
+    --bluegradient01: linear-gradient(102deg,
+        #477c9d 0%, #e4f1ff 19%, #577e98 52%, #adc8d3 71%, #30516c 99%);
+    /* The two 96% stops make a hard edge, the last glint before the dark end. */
+    --bluegradient02: linear-gradient(10deg,
+        #7da9b7 0%, #497a8a 29%, #abd2de 43%, #fff 55%, #669db2 73%, #79acbf 96%, #527ea1 96%);
+}
+.bluegradient01 {
+    --quote-stroke: var(--bluegradient01);
+}
+.bluegradient02 {
+    --quote-stroke: var(--bluegradient02);
+}
+
+.heroQuoteText {
+    margin: 0 0 var(--space-xs);
+}
+
+.heroQuoteText p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    line-height: 1.4;
+    /* No text-wrap: balance. It shortens every line but leaves the box at
+       full width, which opens a gap down the right side. */
+}
+
+/* Byline: quieter, smaller, never italic. */
+.heroQuoteBy {
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    color: var(--color-neutral-600);
+}
+
+/* Emoji sticker (`quoteEmoji:`), about half over the bottom-right corner,
+   where the short last line and byline leave the corner empty. */
+.quoteEmoji {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(45%, 22%);
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    font-size: 96px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 6px 8px rgba(30, 41, 59, 0.18));
+}
+.quoteEmojiGlyph {
+    display: block;
+    opacity: 0;
+}
+.quoteEmojiPop .quoteEmojiGlyph {
+    animation: quoteEmojiPop 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+@keyframes quoteEmojiPop {
+    0%   { transform: scale(0.3) rotate(-25deg); opacity: 0; }
+    55%  { transform: scale(1.12) rotate(8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .quoteEmojiGlyph { opacity: 1; }
+    .quoteEmojiPop .quoteEmojiGlyph { animation: none; }
+}
+/* No side gutter on a phone, so the sticker shrinks and perches below the
+   corner instead of beside it, clear of the text. */
+@media (max-width: 720px) {
+    .heroQuote:has(.quoteEmoji) { margin-bottom: calc(var(--stack) + 2.5rem); }
+    .quoteEmoji {
+        font-size: 64px;
+        transform: translate(15%, 72%);
+    }
+}
+
 /* ─── Snapshot bar ─── */
 .snapshot {
     display: flex;
@@ -1228,6 +1329,8 @@
     /* Issue 2: the 8rem top padding is huge on mobile — tighten it. */
     .hero {
         padding: var(--space-lg) var(--space-md) var(--space-md);
+        /* Extra top room so the outline pill doesn't crowd the title. */
+        padding-top: calc(var(--space-lg) + var(--space-sm));
     }
     /* Issue 3: a fixed 16px radius over-rounds the scaled-down image on mobile
        and cuts the baked frame's corners; shrink it to roughly match. */
@@ -1404,9 +1507,251 @@
     scroll-margin-top: 6rem;
 }
 
+/* ─── Outline pill + sheet (below the desktop breakpoint) ───
+   The same outline as the rail, as a pill pinned under the navbar that opens
+   the full list in a bottom sheet. --navbar-h is measured by OutlineNav. */
+.outlineMobile {
+    display: none;
+}
+
+@media (max-width: 1279px) {
+    .outlineMobile {
+        display: block;
+    }
+
+    /* Clear the navbar and the pill when jumping to a heading. */
+    .sectionHeader,
+    .subsection {
+        scroll-margin-top: calc(var(--navbar-h, 64px) + 5rem);
+    }
+}
+
+.outlinePill {
+    position: fixed;
+    z-index: 90;            /* under the navbar (100), so its menu drops over it */
+    top: calc(var(--navbar-h, 64px) + 0.625rem);
+    left: max(0.75rem, env(safe-area-inset-left, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    max-width: 32rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem 0.75rem;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.25);
+    font: inherit;
+    color: var(--color-text);
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.outlinePill:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.outlinePillNumber {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+}
+
+.outlinePillText {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.outlinePillSub {
+    font-weight: 500;
+    color: var(--color-neutral-500, #7b7b7b);
+}
+
+.outlinePillSub::before {
+    content: '·';
+    margin: 0 0.5rem;
+}
+
+.outlinePillChevron {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    color: var(--color-neutral-500, #7b7b7b);
+}
+
+/* Reading progress along the pill's bottom edge (scaled by OutlineNav). */
+.outlinePillProgress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--color-primary);
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+.outlineScrim {
+    position: fixed;
+    inset: 0;
+    z-index: 200;           /* over the navbar too */
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.outlineSheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 201;
+    max-width: 40rem;
+    max-height: 78vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-neutral-0);
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -10px 30px -10px rgba(0, 0, 0, 0.3);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.3s;
+}
+
+.outlineSheet:focus {
+    outline: none;
+}
+
+.outlineMobileOpen .outlineScrim {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.outlineMobileOpen .outlineSheet {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.outlineSheetHead {
+    flex: none;
+    padding: 0.625rem 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--color-neutral-200);
+    touch-action: none;     /* the drag-to-dismiss gesture owns this strip */
+}
+
+.outlineSheetHandle {
+    width: 36px;
+    height: 4px;
+    margin: 0 auto 0.75rem;
+    border-radius: 2px;
+    background: var(--color-neutral-200);
+}
+
+.outlineSheetTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+
+.outlineSheetEyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+.outlineSheetClose {
+    background: none;
+    border: 0;
+    padding: 0.25rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-neutral-500, #7b7b7b);
+    cursor: pointer;
+}
+
+.outlineSheetList,
+.outlineSheetSubList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outlineSheetList {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem 0 1rem;
+}
+
+.outlineSheetLink,
+.outlineSheetSubLink {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.outlineSheetNumber {
+    flex: none;
+    width: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+}
+
+/* Subsections indent past the number column so their text lines up. */
+.outlineSheetSubLink {
+    padding: 0.5rem 1.25rem 0.5rem calc(1.25rem + 2.5rem);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.outlineSheetSubLinkInSection {
+    color: var(--color-text);
+}
+
+.outlineSheetLinkActive {
+    border-left-color: var(--color-primary);
+    background: #eef7f5;
+    color: var(--color-text);
+}
+
+.outlineSheetLink:focus-visible,
+.outlineSheetSubLink:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .outlineLink,
-    .outlineSubLink {
+    .outlineSubLink,
+    .outlineScrim,
+    .outlineSheet,
+    .outlineMobileOpen .outlineSheet {
         transition: none;
     }
 }

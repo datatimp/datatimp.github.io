@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Footer } from '../components/Footer/Footer';
@@ -9,6 +10,32 @@ import ReactMarkdown from 'react-markdown';
 import { getCaseStudy } from '../content/caseStudies';
 import styles from '../components/CaseStudy/CaseStudy.module.css';
 import '../css/case-study-overrides.css'; // plain global CSS you edit directly
+
+// Emoji sticker on the hero quote's bottom-right corner (`quoteEmoji:` in
+// frontmatter). Pops in the first time it scrolls into view.
+const QuoteEmoji = ({ emoji }) => {
+    const ref = useRef(null);
+    const [popped, setPopped] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setPopped(true);
+                io.disconnect();
+            }
+        }, { threshold: 0.6 });
+        io.observe(el);
+        return () => io.disconnect();
+    }, []);
+
+    return (
+        <span ref={ref} className={`${styles.quoteEmoji} ${popped ? styles.quoteEmojiPop : ''}`} aria-hidden="true">
+            <span className={styles.quoteEmojiGlyph}>{emoji}</span>
+        </span>
+    );
+};
 
 export const CaseStudy = () => {
     const { slug } = useParams();
@@ -67,6 +94,19 @@ export const CaseStudy = () => {
                     <div className={styles.summary}>
                         <ReactMarkdown>{study.summary}</ReactMarkdown>
                     </div>
+                )}
+
+                {/* Client testimony up front, so it's seen in the first screen. */}
+                {study.quote && (
+                    <figure className={`${styles.heroQuote} ${styles[study.quoteStroke] || ''}`}>
+                        <blockquote className={styles.heroQuoteText}>
+                            <p>&ldquo;{study.quote}&rdquo;</p>
+                        </blockquote>
+                        {study.quoteBy && (
+                            <figcaption className={styles.heroQuoteBy}>— {study.quoteBy}</figcaption>
+                        )}
+                        {study.quoteEmoji && <QuoteEmoji emoji={study.quoteEmoji} />}
+                    </figure>
                 )}
 
                 <OutlineNav blocks={blocks} />
