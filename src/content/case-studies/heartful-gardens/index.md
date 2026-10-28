@@ -17,8 +17,8 @@ tools:
 platform: Web, Print
 liveUrl: "https://heartfulgardens.com"   # the live site — shown as the mono callout under the snapshot
 summary: >
-  Heartful Gardens, a small-batch bakery & garden needed brand identity, web presence, and print materials. As the business grew, it also needed a way to take orders online. Deliverables included a *logo system*, *print-ready marketing collateral*, a *hand-built site* featuring *custom animated Rive graphics*, and an *online ordering system* with an admin page for the owner.
-quote: "What began as an idea became a business with a brand customers could recognize. People spot the logo before anything else!"
+  Heartful Gardens, a small-batch bakery and garden, needed a brand and a way to take orders online. I designed the *logo system* and *print collateral*, built the *website* with *Rive animation*, and made an *ordering system* with tools for orders and inventory.
+quote: "Tim turned an idea into a brand, gave us a way for customers to order online, and a way for us to track orders and inventory!"
 quoteBy: "Patricia McKeon, Owner, Heartful Gardens"
 quoteEmoji: "👍"
 card: ./assets/hg-screenshot.webp
