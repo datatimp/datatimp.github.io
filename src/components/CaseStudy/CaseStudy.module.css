@@ -484,26 +484,42 @@
 .quoteEmojiGlyph {
     display: block;
     opacity: 0;
+    transform-origin: 50% 80%;
 }
+/* Pops in, then wiggles once every 10s. The wiggle is the first 0.8s of
+   each cycle; the rest of the cycle is rest. */
 .quoteEmojiPop .quoteEmojiGlyph {
-    animation: quoteEmojiPop 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+    animation:
+        quoteEmojiPop 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) both,
+        quoteEmojiWiggle 10s ease-in-out 4s infinite;
 }
 @keyframes quoteEmojiPop {
     0%   { transform: scale(0.3) rotate(-25deg); opacity: 0; }
     55%  { transform: scale(1.12) rotate(8deg); opacity: 1; }
     100% { transform: scale(1) rotate(0); opacity: 1; }
 }
+@keyframes quoteEmojiWiggle {
+    0%   { transform: scale(1) rotate(0); }
+    2%   { transform: scale(1.06) rotate(-10deg); }
+    4%   { transform: scale(1.06) rotate(8deg); }
+    6%   { transform: scale(1.03) rotate(-4deg); }
+    8%, 100% { transform: scale(1) rotate(0); }
+}
 @media (prefers-reduced-motion: reduce) {
     .quoteEmojiGlyph { opacity: 1; }
     .quoteEmojiPop .quoteEmojiGlyph { animation: none; }
 }
-/* No side gutter on a phone, so the sticker shrinks and perches below the
-   corner instead of beside it, clear of the text. */
+/* No side gutter on a phone, so the sticker shrinks and sits on the corner
+   point, the one spot that stays put across fonts and quotes. Centered
+   exactly, only a quarter of it overlaps the card and it reads as falling
+   off, so it's pulled in until about half of it is on. */
 @media (max-width: 720px) {
-    .heroQuote:has(.quoteEmoji) { margin-bottom: calc(var(--stack) + 2.5rem); }
+    .heroQuote:has(.quoteEmoji) { margin-bottom: calc(var(--stack) + 1.25rem); }
+    /* Byline wraps before it runs under the sticker. */
+    .heroQuote:has(.quoteEmoji) .heroQuoteBy { padding-right: 1.5rem; }
     .quoteEmoji {
-        font-size: 64px;
-        transform: translate(15%, 72%);
+        font-size: 54px;
+        transform: translate(28%, 22%);
     }
 }
 
