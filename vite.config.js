@@ -60,14 +60,15 @@ function assetDims() {
 // page that had no tags at all. This writes tags into index.html for the home
 // page and emits a real <slug>/index.html per live case study, so each URL
 // returns 200 with its own title, description and image. Share images live
-// in public/og/<slug>.jpg (1200x630) at stable URLs; swap them freely.
+// in public/og/ (1200x630) at stable URLs: <slug>.jpg for screenshots,
+// home.png for the home page; swap them freely.
 const SITE = 'https://timpevey.com';
 const SITE_NAME = 'Tim Pevey';
 const HOME = {
   path: '/',
   title: 'Tim Pevey | Product Designer, UI and Design Systems',
-  description: 'Product and UI designer focused on simplicity, clarity and systems thinking. Case studies in brand, web, design systems and motion.',
-  image: '/og/home.jpg',
+  description: 'Product and UI designer focused on simplicity, clarity and systems thinking. Work in web, design systems and motion.',
+  image: '/og/home.png', // PNG: crisp type on a flat graphic
 };
 
 const escapeAttr = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
