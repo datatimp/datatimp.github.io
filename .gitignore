@@ -37,3 +37,6 @@ _dev/
 
 # Windows/WSL download metadata
 *:Zone.Identifier
+
+# Git Bash (MSYS) temp files left behind by saves across the WSL share
+.msys*
