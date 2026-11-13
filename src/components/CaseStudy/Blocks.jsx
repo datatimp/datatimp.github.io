@@ -9,8 +9,10 @@ import { Phone, Device } from './Phone';
 import { Laptop } from './Laptop';
 import { MediaFrame } from './MediaFrame';
 import { ImageZoomModal } from './ImageZoomModal';
+import { RiveModal } from './RiveModal';
 import { boxStyle } from './boxStyle';
 import { sectionId } from './sectionId';
+import clickMe from '../../assets/icons/clickMe.svg';
 import styles from './CaseStudy.module.css';
 
 const isRiv = (s) => typeof s === 'string' && s.split('?')[0].endsWith('.riv');
@@ -79,13 +81,26 @@ function ImpactBlock({ heading, body }) {
 }
 ImpactBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string };
 
-function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, class: mediaClass, background, padding, shadow, mediaTitle, box, enlarge, href, linkBadge }) {
+function ImageBlock({ heading, body, media, alt, riveProps, radius, border, mediaWidth, class: mediaClass, background, padding, shadow, mediaTitle, box, enlarge, href, linkBadge, hint }) {
     const [open, setOpen] = useState(false);
     // `enlarge: true` → click opens the full-screen pan/zoom viewer (large diagrams).
+    // On a .riv it opens the same Rive modal as rows instead, which replays it from the start.
     // `href` → the image becomes an external link that opens in a new tab; it wins over enlarge.
-    const canEnlarge = enlarge && !isRiv(media) && !href;
+    const canEnlarge = enlarge && !href;
+    const riv = isRiv(media);
+    // `hint: left | right | true` → the same "click me" mark as rows, on an upper
+    // corner of the frame (true → right). Only drawn when the media is clickable.
+    const hintCorner = hint === true ? 'right' : hint;
     const frame = (
-        <MediaFrame src={media} alt={alt || heading || ''} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} shadow={shadow} />
+        <MediaFrame src={media} alt={alt || heading || ''} riveProps={riveProps} className={styles.imageBlockFrame} radius={radius} border={border} mediaWidth={mediaWidth} mediaClass={mediaClass} background={background} padding={padding} shadow={shadow} />
+    );
+    const hintMark = hintCorner && (
+        <img
+            src={clickMe}
+            alt=""
+            aria-hidden="true"
+            className={`${styles.clickHint} ${styles.imageBlockHint} ${hintCorner === 'left' ? styles.clickHintLeft : styles.clickHintRight}`}
+        />
     );
     return (
         <section className={styles.imageBlock} style={boxStyle(box)}>
@@ -93,22 +108,26 @@ function ImageBlock({ heading, body, media, alt, radius, border, mediaWidth, cla
             {body && <p className={styles.blockLead}><Inline>{body}</Inline></p>}
             {href ? (
                 <a href={href} target="_blank" rel="noreferrer" className={styles.enlargeImageBtn} style={{ cursor: 'pointer' }} aria-label={`${heading || 'Image'} — opens in a new tab`}>
+                    {hintMark}
                     {frame}
                     <span className={styles.enlargeBadge} aria-hidden="true">{linkBadge || 'Open ↗'}</span>
                 </a>
             ) : canEnlarge ? (
-                <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`Expand ${heading || 'image'}`}>
+                <button type="button" className={styles.enlargeImageBtn} onClick={() => setOpen(true)} aria-label={`${riv ? 'Enlarge' : 'Expand'} ${heading || (riv ? 'animation' : 'image')}`}>
+                    {hintMark}
                     {frame}
-                    <span className={styles.enlargeBadge} aria-hidden="true">⤢ Expand</span>
+                    <span className={styles.enlargeBadge} aria-hidden="true">{riv ? '⤢ Enlarge' : '⤢ Expand'}</span>
                 </button>
             ) : frame}
-            {open && (
+            {open && (riv ? (
+                <RiveModal src={media} riveProps={riveProps} background={background} onClose={() => setOpen(false)} label={`${heading || 'Animation'} — enlarged`} />
+            ) : (
                 <ImageZoomModal src={media} alt={alt || heading || ''} onClose={() => setOpen(false)} label={`${heading || 'Image'} — expanded`} />
-            )}
+            ))}
         </section>
     );
 }
-ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string };
+ImageBlock.propTypes = { heading: PropTypes.string, body: PropTypes.string, media: PropTypes.string, alt: PropTypes.string, riveProps: PropTypes.object, radius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), border: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaWidth: PropTypes.string, class: PropTypes.string, background: PropTypes.string, padding: PropTypes.string, shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), mediaTitle: PropTypes.bool, box: PropTypes.object, enlarge: PropTypes.bool, href: PropTypes.string, linkBadge: PropTypes.string, hint: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]) };
 
 function Gallery({ heading, body, items = [], phone, scroll, enlarge, border, shadow, screenBg = '#000', statusHeight = '9%' }) {
     // `enlarge: true` (per block or per item) → clicking a plain image opens the

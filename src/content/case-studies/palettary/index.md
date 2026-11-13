@@ -2,7 +2,7 @@
 # ─── Meta (shown in the hero + snapshot bar) ───────────────────────────
 title: "Palettary"
 slug: palettary
-draft: true              # unfinished — hidden from the live site, visible in dev
+draft: true
 order: 3
 disciplines:
   - Product Design
@@ -25,6 +25,9 @@ summary: >
   It started as one page of color palettes and grew into *four browser tools*, a
   *Figma component library*, and a *published CLI* — designed, built, and shipped solo,
   with no accounts and no subscriptions.
+quote: "I did a good job."
+quoteBy: "Tim Pevey, Product Design | UI/UX Design"
+quoteEmoji: "🥳"
 card: ./assets/palettary-screenshot.webp
 hero: ./assets/palettary-hero-img.webp
 tagline: "A designer's toolset, built by the designer who needed it"
@@ -47,27 +50,30 @@ blocks:
     number: "01a"
     heading: "One shell, four tools"
     body: >
-      Each tool is a static page sharing one nav, one stylesheet, and one layout —
+      Palettary meets designers where the work already happens. Four tools live in
+      the browser, the Handoff Toolset lives in Figma, and Rosette runs from the
+      command line. The browser tools share one nav, one stylesheet, and one layout:
       controls on the left, live preview on the right. Adding a tool means adding a
       page, not rethinking the product. The constraint is what keeps four unrelated
       utilities feeling like one thing.
 
   - type: gallery
     heading: "The four web tools"
+    enlarge: true
     body: >
-      Color Primitives, Halftone SVG, Thumbnail Generator, and QR Generator — same
+      Color Primitives, Thumbnail Generator, Halftone SVG, and QR Generator. Same
       shell, same controls-and-preview rhythm, four different jobs.
     items:
-      - media: ./assets/tool-palettes.webp        # TODO asset
+      - media: ./assets/palettary-palettes-tool.webp
         label: "Color Primitives"
         body: "Curated palettes, exportable straight into Figma variables."
-      - media: ./assets/tool-halftone.webp        # TODO asset
-        label: "Halftone SVG"
-        body: "Any image to a scalable vector halftone, live-previewed."
-      - media: ./assets/tool-figthumb.webp        # TODO asset
+      - media: ./assets/palettary-thumbnail-tool.webp
         label: "Thumbnail Generator"
         body: "Figma file covers with status, type, and platform built in."
-      - media: ./assets/tool-qr.webp              # TODO asset
+      - media: ./assets/palettary-halftone-tool.webp
+        label: "Halftone SVG"
+        body: "Any image to a scalable vector halftone, live-previewed."
+      - media: ./assets/palettary-qrcode-tool.webp
         label: "QR Generator"
         body: "Vector QR codes with no redirect, no expiry, no tracking."
 
@@ -79,13 +85,33 @@ blocks:
       the brand is warm and a little retro rather than another neutral dev-tool blue.
 
   - type: image
+    heading: "Wordmark"
+    mediaTitle: true
+    media: ./assets/palettary-wordmark-logo.svg
+    alt: "The Palettary wordmark: a stacked-swatch logomark beside the name in a green serif."
+    background: "#ffffff"     # same white mat and grey box as the hero below
+    padding: "3.5rem clamp(1.5rem, 16%, 8rem)"   # side padding sizes the logo; mat stays full width
+    radius: true
+    box:
+      background: "#f0f3f7"
+      padding: "2rem"
+      radius: "16px"
+
+  - type: image
     heading: "Animated hero"
     mediaTitle: true
-    media: ./assets/palettary-hero.riv           # TODO asset — or a still export
+    media: ./assets/palettary-hero.riv
+    riveProps:
+      stateMachines: "State Machine"
     alt: "TODO: what the hero animation shows."
-    background: "#f0f3f7"
-    padding: "2rem"
+    background: "#ffffff"     # white mat: the artboard is designed on white
     radius: true
+    enlarge: true             # click to play it big, from the start
+    hint: right               # the "click me" mark, as on the HG hero
+    box:
+      background: "#f0f3f7"
+      padding: "2rem"
+      radius: "16px"
 
   # ══════════════ 02 — COLOR PRIMITIVES ══════════════
   - type: section
@@ -108,8 +134,8 @@ blocks:
   - type: image
     heading: "Primitive → semantic"
     mediaTitle: true
-    media: ./assets/primitive-semantic-diagram.svg   # TODO asset
-    alt: "TODO: diagram showing a semantic token resolving to a raw primitive value."
+    media: ./assets/primitive-semantic-diagram.svg
+    alt: "Four color primitives, blue-600, blue-700, neutral-900, and neutral-0, each pointing to the semantic tokens that use them. color-link-default and color-button-primary both point at blue-600."
     enlarge: true
     box:
       background: "#f0f3f7"
@@ -128,144 +154,50 @@ blocks:
   - type: image
     heading: "Imported as Figma variables"
     mediaTitle: true
-    media: ./assets/figma-variables.webp        # TODO asset — copy from the palettary repo
+    media: ./assets/figma-variables.webp
     alt: "TODO: the Figma Variables panel after importing a Palettary palette."
-    enlarge: true
     shadow: true
 
-  # ══════════════ 03 — HALFTONE SVG ══════════════
+  # ══════════════ 03 — THUMBNAIL GENERATOR ══════════════
   - type: section
     number: "03"
-    heading: "Halftone SVG"
+    heading: "Thumbnail Generator"
     problem: >
-      Halftones give digital work a printed texture, but the generators that exist
-      either output raster — which falls apart the moment you scale it — or output
-      vector with a rotation bug that makes the angle control unusable. I wanted
-      clean, scalable, correctly-rotated dots, so I wrote the algorithm.
+      Figma's file browser turns into a wall of identical grey rectangles fast.
+      Thumbnails fix that, but hand-making one per file is exactly the kind of chore
+      that quietly stops happening.
 
   - type: subsection
     number: "03a"
-    heading: "The bug every other tool has"
-    body: >
-      Rotating a dot grid inside the image bounds leaves the corners bare, so every
-      angle but zero produces a clipped halftone. Palettary loops the grid in
-      *rotated* coordinate space across the full image diagonal, transforms each
-      point back into image space, then clips to bounds with an SVG `clipPath`. Any
-      angle, complete coverage, edge to edge.
-
-  - type: image
-    heading: "Same image, same angle, two tools"
-    mediaTitle: true
-    media: ./assets/halftone-rotation-comparison.webp   # TODO asset — the money shot
-    alt: "TODO: a competing tool's clipped 45° output beside Palettary's full-bleed output."
-    enlarge: true
-    box:
-      background: "#f0f3f7"
-      padding: "2rem"
-      radius: "16px"
-
-  - type: subsection
-    number: "03b"
-    heading: "Two grids, two algorithms"
-    body: >
-      Square grid blurs the source, samples bilinearly, and scales dot *area* rather
-      than radius — linear density reads as linear ink, which is what you want for
-      tonal gradients and for color. Diamond halves the row spacing and offsets every
-      other row, sampling five points per cell for a chunkier, higher-contrast result
-      that suits black-and-white work.
-
-  - type: image
-    heading: "Square and Diamond"
-    mediaTitle: true
-    media: ./assets/halftone-grid-comparison.webp      # TODO asset
-    alt: "TODO: the same source image rendered on both grids at identical settings."
-    enlarge: true
-
-  - type: subsection
-    number: "03c"
-    heading: "Gamma as a design control"
-    body: >
-      Dot weight is the difference between a halftone that reads and one that turns
-      to mud. The gamma slider opens the highlights or pushes the whole image heavier
-      without touching the source, so an image can be tuned to its output — screen,
-      riso, or press — rather than prepped in Photoshop first.
-
-  - type: image
-    heading: "Light, default, heavy"
-    mediaTitle: true
-    media: ./assets/halftone-gamma-3up.webp            # TODO asset
-    alt: "TODO: one image at three gamma values."
-    enlarge: true
-
-  - type: subsection
-    number: "03d"
-    heading: "Knowing when to leave the browser"
-    body: >
-      Full CMYK separation — four plates, four screen angles, moiré-free — is a print
-      production job, not something to bolt onto a browser tool aimed at designers who
-      want one good halftone. So it became its own product: **Rosette**, a CLI with its
-      own identity, published on PyPI. `pip install rosette-halftone`. The web tool
-      stayed simple because the hard case moved somewhere it belonged.
-
-  - type: image
-    heading: "Four plates, one composite"
-    mediaTitle: true
-    media: ./assets/rosette-cmyk-plates.webp           # TODO asset
-    alt: "TODO: the C, M, Y, and K plates beside the composited preview."
-    enlarge: true
-
-  # ══════════════ 04 — BEYOND THE BROWSER ══════════════
-  - type: section
-    number: "04"
-    heading: "Meeting Designers Where They Work"
-    problem: >
-      The first three tools export *into* Figma. But not every problem is solved by a
-      web page — so the toolset also shows up as a Figma library and as a command-line
-      tool. Same kit, whichever surface the work is actually happening on.
-
-  - type: subsection
-    number: "04a"
-    heading: "Thumbnail Generator"
-    body: >
-      Figma's file browser turns into a wall of identical grey rectangles fast.
-      Thumbnails fix that, but hand-making one per file is exactly the kind of chore
-      that quietly stops happening. The generator treats status, file type, and
-      platform as a small system, and exports true vector SVG as well as PNG — so the
-      cover stays crisp and stays editable.
-
-  - type: image
     heading: "Status, type, and platform as a system"
+    body: >
+      The generator treats status, file type, and platform as a small system, and
+      exports true vector SVG as well as PNG, so the cover stays crisp and stays
+      editable.
+
+  - type: image
+    heading: "Thumbnail variations"
     mediaTitle: true
     media: ./assets/figthumb-matrix.webp               # TODO asset
     alt: "TODO: several generated thumbnails showing status and type variations."
     enlarge: true
 
-  - type: subsection
-    number: "04b"
-    heading: "QR Generator"
-    body: >
-      Most free QR generators route through their own domain, which means the code
-      dies when the service does — and tracks every scan until it happens. Palettary
-      encodes the destination directly into the code. No redirect, no expiry, no
-      analytics. Custom dot, corner, and background colors, an embedded logo with
-      optional auto-recolor, and a real vector export.
-
-  - type: image
-    heading: "Styles and logo embedding"
-    mediaTitle: true
-    media: ./assets/qr-variants.webp                   # TODO asset
-    alt: "TODO: QR codes in several module styles, one with an embedded logo."
-    enlarge: true
-
-  - type: subsection
-    number: "04c"
+  # ══════════════ 04 — HANDOFF TOOLSET ══════════════
+  - type: section
+    number: "04"
     heading: "Handoff Toolset"
-    body: >
+    problem: >
       Figma will tell a developer that a gap is 16px. It will not tell them *why*, or
-      which token that 16 came from. The Handoff Toolset is a published Figma Community
-      library for the annotation layer — resizable measurement bars in both
-      orientations, callouts with a full set of pointer types, and a token chip that
-      names the decision instead of the value.
+      which token that 16 came from.
+
+  - type: subsection
+    number: "04a"
+    heading: "Annotation as components"
+    body: >
+      The Handoff Toolset is a published Figma Community library for the annotation
+      layer: resizable measurement bars in both orientations, callouts with a full
+      set of pointer types, and a token chip that names the decision instead of the
+      value.
 
   - type: image
     heading: "The components in use"
@@ -293,9 +225,113 @@ blocks:
   # The token chip is the piece worth dwelling on — it is the same idea as Dime's
   # token architecture, one layer up: Dime needed breakpoints spec'd as tokens, so
   # here I built the chip that draws that table. Consider making that link explicit
-  # in 04c's body.
+  # in 04a's body.
 
-  # ══════════════ 05 — IMPACT ══════════════
+  # ══════════════ 05 — HALFTONE SVG ══════════════
+  - type: section
+    number: "05"
+    heading: "Halftone SVG"
+    problem: >
+      Halftones give digital work a printed texture, but the generators that exist
+      either output raster — which falls apart the moment you scale it — or output
+      vector with a rotation bug that makes the angle control unusable. I wanted
+      clean, scalable, correctly-rotated dots, so I wrote the algorithm.
+
+  - type: subsection
+    number: "05a"
+    heading: "The bug every other tool has"
+    body: >
+      Rotating a dot grid inside the image bounds leaves the corners bare, so every
+      angle but zero produces a clipped halftone. Palettary loops the grid in
+      *rotated* coordinate space across the full image diagonal, transforms each
+      point back into image space, then clips to bounds with an SVG `clipPath`. Any
+      angle, complete coverage, edge to edge.
+
+  - type: image
+    heading: "Same image, same angle, two tools"
+    mediaTitle: true
+    media: ./assets/halftone-rotation-comparison.webp   # TODO asset — the money shot
+    alt: "TODO: a competing tool's clipped 45° output beside Palettary's full-bleed output."
+    enlarge: true
+    box:
+      background: "#f0f3f7"
+      padding: "2rem"
+      radius: "16px"
+
+  - type: subsection
+    number: "05b"
+    heading: "Two grids, two algorithms"
+    body: >
+      Square grid blurs the source, samples bilinearly, and scales dot *area* rather
+      than radius — linear density reads as linear ink, which is what you want for
+      tonal gradients and for color. Diamond halves the row spacing and offsets every
+      other row, sampling five points per cell for a chunkier, higher-contrast result
+      that suits black-and-white work.
+
+  - type: image
+    heading: "Square and Diamond"
+    mediaTitle: true
+    media: ./assets/halftone-grid-comparison.webp      # TODO asset
+    alt: "TODO: the same source image rendered on both grids at identical settings."
+    enlarge: true
+
+  - type: subsection
+    number: "05c"
+    heading: "Gamma as a design control"
+    body: >
+      Dot weight is the difference between a halftone that reads and one that turns
+      to mud. The gamma slider opens the highlights or pushes the whole image heavier
+      without touching the source, so an image can be tuned to its output — screen,
+      riso, or press — rather than prepped in Photoshop first.
+
+  - type: image
+    heading: "Light, default, heavy"
+    mediaTitle: true
+    media: ./assets/halftone-gamma-3up.webp            # TODO asset
+    alt: "TODO: one image at three gamma values."
+    enlarge: true
+
+  - type: subsection
+    number: "05d"
+    heading: "Knowing when to leave the browser"
+    body: >
+      Full CMYK separation — four plates, four screen angles, moiré-free — is a print
+      production job, not something to bolt onto a browser tool aimed at designers who
+      want one good halftone. So it became its own product: **Rosette**, a CLI with its
+      own identity, published on PyPI. `pip install rosette-halftone`. The web tool
+      stayed simple because the hard case moved somewhere it belonged.
+
+  - type: image
+    heading: "Four plates, one composite"
+    mediaTitle: true
+    media: ./assets/rosette-cmyk-plates.webp           # TODO asset
+    alt: "TODO: the C, M, Y, and K plates beside the composited preview."
+    enlarge: true
+
+  # ══════════════ 06 — QR GENERATOR ══════════════
+  - type: section
+    number: "06"
+    heading: "QR Generator"
+    problem: >
+      Most free QR generators route through their own domain, which means the code
+      dies when the service does. Until then, it tracks every scan.
+
+  - type: subsection
+    number: "06a"
+    heading: "Encoded directly"
+    body: >
+      Palettary encodes the destination directly into the code. No redirect, no
+      expiry, no analytics. Custom dot, corner, and background colors, an embedded
+      logo with optional auto-recolor, and a real vector export.
+
+  - type: image
+    heading: "Styles and logo embedding"
+    mediaTitle: true
+    media: ./assets/qr-variants.webp                   # TODO asset
+    alt: "TODO: QR codes in several module styles, one with an embedded logo."
+    enlarge: true
+
+  # ══════════════ IMPACT ══════════════
   - type: impact
     heading: "Impact"
     body: |
@@ -305,34 +341,33 @@ blocks:
       `rosette-halftone` — three channels, three audiences, one person designing,
       building, and shipping all of it. It is MIT licensed and open to palette
       submissions. TODO: swap in real usage numbers if you want them cited.
-
-      > "I did a great job."
-      >
-      > — Tim Pevey
 ---
 
 <!-- Prose here is optional; the template renders the `blocks` above.
 
      Shot list — what is still to make:
-       01a  Four tool screens for the gallery (tool-palettes / -halftone / -figthumb / -qr)
-       01b  Hero .riv or a still export
-       02a  Primitive → semantic diagram (SVG; the Palettary README has an ASCII version to adapt)
-       02b  figma-variables.webp — already exists in the palettary repo, just copy it over
-       03a  Rotation comparison — competitor clipped vs Palettary full-bleed. Best image in the study.
-       03b  Square vs Diamond at identical settings
-       03c  Gamma 3-up
-       03d  Rosette CMYK plates + composite
-       04a  Thumbnail variations
-       04b  QR styles + logo embed
-       04c  DONE — handoff-toolset02/03.webp
+       01a  DONE — palettary-*-tool.webp (2520 x 1580 at 2x, matched scale)
+       01b  DONE — palettary-wordmark-logo.svg + palettary-hero.riv
+       02a  DONE — primitive-semantic-diagram.svg (hand-built, live text)
+       02b  DONE — figma-variables.webp
+       03a  Thumbnail variations (figthumb-matrix.webp)
+       04a  DONE — handoff-toolset02/03.webp
+       05a  Rotation comparison — competitor clipped vs Palettary full-bleed. Best image in the study.
+       05b  Square vs Diamond at identical settings
+       05c  Gamma 3-up
+       05d  Rosette CMYK plates + composite
+       06a  QR styles + logo embed (qr-variants.webp)
+
+     Order: sections run from most to least design-centric. Every tool gets its
+     own number; "meeting designers where they work" is the thesis in 01a.
 
      Notes:
-       • 04c's two images are capped at 640px so the section does not outweigh 03.
+       • 04a's two images are capped at 640px.
        • -03 uses `enlarge` because the spec table's token names need to be readable.
        • -02 uses `href` instead — `href` wins over `enlarge` in ImageBlock, so it is
          one or the other. Swap if you would rather zoom it than link out.
-       • Neither 04c image takes radius/border/shadow/box — the frame and shadow are
+       • Neither 04a image takes radius/border/shadow/box — the frame and shadow are
          already baked into the export.
        • handoff-toolset01.webp (the Community cover art) is unused. It is advertising
-         rather than evidence, but it is there if you want a branded lead-in for 04c.
+         rather than evidence, but it is there if you want a branded lead-in for 04.
 -->

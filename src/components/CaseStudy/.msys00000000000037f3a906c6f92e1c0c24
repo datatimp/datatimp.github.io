@@ -1,0 +1,1785 @@
+.page {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+/* ─── Hero (Zero-Negative style: dark section, centered framed screenshot) ─── */
+.hero {
+    background-color: var(--color-neutral-900);
+    color: #fff;
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    text-align: center;
+}
+
+.heroHead {
+    max-width: var(--container-width);
+    margin: 0 auto var(--space-lg);
+}
+
+.heroTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0 0 var(--space-sm);
+}
+
+.heroTags {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.95rem;
+    color: var(--color-neutral-200);
+    margin: 0;
+}
+
+.heroFrame {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* The hero export already has a black frame baked in; this is the only
+   chrome CSS adds — a thin white stroke so it reads on the dark section.
+   Tune --hero-frame-radius to match your baked corner radius. */
+.heroFrame .frameImg {
+    border-radius: var(--hero-frame-radius, 16px);
+    /* 1px (not 0.5px): a sub-pixel spread vanishes on the left/right edges
+       when the centered frame lands on a fractional pixel. */
+    box-shadow: 0 0 0 1px #ffffff;
+}
+
+/* ─── Media frame (plain; frames are baked into the exports) ─── */
+.frame {
+    position: relative;
+    width: 100%;
+}
+
+.frameImg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Opt-in modifiers — set `radius: true` / `border: true` on an image or row
+   block's frontmatter. Reusable anywhere, no per-item CSS needed. */
+.radius {
+    border-radius: var(--radius, 0.75rem);
+}
+
+.border {
+    border: 1px solid var(--color-neutral-200);
+}
+
+.frameRive {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+}
+
+/* ─── Phone mockup (media behind a transparent-screen iPhone frame) ─── */
+/* The MOCKUP is centered (not in the alternating print layout) to maximize
+   visibility, but the heading and copy stay left-aligned like every other block
+   on the page — .phone centers itself via its own auto margins, so the column
+   does not need to center its children to achieve that. */
+.phoneBlock {
+    margin: 0 auto var(--stack);
+    /* See .laptopBlock: in .body's flex column, `margin: 0 auto` outranks
+       align-items:stretch, so without this the box shrink-wraps to the mockup
+       and sits narrower than every other block. */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+}
+
+.phoneCaption {
+    max-width: 48ch;
+    margin: 0 0 var(--space-md);
+}
+
+.phoneCaption p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+    margin: 0;
+}
+
+.phone {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    aspect-ratio: 1046 / 2158;   /* the mockup PNG's dimensions */
+    filter: drop-shadow(5px 8px 10px rgba(0, 0, 0, 0.50));
+}    
+
+/* The screen cutout, clipped to rounded corners so nothing escapes the frame.
+   Its background shows behind the Dynamic Island (set via screenBg). Tune the
+   border-radius if the corners leak (too small) or gap (too large). */
+.phoneScreenInner {
+    position: absolute;
+    left: 3.73%;
+    top: 1.48%;
+    width: 92.35%;
+    height: 97.03%;
+    overflow: hidden;
+    border-radius: 12% / 5.5%;
+    z-index: 0;
+}
+
+/* Media fills the screen width; `top` (inline, = statusHeight) pushes it below
+   the island. Natural height ≈ screen height, so the bottom clips off. */
+.phoneScreen {
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+
+.phoneFrame {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* `scroll: true` — a full-page grab scrolls inside the screen. The frame has
+   pointer-events: none, so the wheel and touch reach the screen under it. */
+.phoneScroll .phoneScreenInner {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+.phoneScroll .phoneScreenInner::-webkit-scrollbar { display: none; }
+.phoneScroll .phoneScreen {
+    position: static;
+    display: block;
+}
+.phoneScrollHint {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    z-index: 2;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.phoneScroll:hover .phoneScrollHint,
+.phoneScroll:focus-within .phoneScrollHint { opacity: 0; }
+
+/* ─── Laptop mockup (looping mp4 inside a MacBook Pro frame) ─── */
+/* Mockup centered like the phone, heading and copy left-aligned. The video sits
+   OVER the PNG, clipped to the screen cutout, so it works whether the mockup's
+   screen is transparent or white. */
+.laptopBlock {
+    margin: 0 auto var(--stack);
+    /* Without this the flex column shrink-wraps to its widest child (the heading
+       chip), so .laptop's width:100% resolves against ~240px and the max-width
+       below never applies. */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+}
+
+.laptopCaption {
+    max-width: 60ch;
+    margin: 0 0 var(--space-md);
+}
+
+.laptopCaption p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+    margin: 0;
+}
+
+.laptop {
+    position: relative;
+    width: 100%;
+    max-width: 860px;            /* SIZE KNOB — dense dashboards need the pixels */
+    margin: 0 auto;
+    aspect-ratio: 2500 / 1419;   /* the mockup PNG's dimensions */
+    filter: drop-shadow(15px 3px 15px rgba(0, 0, 0, 0.30));
+}
+
+/* Frame sits ON TOP; its opaque bezel masks the video's edges through the
+   transparent screen cutout. */
+.laptopFrame {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* The video window, BEHIND the frame. Bounds measured from the PNG's transparent
+   cutout (left 11.64% / top 5.57% / 76.72% × 84.36%), bled ~0.4% under the bezel
+   on every edge so there's no seam. Nudge these if it ever drifts. */
+.laptopScreenInner {
+    position: absolute;
+    left: 11.2%;
+    top: 5.1%;
+    width: 77.6%;
+    height: 85.2%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.laptopScreen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* cutout is 1.602:1 — a matching recording fills it exactly */
+}
+
+.framePlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 10;
+    background-color: var(--color-neutral-100);
+    border: 1px dashed var(--color-neutral-200);
+    border-radius: 8px;
+    color: var(--color-neutral-800);
+    font-size: 0.85rem;
+}
+
+/* ─── Body ─── */
+.body {
+    /* One knob for every top-level vertical gap — change this, it all reflows. */
+    --stack: calc(var(--space-lg) * 1.5);
+    /* One knob for body copy size — rowText, blockLead, and prose all use it. */
+    --body-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    /* Panel surface tokens — every tinted box (snapshot, typeSpec, impact, code,
+       section-problem…) references these. Change once here, or override per study
+       on that study's page, to re-tint the whole set. */
+    --panel-bg: #f0f3f7;
+    --quote-bg: #e2e8f0;                 /* one step darker than --panel-bg, same cool cast */
+    --panel-border: #e6e2d6;
+    /* Flex column so block margins DON'T collapse into each other — a top or
+       bottom margin on any block now adds space predictably (no "margin a div
+       down does nothing" surprises). Current spacing is unchanged: every block's
+       top margin is 0, so the gaps stay exactly as they were. */
+    display: flex;
+    flex-direction: column;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: var(--stack) var(--space-lg) var(--space-xl);
+}
+
+/* Markdown `code` in body copy: single backticks → inline chip, fenced ``` → block.
+   Scoped to .body so it covers every text block (rows, prose, leads, captions). */
+.body code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    /* TRANSLUCENT, not a fixed color. This used to be var(--panel-bg), the same
+       #f0f3f7 as the tinted boxes, so a chip inside a box was invisible. A dark
+       wash sits a constant step darker than whatever it lands on, so it reads on
+       white body copy, inside --panel-bg boxes, and on any box color added later. */
+    background: rgba(16, 32, 48, 0.085);
+    box-shadow: inset 0 0 0 1px rgba(16, 32, 48, 0.10);
+    color: var(--color-neutral-900);
+    padding: 0.12em 0.4em;
+    border-radius: 5px;
+}
+
+.body pre {
+    background: var(--panel-bg);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 8px;
+    overflow-x: auto;               /* long lines scroll, never overflow the page */
+}
+
+.body pre code {
+    background: none;               /* the pre owns the panel; don't double-chip */
+    padding: 0;
+    font-size: 0.9em;
+}
+
+/* ─── Impact panel (study close-out; opt in with `type: impact`) ─── */
+/* Boxed so it reads as a distinct wrap-up, not just another subsection. */
+.impact {
+    background: var(--panel-bg);
+    /* border: 1px solid var(--panel-border); */
+    border: 1px solid var(--color-primary);
+    padding: 40px;
+    border-radius: 16px;
+}
+
+/* Centered title flanked by rules — the flourish that sets Impact apart. */
+.impactHeading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: 0 0 20px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+.impactHeading::before,
+.impactHeading::after {
+    content: "";
+    flex: 1;                        /* the rules fill each side, keeping the word centered */
+    height: 2px;
+    background: var(--color-primary);
+}
+
+.impactBody {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.impactBody p {
+    margin: 0;
+}
+
+/* ─── Impact pull quote ──────────────────────────────────────────────────
+   Client testimony, boxed so it reads as evidence rather than more body
+   copy. Impact is the only block rendered through ReactMarkdown, so a
+   blockquote can only ever appear here. */
+.impactBody blockquote {
+    margin: var(--space-md) 0 0;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--quote-bg);
+    border-radius: var(--radius);
+}
+
+/* ReactMarkdown emits the quote and the attribution as sibling <p>s, and
+   `.impactBody p` above zeroes every margin, so respace them here. */
+.impactBody blockquote p {
+    margin: 0;
+}
+
+.impactBody blockquote p:first-child {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    /* Evens the two lines instead of orphaning "today." on its own. */
+    text-wrap: balance;
+    margin: 0 0 var(--space-xs);
+}
+
+/* Attribution reads as a byline: quieter, smaller, never italic. */
+.impactBody blockquote p:last-child {
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    color: var(--color-neutral-600);
+}
+
+.summary {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1.3;
+    max-width: 40ch;
+    margin: 0 0 var(--stack);
+}
+
+/* ReactMarkdown wraps the summary in its own <p> — strip the default margins so
+   the .summary wrapper keeps sole control of spacing. */
+.summary p {
+    margin: 0;
+}
+
+/* Emphasized phrases (*asterisks* in the summary): the teal-italic pull-outs.
+   NOTE: renders faux-italic until a Playfair italic @font-face is loaded. */
+.summary em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* ─── Hero quote (opt in with `quote` + `quoteBy` in frontmatter) ───
+   Sits under the summary, pulled up half a stack so it reads as part of the
+   intro. Same boxed treatment as the old Impact pull quote. */
+.heroQuote {
+    position: relative;
+    width: fit-content;     /* hug the text so every side gets the same 20px */
+    max-width: 48ch;
+    margin: calc(var(--stack) * -0.5) 0 var(--stack);
+    padding: 20px;
+    border-radius: var(--radius);
+    /* Gradient stroke: the fill paints the padding box, the chrome ramp the
+       border box, so the ramp shows only through the transparent border. */
+    border: 1px solid transparent;
+    background:
+        linear-gradient(var(--quote-bg), var(--quote-bg)) padding-box,
+        var(--quote-stroke) border-box;
+    --quote-stroke: var(--pewter);
+    box-shadow:
+        0 10px 28px -12px rgba(30, 41, 59, 0.28),
+        0 2px 6px -2px rgba(30, 41, 59, 0.10);
+}
+
+/* Metallic strokes. Pewter is the default: highlights sit near the corners.
+   Tim's two blues, from his Figma gradient panels, stay available per study
+   with `quoteStroke:` in frontmatter. */
+.heroQuote {
+    --pewter: linear-gradient(108deg,
+        #5f6569 0%, #e3e6e8 10%, #a9afb3 22%, #8d9397 52%, #a9afb3 76%, #d9dcde 90%, #6f757a 100%);
+    --bluegradient01: linear-gradient(102deg,
+        #477c9d 0%, #e4f1ff 19%, #577e98 52%, #adc8d3 71%, #30516c 99%);
+    /* The two 96% stops make a hard edge, the last glint before the dark end. */
+    --bluegradient02: linear-gradient(10deg,
+        #7da9b7 0%, #497a8a 29%, #abd2de 43%, #fff 55%, #669db2 73%, #79acbf 96%, #527ea1 96%);
+}
+.bluegradient01 {
+    --quote-stroke: var(--bluegradient01);
+}
+.bluegradient02 {
+    --quote-stroke: var(--bluegradient02);
+}
+
+.heroQuoteText {
+    margin: 0 0 var(--space-xs);
+}
+
+.heroQuoteText p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    line-height: 1.4;
+    /* No text-wrap: balance. It shortens every line but leaves the box at
+       full width, which opens a gap down the right side. */
+}
+
+/* Byline: quieter, smaller, never italic. */
+.heroQuoteBy {
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    color: var(--color-neutral-600);
+}
+
+/* Emoji sticker (`quoteEmoji:`), about half over the bottom-right corner.
+   The byline always keeps clear of it: a short quote leaves the byline as
+   the widest line, which would otherwise run under the sticker. */
+.heroQuote:has(.quoteEmoji) .heroQuoteBy {
+    padding-right: 2.5rem;
+}
+.quoteEmoji {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(45%, 22%);
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    font-size: 96px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 6px 8px rgba(30, 41, 59, 0.18));
+}
+.quoteEmojiGlyph {
+    display: block;
+    opacity: 0;
+    transform-origin: 50% 80%;
+}
+/* Pops in, waits 6s so the eye has time to get there, then wiggles once
+   every 8s. The wiggle is the first 0.8s of each cycle; the rest is rest. */
+.quoteEmojiPop .quoteEmojiGlyph {
+    animation:
+        quoteEmojiPop 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) both,
+        quoteEmojiWiggle 6s ease-in-out 5s infinite;
+}
+@keyframes quoteEmojiPop {
+    0%   { transform: scale(0.3) rotate(-25deg); opacity: 0; }
+    55%  { transform: scale(1.12) rotate(8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes quoteEmojiWiggle {
+    0%   { transform: scale(1) rotate(0); }
+    2.5% { transform: scale(1.06) rotate(-10deg); }
+    5%   { transform: scale(1.06) rotate(8deg); }
+    7.5% { transform: scale(1.03) rotate(-4deg); }
+    10%, 100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .quoteEmojiGlyph { opacity: 1; }
+    .quoteEmojiPop .quoteEmojiGlyph { animation: none; }
+}
+/* No side gutter on a phone, so the sticker shrinks and sits on the corner
+   point, the one spot that stays put across fonts and quotes. Centered
+   exactly, only a quarter of it overlaps the card and it reads as falling
+   off, so it's pulled in until about half of it is on. */
+@media (max-width: 720px) {
+    .heroQuote:has(.quoteEmoji) { margin-bottom: calc(var(--stack) + 1.25rem); }
+    /* Smaller sticker, smaller clearance. */
+    .heroQuote:has(.quoteEmoji) .heroQuoteBy { padding-right: 1.5rem; }
+    .quoteEmoji {
+        font-size: 54px;
+        transform: translate(28%, 22%);
+    }
+}
+
+/* ─── Snapshot bar ─── */
+.snapshot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin: 0 0 var(--stack);
+    /* Horizontal padding so the items never touch the card edges (was missing —
+       fine when centered on desktop, but flush-left once stacked on mobile). */
+    padding: 20px var(--space-md);
+    /* border-top: 1px solid black;
+    border-bottom: 1px solid black; */
+    background:   var(--panel-bg);
+    border-radius: 10px;
+}
+
+.snapItem {
+    margin: 0;
+    min-width: 8rem;
+    padding-right: 1rem;
+    border-right: 1px solid black;
+}
+
+.snapItem:last-child {
+    border-right: 0;
+    padding-right: 0; /* drop trailing padding so the group is optically centered */
+}
+
+.snapLabel {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: .075em;
+    font-size: 0.72rem;
+    color: var(--color-neutral-800);
+    margin: 0 0 0.25rem;
+}
+
+.snapValue {
+    font-family: var(--font-mono);
+    margin: 0;
+    font-weight: 400;
+}
+
+.snapValue a {
+    color: var(--color-primary);
+}
+
+/* Snapshot + live-URL callout as one metadata group. The URL snugs directly
+   under the bar — same family, but a different KIND of meta, so it gets its own
+   treatment: mono, outlined pill (vs. the bar's solid fill). */
+.snapshotGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);         /* snug the callout right under the snapshot */
+    margin: 0 0 var(--stack);
+}
+
+.snapshotGroup .snapshot {
+    width: 100%;
+    margin-bottom: 0;             /* the group gap owns the spacing now */
+}
+
+.liveUrl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 8px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.liveUrl:hover {
+    background: var(--panel-bg);
+    border-color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.liveUrlIcon {
+    width: 1.05em;
+    height: 1.05em;
+    flex: none;                   /* the icon sits to the right of the URL */
+}
+
+/* ─── Prose blocks ─── */
+.prose {
+    max-width: 65ch;
+    /* Match row/lead body copy so overview/problem/process/impact aren't smaller. */
+    font-size: var(--body-size);
+    margin: 0 0 var(--stack);
+    line-height: 1.6;
+}
+
+.blockHeading {
+    font-family: var(--font-sans);
+    color: white;
+    background-color: var(--color-primary);
+    /* "Hug contents" (Figma): shrink the box to the text so the background only
+       wraps the words, not the full column width. max-width keeps long headings
+       from overflowing — they wrap inside the container instead. */
+    width: fit-content;
+    max-width: 100%;
+    font-weight: 600;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 1.0rem;
+    letter-spacing: 0.01em;
+    /* Proximity: sit close to the content BELOW so the heading groups with it,
+       while the section gap above (--stack) stays larger. Keeping this < --stack
+       is what creates the optical break between sections. */
+    margin: 0 0 var(--space-sm);
+}
+
+.blockLead {
+    max-width: 60ch;
+    /* Match row body copy so image/subsection leads aren't smaller than row text. */
+    font-size: var(--body-size);
+    color: var(--color-neutral-800);
+    margin: 0 0 var(--space-md);
+    line-height: 1.6;
+}
+
+/* ─── Section / subsection hierarchy ─── */
+.eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    margin-bottom: var(--space-sm);
+}
+
+.sectionHeader {
+    margin: 0 0 var(--stack);
+    padding-top: var(--stack);
+    border-top: 2px dashed var(--color-text);
+}
+
+.sectionTitleRow {
+    display: flex;
+    align-items: baseline;
+    /* Match the subsection's number→title gap so 01/Identity and 01a/Logo line up. */
+    gap: var(--space-sm);
+}
+
+.sectionNumber {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+.sectionTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Problem as a callout — set apart from the body, one accent, not a color block. */
+.sectionProblem {
+    margin-top: var(--stack);
+    max-width: 60ch;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 5px solid var(--color-primary);
+    background: var(--panel-bg);
+    border-radius: 0 10px 10px 0;
+}
+
+.sectionProblem .eyebrow {
+    color: var(--color-primary);
+}
+
+.problemText {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.75rem);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.subsection {
+    display: grid;
+    /* KNOB A — space between the subtitle row and its body paragraph. */
+    gap: var(--space-md);
+    /* Gap after the subsection, before the next block — uses --stack so EVERY
+       block-to-block gap in the study is identical (no "why is this section
+       tighter than that one" moments). */
+    margin: 0 0 var(--stack);
+}
+
+/* Let KNOB B be the sole control of the gap below the subsection — drop the
+   body paragraph's own bottom margin here so it doesn't stack on top of it. */
+.subsection .blockLead {
+    margin-bottom: 0;
+}
+
+.subsectionTitleRow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+}
+
+/* Section-style number label (e.g. 01a), the subsection's marker instead of
+   a tick — keeps it in the same header family as the numbered sections. */
+.subsectionNumber {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    color: var(--color-primary);
+}
+
+.subsectionTitle {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* ─── Alternating media/text rows ─── */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: var(--space-lg);
+    /* Gap between the title and its body copy within the text column. */
+    row-gap: var(--space-sm);
+    /* Top-align so a short image doesn't float in the middle of long text. */
+    align-items: start;
+    /* Same block-to-block gap as every other block (--stack) so the rhythm is
+       uniform — a row is not spaced differently from a subsection or an image. */
+    margin: 0 0 var(--stack);
+}
+
+/* Title sits above the body in the text column; the media spans both rows on
+   the other side. On mobile these areas collapse to a single title → media →
+   body stack (see the responsive block) so each row reads as one grouped unit. */
+.rowMediaRight { grid-template-areas: "heading media" "body media"; }
+.rowMediaLeft  { grid-template-areas: "media heading" "media body"; }
+.rowHeadingEl  { grid-area: heading; margin-bottom: 0; }
+.rowMedia      { grid-area: media; position: relative; } /* anchor for the click hint */
+.rowText       { grid-area: body; }
+
+/* Friendly hand-lettered "click me" mark, tucked into an upper corner of a live
+   Rive piece (opt in with `hint:` on the row). Peeks above the frame; corners
+   alternate row-to-row. Decorative only — pointer-events off so it never blocks. */
+.clickHint {
+    position: absolute;
+    z-index: 3;
+    top: clamp(-2.25rem, -3vw, -1.25rem);
+    width: clamp(60px, 9vw, 92px);
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.15));
+}
+.clickHintLeft  { left: clamp(-1.25rem, -2vw, -0.5rem); transform: rotate(-9deg); }
+.clickHintRight { right: clamp(-1.25rem, -2vw, -0.5rem); transform: rotate(9deg); }
+
+/* Body is its own grid item now — strip the leading/trailing markdown margins
+   so the row-gap is the only thing setting the title→body spacing. */
+.rowText > :first-child { margin-top: 0; }
+.rowText > :last-child { margin-bottom: 0; }
+
+/* Inline "see it up close" trigger inside body copy — looks like a link. */
+.zoomLink {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Click-to-enlarge trigger wrapping a .riv media (opt in with `enlarge: true`). */
+.enlargeTrigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    position: relative;
+    cursor: zoom-in;
+}
+
+/* Small badge telling the visitor the animation is clickable. */
+.enlargeBadge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+/* The enlarged .riv inside the modal — a big, matted stage for the animation. */
+.modalRive {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modalRiveEmbed {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+}
+
+/* Row headings are the same level as block headings (both are content blocks) —
+   match their treatment so siblings look consistent. */
+.rowHeading {
+    background-color: var(--color-primary);
+    font-family: var(--font-sans);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.0rem;
+    letter-spacing: 0.1em;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+    margin: 0 0 var(--space-sm);
+}
+
+
+.rowText {
+    line-height: 1.55;
+    font-size: var(--body-size);
+}
+
+/* Media Title — the 4th heading tier, one step below Section Header.
+   Opt in with `mediaTitle: true` on a row/image; a compact label for the
+   media pieces (business cards, flyer, etc.). No tick — keeps it quiet. */
+.mediaTitle {
+    background-color: var(--color-primary);
+    font-family: var(--font-sans);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.0rem;
+    letter-spacing: 0.1em;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+    margin: 0 0 var(--space-sm);
+}
+
+/* ─── Brand colors (native swatches) ─── */
+.brandColors,
+.brandDeck,
+.gallery,
+.typeSpec {
+    margin: 0 0 var(--stack);
+}
+
+/* ─── Type spec (native specimen panel, echoes the brand-deck type slide) ─── */
+.typeSpec {
+    display: grid;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--panel-bg);                         /* same as the snapshot bar */
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+}
+
+.typeSpecGroup {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+/* Role header — "Logo / Titles", "Body Text". Size knob: font-size here. */
+.typeSpecRole {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.typeSpecField {
+    display: grid;
+    gap: 0.15rem;
+}
+
+/* Field label — "Typeface", "Weight", "Glyphs". Size knob: font-size here. */
+.typeSpecFieldLabel {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-neutral-800);
+}
+
+/* Value, rendered in its own face. `--type-size` (from the markdown `size:`) is
+   the desktop ceiling; the clamp scales it with the viewport and floors it so it
+   stays legible — and it can't overspill the panel. */
+.typeSpecValue {
+    font-size: clamp(1.5rem, 13vw, var(--type-size, 2rem));
+    font-weight: 500;
+    line-height: 1.1;
+    max-width: 100%;
+    overflow-wrap: anywhere;   /* a long single value breaks instead of overflowing */
+}
+
+.typeSpecGlyphs {
+    font-size: clamp(1.25rem, 9vw, var(--type-size, 1.75rem));
+    line-height: 1.3;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.brandGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3-up × 2 rows for symmetry */
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.brandCell {
+    position: relative;
+    margin: 0;
+    padding: var(--space-md);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+    background-color: var(--color-neutral-0);
+    text-align: center;
+}
+
+.brandChosen {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.chosenTag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background-color: var(--color-primary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+}
+
+.brandLogo {
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    margin: 0 auto var(--space-sm);
+}
+
+.brandLabel {
+    font-weight: 600;
+    margin: 0 0 var(--space-sm);
+}
+
+.swatchRow {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+}
+
+.swatchChip {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-neutral-200);
+}
+
+.swatchHex {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-neutral-800);
+}
+
+/* ─── Brand deck (thumbnail + modal carousel) ─── */
+.deckThumb {
+    display: block;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    max-width: 760px;                    /* larger preview */
+    margin: var(--space-md) auto 0;      /* centered in the column */
+}
+
+.deckThumbImg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.deckThumbLabel {
+    display: block;
+    padding: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.modalBody {
+    position: relative;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.modalImg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.modalClose {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    font-size: 2rem;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modalNav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+    color: #fff;
+}
+
+.modalNav button {
+    font-size: 2rem;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.modalCount {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+/* ─── Image pan/zoom viewer (enlarge: true on an image block) ─── */
+/* Enlarge trigger sized to the image so the badge hugs its corner (the shared
+   .enlargeTrigger is full-width, which floats the badge off to the right). */
+.enlargeImageBtn {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 720px;          /* match .imageBlockFrame so the badge sits on the image */
+    margin-inline: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: zoom-in;
+}
+
+.zoomBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: #f0f3f7;      /* standard box grey — lets the chart's #F0F3F7
+                                       break-boxes blend so the lines read as broken */
+    display: flex;
+    flex-direction: column;
+}
+
+.zoomToolbar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);   /* dark strip for contrast against the grey */
+}
+
+.zoomToolbar button {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    min-width: 2.4rem;
+    cursor: pointer;
+}
+
+.zoomToolbar button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.26);
+}
+
+.zoomToolbar button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.zoomLevel {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    min-width: 3.5rem;
+    text-align: center;
+}
+
+.zoomClose {
+    margin-left: auto;
+    font-size: 1.5rem !important;
+}
+
+.zoomScroll {
+    flex: 1 1 auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    display: flex;
+    /* flex-start, not centre: a tall image that overflows must begin at its top
+       rather than being centered with the first rows scrolled off. `safe center`
+       still centres anything that fits. */
+    align-items: safe flex-start;
+    justify-content: safe center;   /* center; stay fully reachable when overflowing */
+    padding: 2rem;                  /* breathing room — never edge-to-edge (PAD=64 in JS) */
+}
+/* cursor (grab when pannable, default otherwise) is set inline per zoom state */
+
+.zoomImg {
+    display: block;
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    max-width: none;                /* allow overflow so both axes can scroll when zoomed */
+    user-select: none;              /* SVG carries its own #F0F3F7 background now */
+}
+
+/* Screenshots go white-on-grey here, so give rasters an edge and a little lift.
+   drop-shadow follows the pixels, not the box, so transparent PNGs get no frame.
+   SVGs are skipped: they carry the backdrop grey and would show as a box. */
+.zoomImgRaster {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.35)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
+}
+
+/* ─── Image block (e.g. logo iterations composite) ─── */
+.imageBlock {
+    margin: 0 0 var(--stack);
+}
+
+.imageBlockFrame {
+    max-width: 720px;
+    margin: var(--space-md) auto 0;
+}
+
+/* ─── Gallery (motion showcase) ─── */
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+/* Uniform cards so a collection (e.g. print mockups) reads as one set. They use
+   the panel tokens like every other box; a neutral grey here read as a second hue. */
+.galleryItem {
+    margin: 0;
+    padding: var(--space-md);
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+}
+
+.galleryItem .frameRive {
+    aspect-ratio: 16 / 10;
+}
+
+/* Phone galleries pin to 2 columns instead of auto-fit. A screen-by-screen flow
+   of four reads as 2x2; auto-fit gave 3 + an orphan and squeezed every phone.
+   Scoped to phone galleries so print/mockup grids keep their own density. */
+.galleryGridPhone {
+    grid-template-columns: repeat(3, 1fr);
+    /* Cards stretch to a common height (grid's default) so the boxes match across
+       the row — copy length must not decide how tall a screen's container is.
+       Content stays top-aligned; the slack falls to the bottom of the card. */
+    align-items: stretch;
+}
+
+/* Pending items in a phone gallery preview at phone proportions, so the layout
+   reads correctly before the exports land. */
+.galleryItemPhone .framePlaceholder {
+    aspect-ratio: 1046 / 2158;
+    max-width: 300px;
+    margin-inline: auto;
+}
+
+@media (max-width: 720px) {
+    .galleryGridPhone {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* The 300px cap on .phone is for a solo block; in a multi-up flow it must be
+   narrower or the row stops fitting. */
+.galleryItemPhone .phone {
+    max-width: 260px;
+}
+
+/* Screen label — a filled mono chip. Reads as a marker rather than a heading,
+   which is what a numbered step wants. */
+.galleryLabel {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: var(--color-neutral-0);
+    background: var(--color-neutral-600);
+    padding: 5px 15px;
+    border-radius: 999px;
+}
+
+/* Supporting copy — Inter, left-aligned. Spacing comes from the caption's gap. */
+.galleryBody {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+}
+
+.galleryCaption {
+    margin-top: var(--space-sm);
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--color-neutral-800);
+}
+
+/* A label + copy caption is a block of prose, not a one-line figure caption.
+   One flex column at a single gap keeps phone → chip → copy evenly spaced;
+   align-items shrink-wraps the chip to its text. */
+.galleryCaptionStacked,
+.galleryItemPhone .galleryCaption {
+    /* 32px off the mockup, 16px between chip and copy — the device needs more
+       air beneath it than the caption's own parts need from each other. */
+    margin-top: var(--space-md);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+
+/* ─── Back link / not found ─── */
+.backLink {
+    display: inline-block;
+    margin-top: var(--space-md);
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.notFound {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 720px) {
+    /* Issue 2: the 8rem top padding is huge on mobile — tighten it. */
+    .hero {
+        padding: var(--space-lg) var(--space-md) var(--space-md);
+        /* Extra top room so the outline pill doesn't crowd the title. */
+        padding-top: calc(var(--space-lg) + var(--space-sm));
+    }
+    /* Issue 3: a fixed 16px radius over-rounds the scaled-down image on mobile
+       and cuts the baked frame's corners; shrink it to roughly match. */
+    .heroFrame .frameImg {
+        border-radius: 2px;
+    }
+    /* Tighten side gutters on mobile so text columns aren't crushed. */
+    .body {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+        /* Bottom padding is --space-xl (128px) — a huge gap above the footer on
+           a phone. Bring it down to a normal end-of-page break. */
+        padding-bottom: var(--space-md);
+    }
+    .sectionProblem {
+        padding: var(--space-sm);
+    }
+    /* Playfair's 1.5rem min is too wide for a phone column — step it down. */
+    .summary,
+    .problemText {
+        font-size: 1.25rem;
+    }
+    /* Every top-level block gap keys off --stack; the desktop value (~96px) is
+       far too airy on a phone. One knob tightens the whole vertical rhythm. */
+    .body {
+        --stack: var(--space-lg);
+    }
+    /* Close the gap between the section number (01) and its title. */
+    .sectionTitleRow {
+        gap: var(--space-sm);
+    }
+    /* Collapse each row to one title → media → body stack (both sides), so the
+       heading, mockup, and copy read as a single grouped unit on mobile. */
+    .row {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+    }
+    .rowMediaLeft,
+    .rowMediaRight {
+        grid-template-areas: "heading" "media" "body";
+    }
+    .brandGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    /* The 64px panel padding eats a phone's width — tighten it so the specimen
+       has room and the sample type isn't crushed. */
+    .typeSpec {
+        padding: var(--space-md);
+        gap: var(--space-md);
+    }
+
+    /* Snapshot stacks; the divider flips from right to bottom. */
+    .snapshot {
+        flex-direction: column;
+    }
+    .snapItem {
+        padding-right: 0;
+        padding-bottom: var(--space-sm);
+        border-right: 0;
+        border-bottom: 1px solid black;
+    }
+    .snapItem:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+@media (max-width: 460px) {
+    .brandGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ─── Outline nav (sticky section rail, desktop only) ───
+   Derived from the study's section/subsection blocks. Lives in the left gutter
+   beside .body, which is why it only appears once the viewport is wide enough to
+   have a gutter to spare. */
+.outlineNav {
+    display: none;
+}
+
+@media (min-width: 1280px) {
+    .outlineNav {
+        display: block;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        /* Sits in the gutter left of the centered content column. */
+        left: max(1rem, calc(50vw - (var(--container-width) / 2) + 1rem));
+        /* Exactly the gap between the rail and the hero frame (.heroFrame, 1100px),
+           so a long label wraps instead of running onto the hero. Past 1408px the
+           gap is the same at every width. */
+        width: calc((var(--container-width) - 1100px) / 2 - 2rem);
+        max-height: 70vh;
+        overflow-y: auto;
+        z-index: 5;
+    }
+}
+
+.outlineList,
+.outlineSubList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outlineList > li + li {
+    margin-top: 0.75rem;
+}
+
+.outlineLink {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-neutral-500, #7b7b7b);
+    /* The left rule doubles as the active indicator. */
+    border-left: 2px solid transparent;
+    padding: 0.125rem 0 0.125rem 0.625rem;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.outlineLink:hover {
+    color: var(--color-primary, #0f8a72);
+}
+
+.outlineLinkActive {
+    color: var(--color-text, #202020);
+    border-left-color: var(--color-primary, #0f8a72);
+}
+
+.outlineNumber {
+    /* Holds the column for the unnumbered Impact entry too. */
+    min-width: 2ch;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    color: var(--color-primary, #0f8a72);
+}
+
+.outlineSubList {
+    margin: 0.375rem 0 0;
+    padding-left: 0.625rem;
+}
+
+.outlineSubList > li + li {
+    margin-top: 0.25rem;
+}
+
+.outlineSubLink {
+    display: block;
+    text-decoration: none;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--color-neutral-500, #7b7b7b);
+    border-left: 2px solid transparent;
+    padding: 0.125rem 0 0.125rem 0.625rem;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.outlineSubLink:hover {
+    color: var(--color-primary, #0f8a72);
+}
+
+.outlineSubLinkActive {
+    color: var(--color-text, #202020);
+    border-left-color: var(--color-primary, #0f8a72);
+}
+
+/* Anchors sit under the fixed navbar without the heading hiding beneath it. */
+.sectionHeader,
+.subsection,
+.impact,
+.summary,
+.heroQuote {
+    scroll-margin-top: 6rem;
+}
+
+/* ─── Outline pill + sheet (below the desktop breakpoint) ───
+   The same outline as the rail, as a pill pinned under the navbar that opens
+   the full list in a bottom sheet. --navbar-h is measured by OutlineNav. */
+.outlineMobile {
+    display: none;
+}
+
+@media (max-width: 1279px) {
+    .outlineMobile {
+        display: block;
+    }
+
+    /* Clear the navbar and the pill when jumping to a heading. */
+    .sectionHeader,
+    .subsection,
+    .impact,
+    .summary,
+    .heroQuote {
+        scroll-margin-top: calc(var(--navbar-h, 64px) + 5rem);
+    }
+}
+
+.outlinePill {
+    position: fixed;
+    z-index: 90;            /* under the navbar (100), so its menu drops over it */
+    top: calc(var(--navbar-h, 64px) + 0.625rem);
+    left: max(0.75rem, env(safe-area-inset-left, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    max-width: 32rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem 0.75rem;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.25);
+    font: inherit;
+    color: var(--color-text);
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.outlinePill:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.outlinePillNumber {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+}
+
+.outlinePillText {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.outlinePillSub {
+    font-weight: 500;
+    color: var(--color-neutral-500, #7b7b7b);
+}
+
+.outlinePillSub::before {
+    content: '·';
+    margin: 0 0.5rem;
+}
+
+.outlinePillChevron {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    color: var(--color-neutral-500, #7b7b7b);
+}
+
+/* Reading progress along the pill's bottom edge (scaled by OutlineNav). */
+.outlinePillProgress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--color-primary);
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+.outlineScrim {
+    position: fixed;
+    inset: 0;
+    z-index: 200;           /* over the navbar too */
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.outlineSheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 201;
+    max-width: 40rem;
+    max-height: 78vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-neutral-0);
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -10px 30px -10px rgba(0, 0, 0, 0.3);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.3s;
+}
+
+.outlineSheet:focus {
+    outline: none;
+}
+
+.outlineMobileOpen .outlineScrim {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.outlineMobileOpen .outlineSheet {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.outlineSheetHead {
+    flex: none;
+    padding: 0.625rem 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--color-neutral-200);
+    touch-action: none;     /* the drag-to-dismiss gesture owns this strip */
+}
+
+.outlineSheetHandle {
+    width: 36px;
+    height: 4px;
+    margin: 0 auto 0.75rem;
+    border-radius: 2px;
+    background: var(--color-neutral-200);
+}
+
+.outlineSheetTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+
+.outlineSheetEyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+.outlineSheetClose {
+    background: none;
+    border: 0;
+    padding: 0.25rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-neutral-500, #7b7b7b);
+    cursor: pointer;
+}
+
+.outlineSheetList,
+.outlineSheetSubList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outlineSheetList {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem 0 1rem;
+}
+
+.outlineSheetLink,
+.outlineSheetSubLink {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.outlineSheetNumber {
+    flex: none;
+    width: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+}
+
+/* Subsections indent past the number column so their text lines up. */
+.outlineSheetSubLink {
+    padding: 0.5rem 1.25rem 0.5rem calc(1.25rem + 2.5rem);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.outlineSheetSubLinkInSection {
+    color: var(--color-text);
+}
+
+.outlineSheetLinkActive {
+    border-left-color: var(--color-primary);
+    background: #eef7f5;
+    color: var(--color-text);
+}
+
+.outlineSheetLink:focus-visible,
+.outlineSheetSubLink:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .outlineLink,
+    .outlineSubLink,
+    .outlineScrim,
+    .outlineSheet,
+    .outlineMobileOpen .outlineSheet {
+        transition: none;
+    }
+}
