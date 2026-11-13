@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { imageSize } from 'image-size';
 import { load as yamlLoad } from 'js-yaml';
+import { createHash } from 'node:crypto';
 
 // Case-study images load lazily, so the browser doesn't know their size until
 // they arrive. Without a size, each one starts 0px tall and the page grows as
@@ -61,13 +62,14 @@ function assetDims() {
 // page and emits a real <slug>/index.html per live case study, so each URL
 // returns 200 with its own title, description and image. Share images live
 // in public/og/ (1200x630) at stable URLs: <slug>.jpg for screenshots,
-// home.png for the home page; swap them freely.
+// home.png for the home page. Replace a file and its URL changes on the next
+// build (see versioned() below), so previews pick up the new image.
 const SITE = 'https://timpevey.com';
 const SITE_NAME = 'Tim Pevey';
 const HOME = {
   path: '/',
-  title: 'Tim Pevey | Product Designer, UI and Design Systems',
-  description: 'Product and UI designer focused on simplicity, clarity and systems thinking. Work in web, design systems and motion.',
+  title: 'Tim Pevey | Product Designer, UI, and Design Systems',
+  description: 'Product and UI designer focused on simplicity, clarity, and systems thinking. Work in web, design systems, and motion.',
   image: '/og/home.png', // PNG: crisp type on a flat graphic
 };
 
@@ -96,9 +98,21 @@ function readStudyPages() {
   return pages;
 }
 
+// Link previews cache images by URL, so a replaced file at the same address
+// goes unnoticed. Adding a short hash of the file's contents (?v=3f9a2c1b)
+// gives every new version of an image a new address automatically.
+function versioned(image) {
+  try {
+    const hash = createHash('sha1').update(readFileSync(join(import.meta.dirname, 'public', image))).digest('hex');
+    return `${image}?v=${hash.slice(0, 8)}`;
+  } catch {
+    return image; // file missing: plain URL
+  }
+}
+
 function metaTags({ path, title, description, image }) {
   const url = SITE + path;
-  const img = SITE + image;
+  const img = SITE + versioned(image);
   const t = escapeAttr(title);
   const d = escapeAttr(description);
   return [

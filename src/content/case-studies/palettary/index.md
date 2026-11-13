@@ -32,7 +32,7 @@ card: ./assets/palettary-screenshot.webp
 hero: ./assets/palettary-hero-img.webp
 tagline: "A designer's toolset, built by the designer who needed it"
 metaTitle: "Palettary Case Study | Tim Pevey, Product Designer"   # browser tab, search results and link previews
-metaDescription: "A design toolset I built solo: four browser tools, a Figma library and a published CLI. No accounts, no subscriptions."
+metaDescription: "A design toolset I built solo: four browser tools, a Figma library, and a published CLI. No accounts, no subscriptions."
 
 # ─── Body blocks ───────────────────────────────────────────────────────
 # Skeleton: copy is first-draft — rewrite freely. Every `# TODO asset` line is
