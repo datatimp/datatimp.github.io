@@ -24,6 +24,8 @@ quoteEmoji: "👍"
 card: ./assets/hg-screenshot.webp
 hero: ./assets/hg-hero-img.webp
 tagline: "A brand, website and ordering system for a small-batch garden bakery"   # short logline on the home card (not the summary)
+metaTitle: "Heartful Gardens Case Study | Tim Pevey, Product Designer"   # browser tab, search results and link previews
+metaDescription: "How I built a brand, website and online ordering system for a small-batch bakery and garden, from logo and print to Rive animation and inventory tools."
 
 # ─── Body blocks ───────────────────────────────────────────────────────
 blocks:

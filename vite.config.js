@@ -65,8 +65,8 @@ const SITE = 'https://timpevey.com';
 const SITE_NAME = 'Tim Pevey';
 const HOME = {
   path: '/',
-  title: 'Tim Pevey - Portfolio',
-  description: 'Product Designer crafting clean, user-centric interfaces.',
+  title: 'Tim Pevey | Product Designer, UI and Design Systems',
+  description: 'Product and UI designer focused on simplicity, clarity and systems thinking. Case studies in brand, web, design systems and motion.',
   image: '/og/home.jpg',
 };
 
@@ -86,8 +86,9 @@ function readStudyPages() {
     if (!data.slug || data.draft) continue;
     pages.push({
       path: `/${data.slug}/`,
-      title: `${data.title} | ${SITE_NAME}`,
-      description: plain(data.tagline || data.summary),
+      // metaTitle / metaDescription in the frontmatter win; otherwise fall back.
+      title: data.metaTitle || `${data.title} Case Study | ${SITE_NAME}`,
+      description: plain(data.metaDescription || data.tagline || data.summary),
       image: `/og/${data.slug}.jpg`,
     });
   }

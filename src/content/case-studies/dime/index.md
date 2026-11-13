@@ -24,6 +24,8 @@ quoteEmoji: "🥳"
 card: ./assets/dime-screenshot.webp
 hero: ./assets/dime-hero-img.webp
 tagline: "A design system and payment flow for a scaling fintech platform"
+metaTitle: "Dime Payments Case Study | Tim Pevey, Product Designer"   # browser tab, search results and link previews
+metaDescription: "How I completed a design system and rebuilt the payment pages and account shell for Dime Payments, a fintech platform scaling to three user types."
 
 # ─── Body blocks (rendered in order by the CaseStudy template) ─────────
 blocks:
